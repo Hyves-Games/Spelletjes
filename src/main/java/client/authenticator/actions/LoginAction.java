@@ -1,5 +1,10 @@
 package client.authenticator.actions;
 
-public class LoginAction {
+import support.interfaces.ActionInterface;
 
+public class LoginAction implements ActionInterface {
+    @Override
+    public void handle() {
+
+    }
 }
