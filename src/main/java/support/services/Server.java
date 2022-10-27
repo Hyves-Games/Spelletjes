@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class Server {
     private Socket connection;
@@ -16,7 +20,7 @@ public class Server {
     }
 
     public boolean IsConnected() {
-        if (this.connection == null || this.connection.isClosed() || this.read() == null) {
+        if (this.connection == null || this.connection.isClosed()) {
             return false;
         }
         return true;
@@ -48,11 +52,11 @@ public class Server {
         return true;
     }
 
-    public String read() {
+    public JsonObject read() {
         // read logic
         try {
-            return this.input.readLine();
-        } catch (IOException e) {
+            return this.parse(this.input.readLine());
+        } catch (Exception e) {
             return null;
         }
     }
@@ -65,5 +69,24 @@ public class Server {
             return false;
         }
         return true;
+    }
+
+     private JsonObject parse(String input) {
+        String json_string = this.getJsonString(input);
+        if (json_string != null) {
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(json_string, JsonObject.class);
+            return jsonObject;
+        }
+        return null;
+    }
+
+    private String getJsonString(String input) {
+        Pattern pattern = Pattern.compile("\\{.*?\\}|\\[.*?\\]");
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 }
