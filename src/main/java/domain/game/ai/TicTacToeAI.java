@@ -1,4 +1,6 @@
-public class TTT_AI {
+package domain.game.ai;
+
+public class TicTacToeAI {
     static final int maximisingPlayerPiece = 1;
     static final int minimisingPlayerPiece = -1;
     static final int boardWidth = 3;

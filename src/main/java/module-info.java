@@ -1,10 +1,11 @@
-module example.hyvesgamesspelletjes {
-    requires javafx.controls;
+module hyvesgamesspelletjes {
     requires javafx.fxml;
+    requires javafx.controls;
 
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
 
-    opens example to javafx.fxml;
-    exports example;
+    opens client to javafx.fxml;
+
+    exports client;
 }
