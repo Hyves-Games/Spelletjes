@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import support.abstracts.AbstractServerResponse;
+import support.helpers.ServerResponseEnum;
 
 public class Server {
     private Socket connection;
@@ -52,10 +54,11 @@ public class Server {
         return true;
     }
 
-    public JsonObject read() {
+    public AbstractServerResponse read() {
         // read logic
         try {
-            return this.parse(this.input.readLine());
+            AbstractServerResponse response = this.getServerResponse(this.input.readLine());
+            return response;
         } catch (Exception e) {
             return null;
         }
@@ -69,6 +72,22 @@ public class Server {
             return false;
         }
         return true;
+    }
+
+    private AbstractServerResponse getServerResponse(String response) {
+        try {
+            String category = response.split(" ")[1];
+            AbstractServerResponse serverResponse = new AbstractServerResponse(null, ServerResponseEnum.NONE);
+            switch (category) {
+                case "GAME":
+                    String subcommand = response.split(" ")[2];
+                    serverResponse = new AbstractServerResponse(this.parse(response), ServerResponseEnum.valueOf(subcommand));
+                    break;
+            }
+            return serverResponse;
+        } catch (Exception e) {
+            return new AbstractServerResponse(null, ServerResponseEnum.NONE);
+        }
     }
 
      private JsonObject parse(String input) {
