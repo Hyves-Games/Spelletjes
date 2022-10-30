@@ -1,8 +1,10 @@
 package client;
 
+import domain.player.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import support.services.Server;
 
 import java.io.IOException;
 
