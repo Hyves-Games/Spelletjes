@@ -77,11 +77,14 @@ public class Server {
     private AbstractServerResponse getServerResponse(String response) {
         try {
             String category = response.split(" ")[1];
+            String subcommand = response.split(" ")[2];
             AbstractServerResponse serverResponse = new AbstractServerResponse(null, ServerResponseEnum.NONE);
             switch (category) {
                 case "GAME":
-                    String subcommand = response.split(" ")[2];
                     serverResponse = new AbstractServerResponse(this.parse(response), ServerResponseEnum.valueOf(subcommand));
+                    break;
+                case "PLAYERLIST":
+                    serverResponse = new AbstractServerResponse(this.parse(response), ServerResponseEnum.PLAYERLIST);
                     break;
             }
             return serverResponse;
@@ -104,6 +107,9 @@ public class Server {
         Pattern pattern = Pattern.compile("\\{.*?\\}|\\[.*?\\]");
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
+            if (input.contains("PLAYERLIST")) {
+                return "{ players: ".concat(matcher.group()).concat("}");
+            }
             return matcher.group();
         }
         return null;
