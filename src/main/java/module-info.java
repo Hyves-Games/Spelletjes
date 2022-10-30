@@ -6,6 +6,7 @@ module hyvesgamesspelletjes {
     requires org.kordamp.ikonli.javafx;
 
     opens client.authenticator.controller to javafx.fxml;
+    opens client.menu.controller to javafx.fxml;
 
     exports client;
 }

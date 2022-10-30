@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane fx:controller="client.menu.controller.MenuController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EBEBEB;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox  alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Menu">
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #84A98C;" text="Spel spelen" textFill="#ebebeb">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #84A98C;" text="Spelerslijst" textAlignment="CENTER" textFill="#ebebeb">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #84A98C;" text="Instellingen" textAlignment="CENTER" textFill="#ebebeb">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow height="10.0" radius="4.5" width="10.0" />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: #84A98C;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="6.0" layoutY="5.0" text="Verbonden met: 127.0.0.1" />
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
