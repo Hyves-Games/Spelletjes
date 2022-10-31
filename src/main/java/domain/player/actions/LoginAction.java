@@ -11,20 +11,16 @@ import java.net.Authenticator;
 public class LoginAction extends AbstractAction {
     private final String username;
 
-    public LoginAction(String username) {
+    public LoginAction(String username) throws NoServerConnectionException {
         this.username = username;
 
         this.handler();
     }
 
     @Override
-    protected void handler() {
-        try {
-            new LoginServerAction(this.username);
+    protected void handler() throws NoServerConnectionException {
+        new LoginServerAction(this.username);
 
-            Auth.setPlayer(new Player(this.username));
-        } catch (NoServerConnectionException e) {
-            // failed
-        }
+        Auth.setPlayer(new Player(this.username));
     }
 }

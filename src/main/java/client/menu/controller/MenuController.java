@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import support.exceptions.NoServerConnectionException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 import support.services.Server;
@@ -31,10 +32,14 @@ public class MenuController
     }
 
     public void onLoginClick() {
-        new LoginAction(this.loginField.getText());
+        try {
+            new LoginAction(this.loginField.getText());
 
-        this.setMenuVisibility(true);
-        this.setLoginVisibility(false);
+            this.setMenuVisibility(true);
+            this.setLoginVisibility(false);
+        } catch (NoServerConnectionException e) {
+            // display error
+        }
     }
 
     public void onPlayGameClick(ActionEvent event) {
