@@ -19,7 +19,7 @@ public class SceneSwitcher {
             );
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            
+
             double stageHeight = ((Node)event.getSource()).getScene().getHeight();
             double stageWidth = ((Node)event.getSource()).getScene().getWidth();
 
