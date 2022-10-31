@@ -3,7 +3,10 @@ package client;
 import domain.player.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import support.helpers.Mediaplayer;
 import support.abstracts.AbstractServerResponse;
 import support.actions.MoveServerAction;
 import support.services.Server;
@@ -22,6 +25,8 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Lobby");
         stage.setScene(scene);
         stage.show();
+
+//        Mediaplayer.play();
     }
 
     public static void main(String[] args) {

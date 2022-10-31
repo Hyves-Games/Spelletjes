@@ -51,7 +51,8 @@
    <bottom>
       <AnchorPane prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="6.0" layoutY="5.0" text="Server status: verbonden met: 127.0.0.1" textFill="WHITE" />
+            <Label layoutX="6.0" layoutY="5.0" text="Server status: " textFill="WHITE" />
+            <Label fx:id="serverStatus" layoutX="86.0" layoutY="6.0" text="Status" textFill="WHITE" />
          </children>
       </AnchorPane>
    </bottom>

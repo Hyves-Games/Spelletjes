@@ -35,6 +35,11 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
+            <Label fx:id="errorMessage" textFill="RED">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
             <Button mnemonicParsing="false" onAction="#onConnectClick" text="Connect">
                <VBox.margin>
                   <Insets top="10.0" />
@@ -45,7 +50,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <Slider maxHeight="30.0" maxWidth="200.0" prefHeight="20.0">
+            <Slider fx:id="volumeSlider" maxHeight="30.0" maxWidth="200.0" prefHeight="20.0">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
