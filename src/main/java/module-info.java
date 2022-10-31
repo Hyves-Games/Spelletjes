@@ -7,6 +7,7 @@ module hyvesgamesspelletjes {
 
     opens client.authenticator.controller to javafx.fxml;
     opens client.menu.controller to javafx.fxml;
+    opens client.waitingRoom.controller to javafx.fxml;
 
     exports client;
 }
