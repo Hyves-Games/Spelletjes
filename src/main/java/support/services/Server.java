@@ -16,10 +16,7 @@ public class Server {
     }
 
     public boolean IsConnected() {
-        if (this.connection == null || this.connection.isClosed() || this.read() == null) {
-            return false;
-        }
-        return true;
+        return this.connection != null && !this.connection.isClosed() && this.read() != null;
     }
 
     public Socket getConnection() {
@@ -35,6 +32,7 @@ public class Server {
         } catch (IOException e) {
             return false;
         }
+
         return true;
     }
 
@@ -45,6 +43,7 @@ public class Server {
         } catch (IOException e) {
             return false;
         }
+
         return true;
     }
 
@@ -64,6 +63,7 @@ public class Server {
         } catch (Exception e) {
             return false;
         }
+
         return true;
     }
 }

@@ -8,11 +8,11 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.TextField?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="client.authenticator.controller.LoginController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="104.0" prefWidth="368.0" VBox.vgrow="ALWAYS">
             <children>
-                <TextField id="username" layoutX="113.0" layoutY="37.0" prefHeight="25.0" prefWidth="247.0" promptText="descrummaster" />
+                <TextField id="username" layoutX="113.0" layoutY="37.0" prefHeight="25.0" prefWidth="247.0" promptText="username" />
                 <Text layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gebruikersnaam:" />
                 <Button id="login_button" alignment="CENTER" layoutX="8.0" layoutY="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="352.0" text="Inloggen bij Hyvesgames" textAlignment="CENTER" />
                 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in:">
