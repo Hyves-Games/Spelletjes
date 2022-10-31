@@ -6,8 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import support.abstracts.AbstractServerResponse;
 import support.actions.MoveServerAction;
-import support.helpers.ServerResponseEnum;
-import support.services.Server;
 import support.services.Server;
 
 import java.io.IOException;

@@ -26,7 +26,6 @@ public class Server {
     }
 
     public boolean IsConnected() {
-        return true;
         if (this.connection == null || this.connection.isClosed()) {
             return false;
         }
