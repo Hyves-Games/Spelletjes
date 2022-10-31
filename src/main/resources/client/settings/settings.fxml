@@ -20,22 +20,22 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <TextField alignment="CENTER" maxHeight="30.0" maxWidth="200.0" prefHeight="30.0" prefWidth="200.0">
+            <TextField fx:id="ip" alignment="CENTER" maxHeight="30.0" maxWidth="200.0" prefHeight="30.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Gebruikersnaam">
+            <Label text="Server port">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField alignment="CENTER" maxHeight="30.0" maxWidth="200.0" prefHeight="30.0" prefWidth="200.0">
+            <TextField fx:id="port" alignment="CENTER" maxHeight="30.0" maxWidth="100.0" prefHeight="30.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="Connect">
+            <Button mnemonicParsing="false" onAction="#onConnectClick" text="Connect">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
