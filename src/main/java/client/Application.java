@@ -2,8 +2,6 @@ package client;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import support.helpers.Mediaplayer;
 
@@ -22,7 +20,7 @@ public class Application extends javafx.application.Application {
         stage.setScene(scene);
         stage.show();
 
-//        Mediaplayer.play();
+        Mediaplayer.play();
     }
 
     public static void main(String[] args) {
