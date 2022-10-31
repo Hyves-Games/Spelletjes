@@ -6,13 +6,12 @@ import javafx.scene.media.MediaPlayer;
 
 public class Mediaplayer {
 
-    private Media song;
+    private static Media song;
     private static MediaPlayer player;
     public static void play () {
-        Media song = new Media(Application.class.getResource("audio/counterstrike.mp3").toString());
-        MediaPlayer player = new MediaPlayer(song);
+        song = new Media(Application.class.getResource("audio/counterstrike.mp3").toString());
+        player = new MediaPlayer(song);
         player.play();
-        System.out.println(player.getVolume());
     }
 
     public static void stop() {

@@ -1,5 +1,7 @@
 package client.settings.controller;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,12 +18,17 @@ public class SettingsController implements Initializable {
     @FXML private TextField ip;
     @FXML private TextField port;
     @FXML private Slider volumeSlider;
-
     @FXML private Label errorMessage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        volumeSlider.setValue(Mediaplayer.getVolume() * 100);
+        volumeSlider.setValue(Mediaplayer.getVolume() * 100);
+        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                Mediaplayer.setVolume(volumeSlider.getValue() / 100);
+            }
+        });
     }
 
     public void onBackClick(ActionEvent event) {
@@ -30,7 +37,5 @@ public class SettingsController implements Initializable {
 
     public void onConnectClick() {
 
-        System.out.println(ip.getText());
-        System.out.println(port.getText());
     }
 }
