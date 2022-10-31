@@ -1,18 +1,17 @@
 package support.actions;
 
-import support.interfaces.ActionInterface;
-import support.services.Server;
+import support.abstracts.AbstractServerAction;
 
-public class MoveServerAction implements ActionInterface {
-    private int move;
+public class MoveServerAction extends AbstractServerAction {
+    private final int index;
 
     public MoveServerAction(int index) {
-        this.move = index;
-        this.handle();
+        this.index = index;
+
+        this.handler();
     }
     @Override
-    public void handle() {
-        Server server = Server.getInstance();
-        server.write("move " + this.move);
+    protected void handler() {
+        this.server.write("move " + this.index);
     }
 }

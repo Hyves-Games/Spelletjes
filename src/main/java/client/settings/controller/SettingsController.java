@@ -4,31 +4,26 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import support.helpers.Mediaplayer;
+import support.actions.ConnectServerAction;
+import support.exceptions.ServerConnectionFailedException;
 import support.helpers.SceneSwitcher;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class SettingsController implements Initializable {
+public class SettingsController {
     @FXML private TextField ip;
     @FXML private TextField port;
-    @FXML private Slider volumeSlider;
     @FXML private Label errorMessage;
+    @FXML private Slider volumeSlider;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        volumeSlider.setValue(Mediaplayer.getVolume() * 100);
-        volumeSlider.valueProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                Mediaplayer.setVolume(volumeSlider.getValue() / 100);
-            }
-        });
+    public void initialize() {
+        this.port.setText("7789");
+        this.ip.setText("localhost");
+
+        this.volumeSlider.setValue(Mediaplayer.getVolume() * 100);
+        this.volumeSlider.valueProperty().addListener(observable -> Mediaplayer.setVolume(volumeSlider.getValue() / 100));
     }
 
     public void onBackClick(ActionEvent event) {
@@ -36,6 +31,14 @@ public class SettingsController implements Initializable {
     }
 
     public void onConnectClick() {
+        Integer port = Integer.parseInt(this.port.getText());
 
+        try {
+            new ConnectServerAction(this.ip.getText(), port);
+
+            this.errorMessage.setText("");
+        } catch (ServerConnectionFailedException e) {
+            this.errorMessage.setText("Connection failed to server");
+        }
     }
 }

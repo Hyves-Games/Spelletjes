@@ -10,38 +10,29 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import support.abstracts.AbstractServerResponse;
-import support.helpers.ServerResponseEnum;
+import support.enums.ServerResponseEnum;
 
 public class Server {
-    private Socket connection;
+    private Socket socket;
     private PrintStream data;
     private BufferedReader input;
-    private static Server instance;
+    private static Server connection;
 
-    public static Server getInstance() {
-        if (Server.instance == null) {
-            Server.instance = new Server();
+    public static Server getConnection() {
+        if (Server.connection == null) {
+            Server.connection = new Server();
         }
-        return Server.instance;
+
+        return Server.connection;
     }
 
-    public boolean IsConnected() {
-        if (this.connection == null || this.connection.isClosed()) {
-            return false;
-        }
-        return true;
-    }
-
-    public Socket getConnection() {
-        return this.connection;
-    }
+    public boolean isConnected() { return this.socket != null && !this.socket.isClosed(); }
 
     public boolean connect(String IP, int Port) {
-        // connection logic
         try {
-            this.connection = new Socket(IP, Port);
-            this.data = new PrintStream(this.connection.getOutputStream());
-            this.input = new BufferedReader(new InputStreamReader((this.connection.getInputStream())));
+            this.socket = new Socket(IP, Port);
+            this.data = new PrintStream(this.socket.getOutputStream());
+            this.input = new BufferedReader(new InputStreamReader((this.socket.getInputStream())));
         } catch (IOException e) {
             return false;
         }
@@ -50,9 +41,8 @@ public class Server {
     }
 
     public boolean disconnect() {
-        // disconnect logic
         try {
-            this.connection.close();
+            this.socket.close();
         } catch (IOException e) {
             return false;
         }
@@ -61,9 +51,11 @@ public class Server {
     }
 
     public AbstractServerResponse read() {
-        // read logic
         try {
+            System.out.println(this.input.readLine());
+
             AbstractServerResponse response = this.getServerResponse(this.input.readLine());
+
             return response;
         } catch (Exception e) {
             return null;
@@ -82,30 +74,22 @@ public class Server {
     }
 
     private AbstractServerResponse getServerResponse(String response) {
-        try {
-            String category = response.split(" ")[1];
-            String subcommand = response.split(" ")[2];
-            AbstractServerResponse serverResponse = new AbstractServerResponse(null, ServerResponseEnum.NONE);
-            switch (category) {
-                case "GAME":
-                    serverResponse = new AbstractServerResponse(this.parse(response), ServerResponseEnum.valueOf(subcommand));
-                    break;
-                case "PLAYERLIST":
-                    serverResponse = new AbstractServerResponse(this.parse(response), ServerResponseEnum.PLAYERLIST);
-                    break;
-            }
-            return serverResponse;
-        } catch (Exception e) {
-            return new AbstractServerResponse(null, ServerResponseEnum.NONE);
-        }
+        String category = response.split(" ")[1];
+        String subcommand = response.split(" ")[2];
+
+        return switch (category) {
+            case "GAME" -> new AbstractServerResponse(this.parse(response), ServerResponseEnum.valueOf(subcommand));
+            case "PLAYERLIST" -> new AbstractServerResponse(this.parse(response), ServerResponseEnum.PLAYERLIST);
+            default -> new AbstractServerResponse(null, ServerResponseEnum.NONE);
+        };
     }
 
      private JsonObject parse(String input) {
         String json_string = this.getJsonString(input);
         if (json_string != null) {
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(json_string, JsonObject.class);
-            return jsonObject;
+
+            return gson.fromJson(json_string, JsonObject.class);
         }
         return null;
     }
@@ -117,8 +101,10 @@ public class Server {
             if (input.contains("PLAYERLIST")) {
                 return "{ players: ".concat(matcher.group()).concat("}");
             }
+
             return matcher.group();
         }
+
         return null;
     }
 }

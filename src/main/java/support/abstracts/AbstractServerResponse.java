@@ -1,21 +1,21 @@
 package support.abstracts;
 
 import com.google.gson.JsonObject;
-import support.helpers.ServerResponseEnum;
+import support.enums.ServerResponseEnum;
 
 public class AbstractServerResponse {
     private JsonObject data;
-    private ServerResponseEnum response;
+    private ServerResponseEnum type;
 
-    public AbstractServerResponse(JsonObject data, ServerResponseEnum response) {
+    public AbstractServerResponse(JsonObject data, ServerResponseEnum type) {
         this.data = data;
-        this.response = response;
+        this.type = type;
     }
 
     public JsonObject getData() {
         return this.data;
     }
-    public ServerResponseEnum getResponse() {
-        return this.response != null ? this.response : ServerResponseEnum.NONE;
+    public ServerResponseEnum getType() {
+        return this.type != null ? this.type : ServerResponseEnum.NONE;
     }
 }

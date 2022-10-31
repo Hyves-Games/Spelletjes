@@ -1,4 +1,4 @@
-package support.helpers;
+package support.enums;
 
 public enum ServerResponseEnum {
     MATCH,

@@ -1,38 +1,40 @@
 package client.menu.controller;
 
+import domain.player.actions.LoginAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
+import support.services.Server;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class MenuController implements Initializable
+public class MenuController
 {
-    public Boolean authenticated = false;
     @FXML Label serverStatus;
     @FXML Button loginBtn;
     @FXML TextField loginField;
     @FXML Button playGameBtn;
     @FXML Button playerListBtn;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (!authenticated) {
-            playGameBtn.setVisible(false);
-            playerListBtn.setVisible(false);
+    public void initialize() {
+        String status = Server.getConnection().isConnected() ? "Connected" : "Disconnected";
+
+        this.serverStatus.setText(status);
+
+        if (!Auth.check()) {
+            this.setMenuVisibility(false);
+        } else {
+            this.setLoginVisibility(false);
         }
     }
 
-    public void onLoginClick(ActionEvent event) {
-        playGameBtn.setVisible(true);
-        playerListBtn.setVisible(true);
-        loginField.setVisible(false);
-        loginBtn.setVisible(false);
+    public void onLoginClick() {
+        new LoginAction(this.loginField.getText());
+
+        this.setMenuVisibility(true);
+        this.setLoginVisibility(false);
     }
 
     public void onPlayGameClick(ActionEvent event) {
@@ -43,4 +45,21 @@ public class MenuController implements Initializable
         SceneSwitcher.switchScene(event, "settings/settings.fxml", "Settings");
     }
 
+    private void setMenuVisibility(Boolean condition)
+    {
+        this.playGameBtn.setVisible(condition);
+        this.playGameBtn.setManaged(condition);
+
+        this.playerListBtn.setVisible(condition);
+        this.playerListBtn.setManaged(condition);
+    }
+
+    private void setLoginVisibility(Boolean condition)
+    {
+        this.loginBtn.setVisible(condition);
+        this.loginBtn.setManaged(condition);
+
+        this.loginField.setVisible(condition);
+        this.loginField.setManaged(condition);
+    }
 }

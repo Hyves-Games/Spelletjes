@@ -1,13 +1,13 @@
 package client;
 
-import domain.player.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import support.actions.ConnectServerAction;
+import support.actions.LoginServerAction;
+import support.exceptions.NoServerConnectionException;
+import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Mediaplayer;
-import support.abstracts.AbstractServerResponse;
-import support.actions.MoveServerAction;
-import support.services.Server;
 
 import java.io.IOException;
 
@@ -25,40 +25,16 @@ public class Application extends javafx.application.Application {
         stage.show();
 
         Mediaplayer.play();
+        Mediaplayer.setVolume(0.05);
     }
 
     public static void main(String[] args) {
-        new Thread(() -> {
-            Server server = Server.getInstance();
-            boolean connection = server.connect("localhost", 7789);
-            if (connection) {
-                System.out.println("Connection established");
-            } else {
-                System.out.println("Could not create connection");
-            }
-            if(server.IsConnected()) {
-                System.out.println("Connection test successful");
-            } else {
-                System.out.println("Connection test unsuccessful");
-            }
-            server.write("login socket");
-            server.write("subscribe tic-tac-toe");
-            server.write("get playerlist");
+        try {
+            new ConnectServerAction("localhost", 7789);
+        } catch (ServerConnectionFailedException e) {
+            System.out.println("Connection failed");
+        }
 
-            while (server.IsConnected()) {
-                AbstractServerResponse response = server.read();
-                switch (response.getResponse()) {
-                    case NONE:
-                        break;
-                    case YOURTURN:
-                        new MoveServerAction(7);
-                        break;
-                    default:
-                        System.out.printf("Response Type: %s\nResponse Data: %s\n", response.getResponse(), response.getData());
-                        break;
-                }
-            }
-        }).start();
         launch();
     }
 }
