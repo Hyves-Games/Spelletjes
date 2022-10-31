@@ -18,9 +18,12 @@ public class SceneSwitcher {
                     Application.class.getResource(sceneName)
             );
 
-            Scene scene = new Scene(fxmlLoader.load());
-
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            
+            double stageHeight = ((Node)event.getSource()).getScene().getHeight();
+            double stageWidth = ((Node)event.getSource()).getScene().getWidth();
+
+            Scene scene = new Scene(fxmlLoader.load(), stageWidth, stageHeight);
 
             stage.setTitle(sceneTitle);
             stage.setScene(scene);
