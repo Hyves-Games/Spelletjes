@@ -17,7 +17,7 @@ public class Application extends javafx.application.Application {
                 Application.class.getResource("menu/menu.fxml")
         );
 
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 
         stage.setTitle("Lobby");
         stage.setScene(scene);

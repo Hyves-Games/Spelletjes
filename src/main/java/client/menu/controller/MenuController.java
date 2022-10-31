@@ -7,7 +7,7 @@ import support.helpers.SceneSwitcher;
 public class MenuController {
 
     public void onPlayGameClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "waitingRoom/waitingroom.fxml", "Waiting room");
+        SceneSwitcher.switchScene(event, "game/game.fxml", "Waiting room");
     }
 
     public void onSettingsClick(ActionEvent event) {
