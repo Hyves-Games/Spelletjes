@@ -11,11 +11,11 @@ import java.io.IOException;
 
 public class SceneSwitcher {
 
-    public static void switchScene(ActionEvent event, String sceneName, String sceneTitle) {
+    public static void switchScene(ActionEvent event, String scenePath, String sceneTitle) {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    Application.class.getResource(sceneName)
+                    Application.class.getResource(scenePath)
             );
 
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
