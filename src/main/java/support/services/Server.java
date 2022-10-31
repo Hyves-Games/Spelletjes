@@ -16,9 +16,13 @@ public class Server {
     private Socket connection;
     private PrintStream data;
     private BufferedReader input;
+    private static Server instance;
 
-    public Server getInstance() {
-        return this;
+    public static Server getInstance() {
+        if (Server.instance == null) {
+            Server.instance = new Server();
+        }
+        return Server.instance;
     }
 
     public boolean IsConnected() {
