@@ -2,7 +2,6 @@ package client.settings.controller;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -40,7 +39,7 @@ public class SettingsController {
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().switchByEnum(SceneEnum.LOBBY);
+        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
     }
 
     public void onConnectClick() {

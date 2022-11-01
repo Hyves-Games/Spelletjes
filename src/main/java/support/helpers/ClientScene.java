@@ -1,24 +1,14 @@
 package support.helpers;
 
-public class ClientScene {
+import java.util.Objects;
 
-    private final String path;
-    private final String title;
+public record ClientScene(String path, String title) {
 
     public ClientScene(String path, String title) {
-        if (title.isEmpty() || path.isEmpty()) {
-            throw new AssertionError("Scene path and title cannot be empty");
-        }
+        Objects.requireNonNull(path);
+        Objects.requireNonNull(title);
 
-        this.path = path;
+        this.path = path.concat("/%s.fxml").replace("%s", path);
         this.title = title;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getTitle() {
-        return title;
     }
 }

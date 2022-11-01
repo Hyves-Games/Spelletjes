@@ -11,8 +11,6 @@ import javafx.scene.layout.VBox;
 import support.enums.SceneEnum;
 import support.helpers.SceneSwitcher;
 
-import java.lang.reflect.Array;
-
 public class PlayerListController {
     @FXML VBox playerContainer;
 
@@ -40,7 +38,7 @@ public class PlayerListController {
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().switchByEnum(SceneEnum.LOBBY);
+        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
     }
 
     public void onInviteClick(ActionEvent event) {

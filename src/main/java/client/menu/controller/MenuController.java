@@ -5,7 +5,6 @@ import domain.player.exceptions.LoginFailedException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,8 +14,6 @@ import support.exceptions.NoServerConnectionException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 import support.services.Server;
-
-import java.util.Objects;
 
 public class MenuController
 {
@@ -69,15 +66,15 @@ public class MenuController
     }
 
     public void onPlayGameClick() {
-        SceneSwitcher.getInstance().switchByEnum(SceneEnum.TIC_TAC_TOE);
+        SceneSwitcher.getInstance().change(SceneEnum.TIC_TAC_TOE);
     }
 
     public void onSettingsClick() {
-        SceneSwitcher.getInstance().switchByEnum(SceneEnum.SETTING);
+        SceneSwitcher.getInstance().change(SceneEnum.SETTING);
     }
 
     public void onPlayerListClick(ActionEvent event) {
-        SceneSwitcher.getInstance().switchByEnum(SceneEnum.PLAYERLIST);
+        SceneSwitcher.getInstance().change(SceneEnum.PLAYERLIST);
     }
 
     private void setMenuVisibility(Boolean condition)

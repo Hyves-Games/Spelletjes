@@ -1,7 +1,5 @@
 package client;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import support.actions.ConnectServerAction;
 import support.enums.SceneEnum;
@@ -16,7 +14,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) {
         SceneSwitcher switcher = new SceneSwitcher(stage);
 
-        switcher.switchByEnum(SceneEnum.LOGIN);
+        switcher.change(SceneEnum.LOGIN);
 
         AudioPlayer.play();
         AudioPlayer.setVolume(0.1);
