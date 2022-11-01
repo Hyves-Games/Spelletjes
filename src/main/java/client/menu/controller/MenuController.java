@@ -6,14 +6,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import support.exceptions.NoServerConnectionException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 import support.services.Server;
 
+import java.util.Objects;
+
 public class MenuController
 {
     @FXML Label serverStatus;
+    @FXML Label menuTitle;
+    @FXML Label errorMessage;
     @FXML Button loginBtn;
     @FXML TextField loginField;
     @FXML Button playGameBtn;
@@ -23,6 +29,7 @@ public class MenuController
         String status = Server.getConnection().isConnected() ? "Connected" : "Disconnected";
 
         this.serverStatus.setText(status);
+        this.loginField.setFocusTraversable(false);
 
         if (!Auth.check()) {
             this.setMenuVisibility(false);
@@ -33,10 +40,20 @@ public class MenuController
 
     public void onLoginClick() {
         try {
+            String loginFieldText = this.loginField.getText();
+
+            if(Objects.equals(loginFieldText, "")) {
+                showErrorMessage(true);
+                return;
+            }
+
+            showErrorMessage(false);
+
             new LoginAction(this.loginField.getText());
 
             this.setMenuVisibility(true);
             this.setLoginVisibility(false);
+
         } catch (NoServerConnectionException e) {
             // display error
         }
@@ -57,6 +74,12 @@ public class MenuController
 
         this.playerListBtn.setVisible(condition);
         this.playerListBtn.setManaged(condition);
+
+        if(condition) {
+            this.menuTitle.setText("Menu");
+        } else {
+            this.menuTitle.setText("Login");
+        }
     }
 
     private void setLoginVisibility(Boolean condition)
@@ -66,5 +89,11 @@ public class MenuController
 
         this.loginField.setVisible(condition);
         this.loginField.setManaged(condition);
+    }
+
+    private void showErrorMessage(Boolean condition)
+    {
+        this.errorMessage.setManaged(condition);
+        this.errorMessage.setVisible(condition);
     }
 }

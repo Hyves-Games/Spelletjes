@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EBEBEB;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.menu.controller.MenuController">
+<BorderPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EBEBEB;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.menu.controller.MenuController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Menu">
+            <Label fx:id="menuTitle" text="Menu">
                <padding>
                   <Insets bottom="10.0" />
                </padding>
@@ -19,6 +20,11 @@
                </font>
             </Label>
             <TextField fx:id="loginField" maxWidth="200.0" promptText="Gebruikersnaam" />
+            <Label fx:id="errorMessage" managed="false" text="Enter a username." textFill="RED" visible="false">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
             <Button fx:id="loginBtn" maxWidth="200.0" mnemonicParsing="false" onAction="#onLoginClick" text="Login">
                <VBox.margin>
                   <Insets top="10.0" />
