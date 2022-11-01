@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import support.enums.SceneEnum;
 import support.helpers.SceneSwitcher;
 
 import java.lang.reflect.Array;
@@ -27,8 +28,8 @@ public class PlayerListController {
         }
     }
 
-    public void onBackClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "menu/menu.fxml", "Lobby");
+    public void onBackClick() {
+        SceneSwitcher.getInstance().switchByEnum(SceneEnum.LOBBY);
     }
 
     public void onInviteClick(ActionEvent event) {

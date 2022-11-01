@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -62,17 +63,12 @@ public class MenuController
         }
     }
 
-    public void onPlayGameClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "game/game.fxml", "Tic-Tac-Toe");
+    public void onPlayGameClick() {
+        SceneSwitcher.getInstance().switchByEnum(SceneEnum.TIC_TAC_TOE);
     }
 
-    public void onSettingsClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "settings/settings.fxml", "Settings");
-    }
-
-    public void onPlayerListClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "playerList/playerList.fxml", "Player list");
-
+    public void onSettingsClick() {
+        SceneSwitcher.getInstance().switchByEnum(SceneEnum.SETTING);
     }
 
     private void setMenuVisibility(Boolean condition)

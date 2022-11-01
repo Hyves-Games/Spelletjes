@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import support.enums.SceneEnum;
 import support.helpers.AudioPlayer;
 import support.actions.ConnectServerAction;
 import support.exceptions.ServerConnectionFailedException;
@@ -38,8 +39,8 @@ public class SettingsController {
         });
     }
 
-    public void onBackClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "menu/menu.fxml", "Lobby");
+    public void onBackClick() {
+        SceneSwitcher.getInstance().switchByEnum(SceneEnum.LOBBY);
     }
 
     public void onConnectClick() {
