@@ -66,19 +66,22 @@ public class SceneSwitcher {
                 SceneEnum.LOGIN, new ClientScene("menu/menu.fxml", "Login")
         );
         this.availableScenes.put(
-                SceneEnum.SETTING, new ClientScene("settings/settings.fxml", "Settings")
+                SceneEnum.PLAYERLIST, new ClientScene("playerList/playerlist.fxml", "Playerlist")
         );
         this.availableScenes.put(
                 SceneEnum.TIC_TAC_TOE, new ClientScene("game/game.fxml", "Tic-Tac-Toe")
-        );
-        this.availableScenes.put(
-                SceneEnum.PLAYERLIST, new ClientScene("playerList/playerlist.fxml", "Playerlist")
         );
         this.availableScenes.put(
                 SceneEnum.GAMESELECTOR, new ClientScene("gameSelector/gameSelector.fxml", "Game selector")
         );
         this.availableScenes.put(
                 SceneEnum.GAMEMODESELECTOR, new ClientScene("gameModeSelector/gameModeSelector.fxml", "Gamemode Selector")
+        );
+        this.availableScenes.put(
+                SceneEnum.SETTING, new ClientScene("settings/settings.fxml", "Settings")
+        );
+        this.availableScenes.put(
+                SceneEnum.WAITROOM, new ClientScene("waitingRoom/waitingroom.fxml", "Finding a game")
         );
     }
 }

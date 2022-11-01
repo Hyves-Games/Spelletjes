@@ -6,6 +6,7 @@ import support.enums.SceneEnum;
 import support.helpers.SceneSwitcher;
 
 public class GameModeSelectorController {
+
     public void onBackClick() {
         SceneSwitcher.getInstance().switchByEnum(SceneEnum.GAMESELECTOR);
     }
@@ -13,10 +14,11 @@ public class GameModeSelectorController {
     public void chooseGamemode(ActionEvent event) {
         switch(((Node)event.getSource()).getId()) {
             case "pvp":
+                SceneSwitcher.getInstance().switchByEnum(SceneEnum.WAITROOM);
                 break;
             case "pva":
-                break;
             case "ava":
+                SceneSwitcher.getInstance().switchByEnum(SceneEnum.TIC_TAC_TOE);
                 break;
             default:
                 break;

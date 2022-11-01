@@ -7,5 +7,6 @@ public enum SceneEnum {
     SETTING,
     PLAYERLIST,
     GAMESELECTOR,
-    GAMEMODESELECTOR
+    GAMEMODESELECTOR,
+    WAITROOM
 }
