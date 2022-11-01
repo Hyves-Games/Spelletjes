@@ -70,5 +70,8 @@ public class SceneSwitcher {
         this.availableScenes.put(
                 SceneEnum.TIC_TAC_TOE, new ClientScene("game/game.fxml", "Tic-Tac-Toe")
         );
+        this.availableScenes.put(
+                SceneEnum.PLAYERLIST, new ClientScene("playerList/playerlist.fxml", "Playerlist")
+        );
     }
 }

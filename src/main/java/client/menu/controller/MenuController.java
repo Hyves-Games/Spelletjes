@@ -4,6 +4,7 @@ import domain.player.actions.LoginAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -69,6 +70,10 @@ public class MenuController
 
     public void onSettingsClick() {
         SceneSwitcher.getInstance().switchByEnum(SceneEnum.SETTING);
+    }
+
+    public void onPlayerListClick(ActionEvent event) {
+        SceneSwitcher.getInstance().switchByEnum(SceneEnum.PLAYERLIST);
     }
 
     private void setMenuVisibility(Boolean condition)
