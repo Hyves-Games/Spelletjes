@@ -1,5 +1,6 @@
 package client.menu.controller;
 
+import domain.game.model.TicTacToe;
 import domain.player.actions.LoginAction;
 import domain.player.exceptions.LoginFailedException;
 import javafx.event.ActionEvent;
@@ -41,13 +42,15 @@ public class MenuController
     public void onLoginClick(ActionEvent event) {
         try {
             String loginFieldText = this.loginField.getText();
-
+            System.out.println(loginFieldText);
             if (loginFieldText == null || loginFieldText.trim().isEmpty()) {
+                this.showErrorMessage(true);
                 this.errorMessage.setText("Enter a username");
 
                 return;
             }
 
+            this.showErrorMessage(false);
             this.errorMessage.setText("");
 
             new LoginAction(this.loginField.getText());
@@ -66,7 +69,7 @@ public class MenuController
     }
 
     public void onPlayGameClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.TIC_TAC_TOE);
+        SceneSwitcher.getInstance().change(SceneEnum.GAMESELECTOR);
     }
 
     public void onSettingsClick() {
@@ -99,5 +102,11 @@ public class MenuController
 
         this.loginField.setVisible(condition);
         this.loginField.setManaged(condition);
+    }
+
+    private void showErrorMessage(Boolean condition)
+    {
+        this.errorMessage.setVisible(condition);
+        this.errorMessage.setManaged(condition);
     }
 }

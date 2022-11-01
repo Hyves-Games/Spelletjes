@@ -20,6 +20,9 @@ public class SceneSwitcher {
         put(SceneEnum.SETTING, new ClientScene("settings", "Settings"));
         put(SceneEnum.TIC_TAC_TOE, new ClientScene("game", "Tic-Tac-Toe"));
         put(SceneEnum.PLAYERLIST, new ClientScene("playerList", "Playerlist"));
+        put(SceneEnum.GAMEMODESELECTOR, new ClientScene("gameModeSelector", "Select a gamemode"));
+        put(SceneEnum.GAMESELECTOR, new ClientScene("gameSelector", "Select a game"));
+        put(SceneEnum.WAITROOM, new ClientScene("waitingRoom", "Select a game"));
     }};
 
     public SceneSwitcher(Stage stage) {
