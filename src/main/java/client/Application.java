@@ -7,6 +7,7 @@ import support.actions.ConnectServerAction;
 import support.actions.LoginServerAction;
 import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
+import support.helpers.Auth;
 import support.helpers.Mediaplayer;
 
 import java.io.IOException;
@@ -20,12 +21,13 @@ public class Application extends javafx.application.Application {
 
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
-        stage.setTitle("Lobby");
         stage.setScene(scene);
+
+        stage.setTitle("Login");
         stage.show();
 
         Mediaplayer.play();
-        Mediaplayer.setVolume(0.05);
+        Mediaplayer.setVolume(0.1);
     }
 
     public static void main(String[] args) {

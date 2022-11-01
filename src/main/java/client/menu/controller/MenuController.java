@@ -3,11 +3,14 @@ package client.menu.controller;
 import domain.player.actions.LoginAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
 import support.exceptions.NoServerConnectionException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -38,7 +41,7 @@ public class MenuController
         }
     }
 
-    public void onLoginClick() {
+    public void onLoginClick(ActionEvent event) {
         try {
             String loginFieldText = this.loginField.getText();
 
@@ -50,6 +53,9 @@ public class MenuController
             showErrorMessage(false);
 
             new LoginAction(this.loginField.getText());
+
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setTitle("Lobby");
 
             this.setMenuVisibility(true);
             this.setLoginVisibility(false);
