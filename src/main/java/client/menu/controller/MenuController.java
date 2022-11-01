@@ -1,5 +1,6 @@
 package client.menu.controller;
 
+import domain.game.model.TicTacToe;
 import domain.player.actions.LoginAction;
 import domain.player.exceptions.LoginFailedException;
 import javafx.event.ActionEvent;

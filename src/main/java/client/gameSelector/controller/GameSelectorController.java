@@ -8,13 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import support.abstracts.AbstractGame;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.SceneSwitcher;
-
 import java.util.HashMap;
-import java.util.Map;
 
 public class GameSelectorController {
 
@@ -22,21 +19,15 @@ public class GameSelectorController {
 
     public void initialize() {
         for (GameModeEnum gameModeValue : GameModeEnum.values()) {
-            HashMap<String, String> gameModeInfo = getGameModeInfo(gameModeValue.toString());
-
-            System.out.println(gameModeInfo.get("name"));
+            HashMap<String, String> gameProperties = getGameModeInfo(gameModeValue.toString());
 
             VBox gameContainer = new VBox();
             Button gameButton = new Button();
-            Label gameName = new Label(gameModeInfo.get("name"));
+            Label gameName = new Label(gameProperties.get("name"));
 
-            Image icon = new Image(gameModeInfo.get("iconPath"));
-            ImageView view = new ImageView(icon);
+            ImageView icon = createImage(gameProperties.get("iconPath"), 60, 60);
 
-            view.setFitHeight(60);
-            view.setFitWidth(60);
-
-            gameButton.setGraphic(view);
+            gameButton.setGraphic(icon);
             gameContainer.setSpacing(10);
 
             gameContainer.getChildren().add(gameButton);
@@ -46,23 +37,33 @@ public class GameSelectorController {
     }
 
     public HashMap<String, String> getGameModeInfo(String GameMode) {
-        HashMap<String, String> gameInfo = new HashMap<String, String>();
+        HashMap<String, String> gameProperties = new HashMap<String, String>();
 
         switch (GameMode) {
             case "TIC_TAC_TOE":
 
-                gameInfo.put("name", TicTacToe.name);
-                gameInfo.put("iconPath", TicTacToe.iconPath);
+                gameProperties.put("name", TicTacToe.name);
+                gameProperties.put("iconPath", TicTacToe.iconPath);
 
                 break;
             default:
                 return null;
         }
 
-        return gameInfo;
+        return gameProperties;
     }
 
     public void onBackClick() {
         SceneSwitcher.getInstance().switchByEnum(SceneEnum.LOBBY);
+    }
+
+    public ImageView createImage(String name, double height, double width) {
+        Image icon = new Image(name);
+        ImageView image = new ImageView(icon);
+
+        image.setFitHeight(60);
+        image.setFitWidth(60);
+
+        return image;
     }
 }
