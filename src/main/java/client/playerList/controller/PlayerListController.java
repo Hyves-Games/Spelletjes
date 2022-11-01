@@ -14,7 +14,7 @@ public class PlayerListController {
     @FXML VBox playerContainer;;
 
     public void initialize() {
-        String[] players = {"player 1", "player 2", "player 3", "player 3", "player 3", "player 3", "player 3", "player 3", "player 3", "player 3", "player 3"};
+        String[] players = {"player 1", "player 2", "player 3", "player 4", "player 5", "player 6", "player 7", "player 8", "player 9", "player 10", "player 11"};
 
         playerContainer.setSpacing(10);
 
