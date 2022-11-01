@@ -7,23 +7,33 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import support.helpers.Mediaplayer;
+import support.helpers.AudioPlayer;
 import support.actions.ConnectServerAction;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.SceneSwitcher;
 
 public class SettingsController {
+
     @FXML private TextField ip;
     @FXML private TextField port;
     @FXML private Label errorMessage;
+    @FXML private Label volumeLevel;
     @FXML private Slider volumeSlider;
 
     public void initialize() {
         this.port.setText("7789");
         this.ip.setText("localhost");
 
-        this.volumeSlider.setValue(Mediaplayer.getVolume() * 100);
-        this.volumeSlider.valueProperty().addListener(observable -> Mediaplayer.setVolume(volumeSlider.getValue() / 100));
+        this.volumeSlider.setValue(AudioPlayer.getVolume() * 100);
+        this.volumeLevel.setText(Long.toString(Math.round(volumeSlider.getValue())));
+
+        this.volumeSlider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                AudioPlayer.setVolume(volumeSlider.getValue() / 100);
+                volumeLevel.setText(Long.toString(Math.round(volumeSlider.getValue())));
+            }
+        });
     }
 
     public void onBackClick(ActionEvent event) {

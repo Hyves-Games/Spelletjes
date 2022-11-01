@@ -55,6 +55,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Slider>
+            <Label fx:id="volumeLevel" />
          </children>
       </VBox>
    </center>
