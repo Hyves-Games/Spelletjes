@@ -4,12 +4,13 @@ import client.Application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class Mediaplayer {
+import java.util.Objects;
 
-    private static Media song;
+public class AudioPlayer {
+
     private static MediaPlayer player;
     public static void play () {
-        song = new Media(Application.class.getResource("audio/counterstrike.mp3").toString());
+        Media song = new Media(Objects.requireNonNull(Application.class.getResource("audio/counterstrike.mp3")).toString());
         player = new MediaPlayer(song);
         player.play();
     }
