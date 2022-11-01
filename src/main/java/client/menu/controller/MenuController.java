@@ -69,7 +69,7 @@ public class MenuController
     }
 
     public void onPlayGameClick() {
-        SceneSwitcher.getInstance().switchByEnum(SceneEnum.TIC_TAC_TOE);
+        SceneSwitcher.getInstance().switchByEnum(SceneEnum.GAMESELECTOR);
     }
 
     public void onSettingsClick() {

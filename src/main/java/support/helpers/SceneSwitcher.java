@@ -17,6 +17,7 @@ public class SceneSwitcher {
     protected static SceneSwitcher instance;
 
     private final HashMap<SceneEnum, ClientScene> availableScenes = new HashMap<>();
+
     public SceneSwitcher(Stage stage) {
         this.fillAvailableScenes();
         this.stage = stage;
@@ -72,6 +73,9 @@ public class SceneSwitcher {
         );
         this.availableScenes.put(
                 SceneEnum.PLAYERLIST, new ClientScene("playerList/playerlist.fxml", "Playerlist")
+        );
+        this.availableScenes.put(
+                SceneEnum.GAMESELECTOR, new ClientScene("gameSelector/gameSelector.fxml", "Game selector")
         );
     }
 }

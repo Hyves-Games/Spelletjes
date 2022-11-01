@@ -5,5 +5,6 @@ public enum SceneEnum {
     LOGIN,
     TIC_TAC_TOE,
     SETTING,
-    PLAYERLIST
+    PLAYERLIST,
+    GAMESELECTOR
 }
