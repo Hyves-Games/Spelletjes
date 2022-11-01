@@ -70,6 +70,11 @@ public class MenuController
         SceneSwitcher.switchScene(event, "settings/settings.fxml", "Settings");
     }
 
+    public void onPlayerListClick(ActionEvent event) {
+        SceneSwitcher.switchScene(event, "playerList/playerList.fxml", "Player list");
+
+    }
+
     private void setMenuVisibility(Boolean condition)
     {
         this.playGameBtn.setVisible(condition);

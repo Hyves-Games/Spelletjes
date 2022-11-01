@@ -11,6 +11,7 @@ module hyvesgamesspelletjes {
     opens client.waitingRoom.controller to javafx.fxml;
     opens client.settings.controller to javafx.fxml;
     opens client.game.controller to javafx.fxml;
+    opens client.playerList.controller to javafx.fxml;
 
     exports client;
 }

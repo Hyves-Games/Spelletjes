@@ -19,7 +19,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="loginField" maxWidth="200.0" promptText="Gebruikersnaam" />
+            <TextField fx:id="loginField" maxWidth="200.0" promptText="Username" />
             <Label fx:id="errorMessage" managed="false" text="Enter a username." textFill="RED" visible="false">
                <VBox.margin>
                   <Insets top="10.0" />
@@ -30,7 +30,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="playGameBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onPlayGameClick" prefHeight="35.0" prefWidth="100.0" text="Spel spelen" textAlignment="CENTER">
+            <Button fx:id="playGameBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onPlayGameClick" prefHeight="35.0" prefWidth="100.0" text="Play game" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -38,7 +38,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <Button fx:id="playerListBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Spelerslijst" textAlignment="CENTER">
+            <Button fx:id="playerListBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onPlayerListClick" prefHeight="35.0" prefWidth="100.0" text="Players list" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -46,7 +46,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsClick" prefHeight="35.0" prefWidth="100.0" text="Instellingen" textAlignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsClick" prefHeight="35.0" prefWidth="100.0" text="Settings" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
