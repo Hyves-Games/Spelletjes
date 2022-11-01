@@ -19,14 +19,16 @@ public class SceneSwitcher {
         put(SceneEnum.LOGIN, new ClientScene("menu", "Login"));
         put(SceneEnum.SETTING, new ClientScene("settings", "Settings"));
         put(SceneEnum.TIC_TAC_TOE, new ClientScene("game", "Tic-Tac-Toe"));
-        put(SceneEnum.PLAYERLIST, new ClientScene("playerList", "Playerlist"));
-        put(SceneEnum.GAMEMODESELECTOR, new ClientScene("gameModeSelector", "Select a gamemode"));
-        put(SceneEnum.GAMESELECTOR, new ClientScene("gameSelector", "Select a game"));
-        put(SceneEnum.WAITROOM, new ClientScene("waitingRoom", "Select a game"));
+        put(SceneEnum.PLAYERLIST, new ClientScene("playerList", "Players list"));
+        put(SceneEnum.GAMEMODESELECTOR, new ClientScene("gameModeSelector", "Gamemode"));
+        put(SceneEnum.GAMESELECTOR, new ClientScene("gameSelector", "Game"));
+        put(SceneEnum.WAITROOM, new ClientScene("waitingRoom", "Finding a game"));
     }};
 
     public SceneSwitcher(Stage stage) {
         this.stage = stage;
+        this.stage.setWidth(1300);
+        this.stage.setHeight(800);
         SceneSwitcher.instance = this;
     }
 
