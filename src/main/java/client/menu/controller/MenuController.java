@@ -1,6 +1,7 @@
 package client.menu.controller;
 
 import domain.player.actions.LoginAction;
+import domain.player.exceptions.LoginFailedException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -44,12 +45,13 @@ public class MenuController
         try {
             String loginFieldText = this.loginField.getText();
 
-            if(Objects.equals(loginFieldText, "")) {
-                showErrorMessage(true);
+            if (loginFieldText == null || loginFieldText.trim().isEmpty()) {
+                this.errorMessage.setText("Enter a username");
+
                 return;
             }
 
-            showErrorMessage(false);
+            this.errorMessage.setText("");
 
             new LoginAction(this.loginField.getText());
 
@@ -59,8 +61,10 @@ public class MenuController
             this.setMenuVisibility(true);
             this.setLoginVisibility(false);
 
+        } catch (LoginFailedException e) {
+            this.errorMessage.setText("Failed to login");
         } catch (NoServerConnectionException e) {
-            // display error
+            this.errorMessage.setText("No connection");
         }
     }
 
@@ -98,11 +102,5 @@ public class MenuController
 
         this.loginField.setVisible(condition);
         this.loginField.setManaged(condition);
-    }
-
-    private void showErrorMessage(Boolean condition)
-    {
-        this.errorMessage.setManaged(condition);
-        this.errorMessage.setVisible(condition);
     }
 }

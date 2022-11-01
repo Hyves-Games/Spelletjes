@@ -13,11 +13,14 @@ import support.helpers.ServerResponse;
 import support.enums.ServerResponseEnum;
 
 public class Server {
+    private Boolean handled = false;
+    private Boolean lastResponseSuccessful = false;
+
     private Socket socket;
     private PrintStream data;
     private BufferedReader input;
+
     private static Server connection;
-    private boolean lastResponseSuccessful;
 
     public static Server getConnection() {
         if (Server.connection == null) {
@@ -33,7 +36,7 @@ public class Server {
         try {
             this.socket = new Socket(IP, Port);
             this.data = new PrintStream(this.socket.getOutputStream());
-            this.input = new BufferedReader(new InputStreamReader((this.socket.getInputStream())));
+            this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         } catch (IOException e) {
             return false;
         }
@@ -53,26 +56,25 @@ public class Server {
 
     public ServerResponse read() {
         try {
-            System.out.println(this.input.readLine());
-
-            ServerResponse response = this.getServerResponse(this.input.readLine());
-
-            return response;
+            return this.getServerResponse(this.input.readLine());
         } catch (Exception e) {
             return null;
         }
     }
 
-    public boolean write(String data) {
-        // write logic
+    public Server write(String data) {
         try {
-            this.lastResponseSuccessful = false; // reset to false
-            this.data.println(data);
-        } catch (Exception e) {
-            return false;
-        }
+            this.handled = false;
+            this.lastResponseSuccessful = false;
 
-        return true;
+            this.data.println(data);
+
+            while (!this.handled) {
+                Thread.sleep(50);
+            }
+        } catch (Exception ignored) {}
+
+        return this;
     }
     private ServerResponse getServerResponse(String response) {
         try {
@@ -121,5 +123,13 @@ public class Server {
         }
 
         return null;
+    }
+
+    public void responseHandled() {
+        this.handled = true;
+    }
+
+    public boolean isLastResponseSuccessful() {
+        return this.lastResponseSuccessful;
     }
 }

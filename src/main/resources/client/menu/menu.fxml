@@ -20,7 +20,7 @@
                </font>
             </Label>
             <TextField fx:id="loginField" maxWidth="200.0" promptText="Username" />
-            <Label fx:id="errorMessage" managed="false" text="Enter a username." textFill="RED" visible="false">
+            <Label fx:id="errorMessage" managed="false" textFill="RED" visible="false">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

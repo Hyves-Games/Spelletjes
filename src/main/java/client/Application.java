@@ -34,6 +34,7 @@ public class Application extends javafx.application.Application {
                     ServerResponse response = server.read();
                     switch (response.getType()) {
 //                        case MATCH ->
+                        case OK, ERROR: server.responseHandled();
                     }
                 }
             }).start();
