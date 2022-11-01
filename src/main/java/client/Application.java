@@ -19,7 +19,7 @@ public class Application extends javafx.application.Application {
         switcher.switchByEnum(SceneEnum.LOGIN);
 
         AudioPlayer.play();
-        AudioPlayer.setVolume(0.1);
+        AudioPlayer.setVolume(0);
 
         System.out.print(SceneSwitcher.getInstance());
     }

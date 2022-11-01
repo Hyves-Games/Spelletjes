@@ -77,5 +77,8 @@ public class SceneSwitcher {
         this.availableScenes.put(
                 SceneEnum.GAMESELECTOR, new ClientScene("gameSelector/gameSelector.fxml", "Game selector")
         );
+        this.availableScenes.put(
+                SceneEnum.GAMEMODESELECTOR, new ClientScene("gameModeSelector/gameModeSelector.fxml", "Gamemode Selector")
+        );
     }
 }

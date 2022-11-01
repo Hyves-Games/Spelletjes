@@ -13,6 +13,7 @@ module hyvesgamesspelletjes {
     opens client.game.controller to javafx.fxml;
     opens client.playerList.controller to javafx.fxml;
     opens client.gameSelector.controller to javafx.fxml;
+    opens client.gameModeSelector.controller to javafx.fxml;
 
     exports client;
 }

@@ -6,5 +6,6 @@ public enum SceneEnum {
     TIC_TAC_TOE,
     SETTING,
     PLAYERLIST,
-    GAMESELECTOR
+    GAMESELECTOR,
+    GAMEMODESELECTOR
 }
