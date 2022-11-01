@@ -1,12 +1,13 @@
 package support.abstracts;
 
 import support.exceptions.NoServerConnectionException;
+import support.helpers.ServerResponse;
 import support.services.Server;
 
 public abstract class AbstractServerAction extends AbstractAction {
     protected Server server = Server.getConnection();
 
-    protected AbstractServerResponse response;
+    protected ServerResponse response;
 
     protected Boolean isConnected() {
         return this.server.isConnected();

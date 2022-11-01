@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import support.abstracts.AbstractServerResponse;
+import support.helpers.ServerResponse;
 import support.enums.ServerResponseEnum;
 
 public class Server {
@@ -17,6 +17,7 @@ public class Server {
     private PrintStream data;
     private BufferedReader input;
     private static Server connection;
+    private boolean lastResponseSuccessful;
 
     public static Server getConnection() {
         if (Server.connection == null) {
@@ -50,11 +51,11 @@ public class Server {
         return true;
     }
 
-    public AbstractServerResponse read() {
+    public ServerResponse read() {
         try {
             System.out.println(this.input.readLine());
 
-            AbstractServerResponse response = this.getServerResponse(this.input.readLine());
+            ServerResponse response = this.getServerResponse(this.input.readLine());
 
             return response;
         } catch (Exception e) {
@@ -65,6 +66,7 @@ public class Server {
     public boolean write(String data) {
         // write logic
         try {
+            this.lastResponseSuccessful = false; // reset to false
             this.data.println(data);
         } catch (Exception e) {
             return false;
@@ -72,16 +74,29 @@ public class Server {
 
         return true;
     }
+    private ServerResponse getServerResponse(String response) {
+        try {
+            String[] split = response.split(" ");
 
-    private AbstractServerResponse getServerResponse(String response) {
-        String category = response.split(" ")[1];
-        String subcommand = response.split(" ")[2];
+            switch (split[0]) {
+                case "OK":
+                    this.lastResponseSuccessful = true;
 
-        return switch (category) {
-            case "GAME" -> new AbstractServerResponse(this.parse(response), ServerResponseEnum.valueOf(subcommand));
-            case "PLAYERLIST" -> new AbstractServerResponse(this.parse(response), ServerResponseEnum.PLAYERLIST);
-            default -> new AbstractServerResponse(null, ServerResponseEnum.NONE);
-        };
+                    return new ServerResponse(null, ServerResponseEnum.OK);
+                case "ERR":
+                    this.lastResponseSuccessful = false;
+
+                    return new ServerResponse(null, ServerResponseEnum.ERROR);
+                case "SVR":
+                    String type = split[1] != "GAME" ? split[1] : split[2];
+
+                    return new ServerResponse(this.parse(response), ServerResponseEnum.valueOf(type));
+                default:
+                    return new ServerResponse(null, ServerResponseEnum.NONE);
+            }
+        } catch (IllegalArgumentException $e) {
+            return new ServerResponse(null, ServerResponseEnum.NONE);
+        }
     }
 
      private JsonObject parse(String input) {

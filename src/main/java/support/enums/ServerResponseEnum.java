@@ -9,4 +9,6 @@ public enum ServerResponseEnum {
     MOVE,
     PLAYERLIST,
     NONE,
+    OK,
+    ERROR,
 }
