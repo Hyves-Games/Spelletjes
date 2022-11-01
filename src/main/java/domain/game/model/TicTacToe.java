@@ -7,11 +7,7 @@ import java.util.Objects;
 
 public class TicTacToe extends AbstractGame {
 
-    public TicTacToe() {
-        this.name = "Tic Tac Toe";
-        this.gameModes = new String[] {"Player vs Player", "Player vs AI", "AI vs AI"};
-        this.iconPath = Objects.requireNonNull(Application.class.getResource("assets/icons/tic_tac_toe.png")).toString();
-        this.musicPath = "focking spannende muziek.mp3";
-    }
+    public static String name = "Tic Tac Toe";
+    public static String iconPath = Application.class.getResource("assets/icons/tic_tac_toe.png").toString();
 
 }

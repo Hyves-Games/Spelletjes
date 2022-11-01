@@ -13,20 +13,25 @@ import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.SceneSwitcher;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameSelectorController {
 
     @FXML HBox container;
 
     public void initialize() {
         for (GameModeEnum gameModeValue : GameModeEnum.values()) {
-            AbstractGame gameMode = getGameModeInfo(gameModeValue.toString());
+            HashMap<String, String> gameModeInfo = getGameModeInfo(gameModeValue.toString());
+
+            System.out.println(gameModeInfo.get("name"));
 
             VBox gameContainer = new VBox();
             Button gameButton = new Button();
-            Label gameName = new Label(gameMode.getName());
+            Label gameName = new Label(gameModeInfo.get("name"));
 
-            Image img = new Image(gameMode.getIconPath());
-            ImageView view = new ImageView(img);
+            Image icon = new Image(gameModeInfo.get("iconPath"));
+            ImageView view = new ImageView(icon);
 
             view.setFitHeight(60);
             view.setFitWidth(60);
@@ -40,14 +45,21 @@ public class GameSelectorController {
         }
     }
 
-    public AbstractGame getGameModeInfo(String GameMode) {
+    public HashMap<String, String> getGameModeInfo(String GameMode) {
+        HashMap<String, String> gameInfo = new HashMap<String, String>();
 
         switch (GameMode) {
             case "TIC_TAC_TOE":
-                return new TicTacToe();
+
+                gameInfo.put("name", TicTacToe.name);
+                gameInfo.put("iconPath", TicTacToe.iconPath);
+
+                break;
             default:
                 return null;
         }
+
+        return gameInfo;
     }
 
     public void onBackClick() {
