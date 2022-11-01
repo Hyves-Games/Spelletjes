@@ -14,15 +14,17 @@ import support.helpers.SceneSwitcher;
 
 public class SettingsController {
 
-    @FXML private TextField ip;
-    @FXML private TextField port;
-    @FXML private Label errorMessage;
-    @FXML private Label volumeLevel;
-    @FXML private Slider volumeSlider;
+    @FXML TextField ip;
+    @FXML TextField port;
+    @FXML Label errorMessage;
+    @FXML Label volumeLevel;
+    @FXML Slider volumeSlider;
 
     public void initialize() {
         this.port.setText("7789");
         this.ip.setText("localhost");
+
+        this.errorMessage.setManaged(false);
 
         this.volumeSlider.setValue(AudioPlayer.getVolume() * 100);
         this.volumeLevel.setText(Long.toString(Math.round(volumeSlider.getValue())));
@@ -47,7 +49,9 @@ public class SettingsController {
             new ConnectServerAction(this.ip.getText(), port);
 
             this.errorMessage.setText("");
+            this.errorMessage.setManaged(false);
         } catch (ServerConnectionFailedException e) {
+            this.errorMessage.setManaged(true);
             this.errorMessage.setText("Connection failed to server");
         }
     }
