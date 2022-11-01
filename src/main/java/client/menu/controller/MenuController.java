@@ -43,7 +43,7 @@ public class MenuController
     }
 
     public void onPlayGameClick(ActionEvent event) {
-        SceneSwitcher.switchScene(event, "game/game.fxml", "Waiting room");
+        SceneSwitcher.switchScene(event, "game/game.fxml", "Tic-Tac-Toe");
     }
 
     public void onSettingsClick(ActionEvent event) {
