@@ -6,13 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import support.abstracts.AbstractController;
 import support.enums.SceneEnum;
 import support.helpers.AudioPlayer;
 import support.actions.ConnectServerAction;
 import support.exceptions.ServerConnectionFailedException;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
-public class SettingsController {
+public class SettingsController extends AbstractController {
 
     @FXML TextField ip;
     @FXML TextField port;
@@ -39,20 +41,24 @@ public class SettingsController {
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        if (Auth.check()) {
+            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        } else {
+            SceneSwitcher.getInstance().change(SceneEnum.LOGIN);
+        }
     }
 
     public void onConnectClick() {
-        Integer port = Integer.parseInt(this.port.getText());
-
         try {
+            Integer port = Integer.parseInt(this.port.getText());
+
             new ConnectServerAction(this.ip.getText(), port);
 
-            this.errorMessage.setText("");
-            this.errorMessage.setManaged(false);
+            this.setError(this.errorMessage, null);
         } catch (ServerConnectionFailedException e) {
-            this.errorMessage.setManaged(true);
-            this.errorMessage.setText("Connection failed to server");
+            this.setError(this.errorMessage,"Connection failed to server");
+        } catch (NumberFormatException e) {
+            this.setError(this.errorMessage,"Invalid port number");
         }
     }
 }

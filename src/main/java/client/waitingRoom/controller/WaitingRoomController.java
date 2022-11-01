@@ -5,6 +5,6 @@ import support.helpers.SceneSwitcher;
 
 public class WaitingRoomController {
     public void onCancel() {
-        SceneSwitcher.getInstance().change(SceneEnum.GAMEMODESELECTOR);
+        SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
     }
 }

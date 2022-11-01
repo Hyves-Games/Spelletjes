@@ -1,13 +1,20 @@
 package domain.game.model;
 
 import client.Application;
-import support.abstracts.AbstractGame;
+import support.abstracts.AbstractGameBoard;
 
-import java.util.Objects;
+public class TicTacToe extends AbstractGameBoard {
+    public TicTacToe() {
+        this.generate(9);
+    }
 
-public class TicTacToe extends AbstractGame {
+    @Override
+    public String getName() {
+        return "Tic Tac Toe";
+    }
 
-    public static String name = "Tic Tac Toe";
-    public static String iconPath = Application.class.getResource("assets/icons/tic_tac_toe.png").toString();
-
+    @Override
+    public String getIconPath() {
+        return Application.class.getResource("assets/icons/tic_tac_toe.png").toString();
+    }
 }

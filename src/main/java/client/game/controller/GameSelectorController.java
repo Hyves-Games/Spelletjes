@@ -1,4 +1,4 @@
-package client.gameSelector.controller;
+package client.game.controller;
 
 import domain.game.model.TicTacToe;
 import javafx.event.ActionEvent;
@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import support.abstracts.AbstractGameBoard;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.SceneSwitcher;
@@ -20,18 +21,18 @@ public class GameSelectorController {
     @FXML HBox container;
 
     public void initialize() {
-        for (GameModeEnum gameModeValue : GameModeEnum.values()) {
-            HashMap<String, String> gameProperties = getGameModeInfo(gameModeValue.toString());
+        for (GameModeEnum type : GameModeEnum.values()) {
+            AbstractGameBoard gameProperties = this.getGameBoard(type);
 
             VBox gameContainer = new VBox();
             Button gameButton = new Button();
-            Label gameName = new Label(gameProperties.get("name"));
+            Label gameName = new Label(gameProperties.getName());
 
-            ImageView icon = createImage(gameProperties.get("iconPath"), 60, 60);
+            ImageView icon = this.createImage(gameProperties.getIconPath(), 60, 60);
 
             gameButton.setGraphic(icon);
             gameButton.setOnAction(this::onGameChoose);
-            gameButton.setId(gameProperties.get("name"));
+            gameButton.setId(gameProperties.getName());
             gameContainer.setSpacing(10);
 
             gameContainer.getChildren().add(gameButton);
@@ -44,34 +45,27 @@ public class GameSelectorController {
         //Gamemode print
         System.out.println(((Node)event.getSource()).getId());
 
-        SceneSwitcher.getInstance().change(SceneEnum.GAMEMODESELECTOR);
-    }
-
-    public HashMap<String, String> getGameModeInfo(String GameMode) {
-        HashMap<String, String> gameProperties = new HashMap<String, String>();
-
-        switch (GameMode) {
-            case "TIC_TAC_TOE":
-                gameProperties.put("name", TicTacToe.name);
-                gameProperties.put("iconPath", TicTacToe.iconPath);
-                break;
-            default:
-                return null;
-        }
-
-        return gameProperties;
+        SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
     }
 
     public void onBackClick() {
         SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
     }
 
-    public ImageView createImage(String name, double height, double width) {
+    private AbstractGameBoard getGameBoard(GameModeEnum type) {
+        return switch (type) {
+            case TIC_TAC_TOE -> new TicTacToe();
+        };
+    }
+
+    private ImageView createImage(String name, double height, double width) {
+        System.out.println(name);
+
         Image icon = new Image(name);
         ImageView image = new ImageView(icon);
 
-        image.setFitHeight(60);
-        image.setFitWidth(60);
+        image.setFitHeight(height);
+        image.setFitWidth(width);
 
         return image;
     }

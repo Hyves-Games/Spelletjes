@@ -5,8 +5,8 @@ public enum SceneEnum {
     LOGIN,
     TIC_TAC_TOE,
     SETTING,
-    PLAYERLIST,
-    GAMESELECTOR,
-    GAMEMODESELECTOR,
-    WAITROOM
+    PLAYER_LIST,
+    GAME_SELECTOR,
+    GAME_MODE_SELECTOR,
+    WAIT_ROOM
 }
