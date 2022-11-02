@@ -10,7 +10,7 @@ public class AudioPlayer {
 
     private static MediaPlayer player;
     public static void play () {
-        Media song = new Media(Objects.requireNonNull(Application.class.getResource("audio/counterstrike.mp3")).toString());
+        Media song = new Media(Application.class.getResource("assets/audio/counterstrike.mp3").toString());
         player = new MediaPlayer(song);
         player.play();
     }

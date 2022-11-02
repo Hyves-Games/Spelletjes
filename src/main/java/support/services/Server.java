@@ -5,19 +5,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import support.helpers.Auth;
 import support.helpers.ServerResponse;
 import support.enums.ServerResponseEnum;
 
 public class Server {
+    private Boolean handled = false;
+    private Boolean lastResponseSuccessful = false;
+
     private Socket socket;
     private PrintStream data;
     private BufferedReader input;
-    private static Server connection;
-    private boolean lastResponseSuccessful;
+
+    private static Server connection = null;
 
     public static Server getConnection() {
         if (Server.connection == null) {
@@ -27,13 +32,13 @@ public class Server {
         return Server.connection;
     }
 
-    public boolean isConnected() { return this.socket != null && !this.socket.isClosed(); }
+    public Boolean isConnected() { return this.socket != null && !this.socket.isClosed(); }
 
-    public boolean connect(String IP, int Port) {
+    public Boolean connect(String IP, int Port) {
         try {
             this.socket = new Socket(IP, Port);
             this.data = new PrintStream(this.socket.getOutputStream());
-            this.input = new BufferedReader(new InputStreamReader((this.socket.getInputStream())));
+            this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         } catch (IOException e) {
             return false;
         }
@@ -41,39 +46,44 @@ public class Server {
         return true;
     }
 
-    public boolean disconnect() {
+    public void disconnect() {
         try {
             this.socket.close();
-        } catch (IOException e) {
-            return false;
-        }
 
-        return true;
+            Auth.setPlayer(null);
+        } catch (IOException ignored) {}
     }
 
     public ServerResponse read() {
         try {
-            System.out.println(this.input.readLine());
-
-            ServerResponse response = this.getServerResponse(this.input.readLine());
-
-            return response;
+            return this.getServerResponse(this.input.readLine());
         } catch (Exception e) {
             return null;
         }
     }
 
-    public boolean write(String data) {
-        // write logic
-        try {
-            this.lastResponseSuccessful = false; // reset to false
-            this.data.println(data);
-        } catch (Exception e) {
-            return false;
-        }
+    public void write(String data) {
+        int waited = 0;
+        int sleep = 100;
 
-        return true;
+        this.handled = false;
+        this.lastResponseSuccessful = false;
+
+        this.data.println(data);
+
+        while (!this.handled) {
+            if (waited >= 2000) {
+                break;
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException ignored) {}
+
+            waited += sleep;
+        }
     }
+
     private ServerResponse getServerResponse(String response) {
         try {
             String[] split = response.split(" ");
@@ -88,7 +98,7 @@ public class Server {
 
                     return new ServerResponse(null, ServerResponseEnum.ERROR);
                 case "SVR":
-                    String type = split[1] != "GAME" ? split[1] : split[2];
+                    String type = !Objects.equals(split[1], "GAME") ? split[1] : split[2];
 
                     return new ServerResponse(this.parse(response), ServerResponseEnum.valueOf(type));
                 default:
@@ -121,5 +131,13 @@ public class Server {
         }
 
         return null;
+    }
+
+    public void responseHandled() {
+        this.handled = true;
+    }
+
+    public boolean isLastResponseSuccessful() {
+        return this.lastResponseSuccessful;
     }
 }
