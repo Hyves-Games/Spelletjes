@@ -12,6 +12,11 @@ public class TicTacToe extends AbstractGameBoard {
 
     public TicTacToe() {
         this.generate(9);
+        this.player = Auth.getPlayer();
+        this.opponent = new Player("Lech", false);
+
+        //Dit krijg je van de server uiteindelijk
+        this.playerToMove = player.getUsername();
     }
 
     @Override

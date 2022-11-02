@@ -1,6 +1,7 @@
 package client.game.board.controller;
 
 import client.Application;
+import domain.game.model.TicTacToe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -16,6 +17,7 @@ import support.exceptions.NoServerConnectionException;
 import support.helpers.SceneSwitcher;
 
 import java.util.Optional;
+import java.util.*;
 
 public class TicTacToeController {
 
@@ -37,11 +39,15 @@ public class TicTacToeController {
     @FXML Button btn_7;
     @FXML Button btn_8;
 
+    private Button[] board;
+
     @FXML VBox boardContainer;
 
     private final AbstractGameBoard gameBoard = Application.getGameBoard();
 
     public void initialize() {
+        this.board = new Button[]{btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8};
+
         player_1.setText(this.gameBoard.getPlayer().getUsername());
         player_2.setText(this.gameBoard.getOpponent().getUsername());
 
@@ -54,6 +60,12 @@ public class TicTacToeController {
         );
 
         this.changeTurn(!this.gameBoard.setMove(index));
+        
+        for (int i = 0; i < this.board.length; i++) {
+            if(i == index) {
+                this.board[i].setText("0");
+            }
+        }
     }
 
     public void onLeaveClick(ActionEvent event) {
@@ -100,3 +112,4 @@ public class TicTacToeController {
         this.boardContainer.setDisable(condition);
     }
 }
+
