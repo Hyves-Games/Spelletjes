@@ -59,8 +59,6 @@ public class GameSelectorController {
     }
 
     private ImageView createImage(String name, double height, double width) {
-        System.out.println(name);
-
         Image icon = new Image(name);
         ImageView image = new ImageView(icon);
 
