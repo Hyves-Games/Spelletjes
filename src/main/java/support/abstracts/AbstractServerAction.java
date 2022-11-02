@@ -1,6 +1,8 @@
 package support.abstracts;
 
-import support.exceptions.NoServerConnectionException;
+import support.enums.SceneEnum;
+import support.helpers.Auth;
+import support.helpers.SceneSwitcher;
 import support.services.Server;
 
 public abstract class AbstractServerAction extends AbstractAction {
@@ -12,15 +14,14 @@ public abstract class AbstractServerAction extends AbstractAction {
 
     protected Boolean isSuccessFull() {return this.server.isLastResponseSuccessful(); }
 
-    protected void command(String command) throws NoServerConnectionException {
+    protected void command(String command) {
         if (this.isConnected()) {
             this.server.write(command);
 
             return;
         }
 
-        throw new NoServerConnectionException();
+        Auth.setPlayer(null);
+        SceneSwitcher.getInstance().change(SceneEnum.LOGIN);
     }
-
-
 }

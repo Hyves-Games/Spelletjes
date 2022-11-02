@@ -3,17 +3,27 @@ package support.helpers;
 import domain.player.model.Player;
 
 public class Auth {
-    private static Player player = null;
+    private static Auth auth;
 
-    public static Player getPlayer() {
-        return player;
+    private Player player = null;
+
+    private static Auth getInstance() {
+        if (Auth.auth == null) {
+            Auth.auth = new Auth();
+        }
+
+        return Auth.auth;
     }
 
     public static void setPlayer(Player player) {
-        Auth.player = player;
+        Auth.getInstance().player = player;
+    }
+
+    public static Player getPlayer() {
+        return Auth.getInstance().player;
     }
 
     public static Boolean check() {
-        return Auth.player != null;
+        return Auth.getInstance().player != null;
     }
 }

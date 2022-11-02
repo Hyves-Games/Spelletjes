@@ -1,5 +1,6 @@
 package support.helpers;
 
+import client.Application;
 import domain.game.actions.ViewGameAction;
 import support.services.Server;
 
@@ -15,7 +16,7 @@ public class ResponseHandler extends Thread {
                 if (response != null) {
                     switch (response.getType()) {
                         case MATCH -> new ViewGameAction(response.getData());
-                        case YOURTURN -> {}
+                        case YOURTURN -> Application.getGameBoard().setYourTurn(true);
                         case WIN -> {}
                         case DRAW -> {}
                         case LOSS -> {}
@@ -25,7 +26,7 @@ public class ResponseHandler extends Thread {
                     }
                 }
             } catch (Exception e) {
-                System.err.println(e.toString());
+                throw new RuntimeException(e);
             }
         }
     }

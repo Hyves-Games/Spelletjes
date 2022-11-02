@@ -1,9 +1,6 @@
 package client.game.board.controller;
 
-import domain.game.model.TicTacToe;
-import domain.player.model.Player;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import client.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,10 +9,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import support.abstracts.AbstractGameBoard;
+import support.actions.StopGameAction;
 import support.enums.SceneEnum;
+import support.exceptions.NoServerConnectionException;
 import support.helpers.SceneSwitcher;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class TicTacToeController {
@@ -40,19 +39,21 @@ public class TicTacToeController {
 
     @FXML VBox boardContainer;
 
-    private final TicTacToe ticTacToe = new TicTacToe();
+    private final AbstractGameBoard gameBoard = Application.getGameBoard();
 
     public void initialize() {
-        player_1.setText(ticTacToe.player.getUsername());
-        player_2.setText(ticTacToe.opponent.getUsername());
+        player_1.setText(this.gameBoard.getPlayer().getUsername());
+        player_2.setText(this.gameBoard.getOpponent().getUsername());
 
-        this.setTurn(ticTacToe.playerToMove);
+        this.setTurn();
     }
 
     public void onMoveClick(ActionEvent event) {
-        String index = ((Node)(event.getSource())).getId().split("_")[1];
+        Integer index = Integer.valueOf(
+                ((Node)(event.getSource())).getId().split("_")[1]
+        );
 
-        System.out.println(index);
+        this.changeTurn(!this.gameBoard.setMove(index));
     }
 
     public void onLeaveClick(ActionEvent event) {
@@ -67,24 +68,35 @@ public class TicTacToeController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.get() == ButtonType.OK) {
+            try {
+                new StopGameAction();
+            } catch (NoServerConnectionException ignored) {}
+
             SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
-            //Hier moet client / server de stop game action doen.
         }
     }
 
-    public void setTurn(String username) {
-        if (Objects.equals(username, player_1.getText())) {
+    private void setTurn() {
+        if (this.gameBoard.isYourTurn()) {
             this.player_1_turn.setText("your turn");
+            this.player_2_turn.setText(null);
+
             this.disableBoard(false);
         } else {
+            this.player_1_turn.setText(null);
             this.player_2_turn.setText("your turn");
+
             this.disableBoard(true);
         }
     }
 
+    private void changeTurn(Boolean condition) {
+        this.gameBoard.setYourTurn(condition);
 
-    public void disableBoard(Boolean condition) {
-        this.boardContainer.setDisable(condition);
+        this.setTurn();
     }
 
+    private void disableBoard(Boolean condition) {
+        this.boardContainer.setDisable(condition);
+    }
 }

@@ -49,7 +49,7 @@ public class SceneSwitcher {
                     Application.class.getResource(clientScene.path())
             );
 
-            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight() - 28);
+            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight());
 
             this.stage.setTitle(clientScene.title());
             this.stage.setScene(scene);

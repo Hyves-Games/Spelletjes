@@ -1,20 +1,17 @@
 package domain.game.model;
 
 import client.Application;
-import client.game.board.controller.TicTacToeController;
-import domain.player.model.Player;
+
+import domain.game.exceptions.MoveNotAllowedException;
 import support.abstracts.AbstractGameBoard;
-import support.helpers.Auth;
+import support.actions.MoveServerAction;
+import support.exceptions.NoServerConnectionException;
+
 
 public class TicTacToe extends AbstractGameBoard {
 
     public TicTacToe() {
         this.generate(9);
-        this.player = Auth.getPlayer();
-        this.opponent = new Player("Lech", false);
-
-        //Dit krijg je van de server uiteindelijk
-        this.playerToMove = opponent.getUsername();
     }
 
     @Override
@@ -27,4 +24,23 @@ public class TicTacToe extends AbstractGameBoard {
         return Application.class.getResource("assets/icons/tic_tac_toe.png").toString();
     }
 
+    @Override
+    public Boolean setMove(Integer index) {
+        if (this.checkMove(index)) {
+            try {
+                new MoveServerAction(index);
+            } catch (MoveNotAllowedException e) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    protected Boolean checkMove(Integer index) {
+        return this.board.get(index) == 0;
+    }
 }
