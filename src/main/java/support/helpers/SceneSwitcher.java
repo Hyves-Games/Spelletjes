@@ -27,8 +27,8 @@ public class SceneSwitcher {
 
     public SceneSwitcher(Stage stage) {
         this.stage = stage;
-        this.stage.setWidth(1300);
-        this.stage.setHeight(800);
+        this.stage.setWidth(900);
+        this.stage.setHeight(600);
 
         SceneSwitcher.instance = this;
     }

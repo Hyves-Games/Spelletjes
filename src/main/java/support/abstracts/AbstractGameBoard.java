@@ -1,5 +1,7 @@
 package support.abstracts;
 
+import domain.player.model.Player;
+
 import java.util.ArrayList;
 
 public abstract class AbstractGameBoard {
@@ -11,6 +13,10 @@ public abstract class AbstractGameBoard {
         }
     }
 
+    public Player player;
+
+    public Player opponent;
+
     public abstract String getIconPath();
 
     public abstract String getName();
@@ -18,4 +24,7 @@ public abstract class AbstractGameBoard {
     public ArrayList<Integer> getBoard() {
         return board;
     }
+
+    public String playerToMove;
+
 }
