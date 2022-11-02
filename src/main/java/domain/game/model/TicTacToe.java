@@ -3,20 +3,17 @@ package domain.game.model;
 import client.Application;
 
 import domain.game.exceptions.MoveNotAllowedException;
+import domain.player.model.Player;
 import support.abstracts.AbstractGameBoard;
 import support.actions.MoveServerAction;
 import support.exceptions.NoServerConnectionException;
+import support.helpers.Auth;
 
 
 public class TicTacToe extends AbstractGameBoard {
 
     public TicTacToe() {
         this.generate(9);
-        this.player = Auth.getPlayer();
-        this.opponent = new Player("Lech", false);
-
-        //Dit krijg je van de server uiteindelijk
-        this.playerToMove = player.getUsername();
     }
 
     @Override
