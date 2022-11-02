@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import support.enums.SceneEnum;
+import support.records.ClientScene;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class SceneSwitcher {
         put(SceneEnum.LOGIN, new ClientScene("authenticator", "login", "Login"));
         put(SceneEnum.LOBBY, new ClientScene("lobby", "lobby", "Lobby"));
         put(SceneEnum.SETTING, new ClientScene("settings", "settings", "Settings"));
-        put(SceneEnum.TIC_TAC_TOE, new ClientScene("game", "game", "Tic-Tac-Toe"));
+        put(SceneEnum.TIC_TAC_TOE, new ClientScene("game/board", "ticTacToe", "Tic-Tac-Toe"));
         put(SceneEnum.PLAYER_LIST, new ClientScene("playerList", "playerList","Players list"));
         put(SceneEnum.GAME_MODE_SELECTOR, new ClientScene("game","gameModeSelector", "Game mode"));
         put(SceneEnum.GAME_SELECTOR, new ClientScene("game","gameSelector", "Game"));
