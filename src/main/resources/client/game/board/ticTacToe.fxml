@@ -109,7 +109,7 @@
       </VBox>
    </center>
    <bottom>
-      <ProgressBar prefWidth="200.0" progress="0.68" BorderPane.alignment="CENTER">
+      <ProgressBar fx:id="timeLeft" prefWidth="200.0" progress="0.68" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" />
          </padding>
