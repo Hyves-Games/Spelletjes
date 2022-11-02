@@ -10,9 +10,7 @@ public class WaitingRoomController {
     public void initialize() {
         try {
             new SubscribeServerAction();
-        } catch (NoServerConnectionException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (NoServerConnectionException ignored) {}
     }
 
     public void onCancel() {

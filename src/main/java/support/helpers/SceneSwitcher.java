@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class SceneSwitcher {
+    private SceneEnum scene;
     private final Stage stage;
     private static SceneSwitcher instance;
 
@@ -54,6 +55,8 @@ public class SceneSwitcher {
             this.stage.setTitle(clientScene.title());
             this.stage.setScene(scene);
             this.stage.show();
+
+            this.scene = sceneEnum;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,5 +64,9 @@ public class SceneSwitcher {
 
     public Stage getStage() {
         return this.stage;
+    }
+
+    public SceneEnum getScene() {
+        return this.scene;
     }
 }

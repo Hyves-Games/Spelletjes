@@ -31,9 +31,11 @@ public class TicTacToe extends AbstractGameBoard {
         if (this.checkMove(index)) {
             try {
                 new MoveServerAction(index);
+
+                this.board.set(index, 1);
             } catch (MoveNotAllowedException e) {
                 return false;
-            }
+            } catch (NoServerConnectionException ignored) {}
 
             return true;
         }
