@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.playerList.controller.PlayerListController">
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#onBackClick" text="Back to menu" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="292.0" maxWidth="366.0" prefHeight="292.0" prefWidth="366.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="playerContainer" alignment="CENTER" maxWidth="365.0" prefHeight="258.0" prefWidth="276.0" style="-fx-padding: 10;" />
+         </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Connected players list" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="25.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+   </top>
+</BorderPane>

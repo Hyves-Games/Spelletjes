@@ -2,6 +2,9 @@ package support.actions;
 
 import support.abstracts.AbstractServerAction;
 import support.exceptions.ServerConnectionFailedException;
+import support.helpers.ResponseHandler;
+
+import java.util.Set;
 
 public class ConnectServerAction extends AbstractServerAction {
     private final String host;
@@ -16,14 +19,16 @@ public class ConnectServerAction extends AbstractServerAction {
 
     @Override
     protected void handler() throws ServerConnectionFailedException {
-        boolean success = this.server.connect(this.host, this.port);
-
-        if (success) {
-            System.out.println("Connection established");
-
-            return;
+        if (this.isConnected()) {
+            this.server.disconnect();
         }
 
-        throw new ServerConnectionFailedException();
+        boolean success = this.server.connect(this.host, this.port);
+
+        if (!success) {
+            throw new ServerConnectionFailedException();
+        }
+
+        new Thread(new ResponseHandler()).start();
     }
 }

@@ -7,10 +7,12 @@ module hyvesgamesspelletjes {
     requires com.google.gson;
 
     opens client.authenticator.controller to javafx.fxml;
-    opens client.menu.controller to javafx.fxml;
+    opens client.lobby.controller to javafx.fxml;
     opens client.waitingRoom.controller to javafx.fxml;
     opens client.settings.controller to javafx.fxml;
     opens client.game.controller to javafx.fxml;
+    opens client.playerList.controller to javafx.fxml;
+    opens client.game.board.controller to javafx.fxml;
 
     exports client;
 }

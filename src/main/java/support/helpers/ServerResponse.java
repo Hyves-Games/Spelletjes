@@ -1,13 +1,13 @@
-package support.abstracts;
+package support.helpers;
 
 import com.google.gson.JsonObject;
 import support.enums.ServerResponseEnum;
 
-public class AbstractServerResponse {
+public class ServerResponse {
     private JsonObject data;
     private ServerResponseEnum type;
 
-    public AbstractServerResponse(JsonObject data, ServerResponseEnum type) {
+    public ServerResponse(JsonObject data, ServerResponseEnum type) {
         this.data = data;
         this.type = type;
     }

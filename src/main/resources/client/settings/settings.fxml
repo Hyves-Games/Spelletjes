@@ -3,9 +3,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.Cursor?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.settings.controller.SettingsController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
@@ -22,7 +22,7 @@
             </Label>
             <TextField fx:id="ip" alignment="CENTER" maxHeight="30.0" maxWidth="200.0" prefHeight="30.0" prefWidth="200.0">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </TextField>
             <Label text="Server port">
@@ -32,15 +32,15 @@
             </Label>
             <TextField fx:id="port" alignment="CENTER" maxHeight="30.0" maxWidth="200.0" prefHeight="30.0" prefWidth="200.0">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </TextField>
             <Label fx:id="errorMessage" textFill="RED">
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets bottom="5.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <Button mnemonicParsing="false" onAction="#onConnectClick" text="Connect">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onConnectClick" prefHeight="25.0" prefWidth="100.0"  text="Connect" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -52,17 +52,23 @@
             </Label>
             <Slider fx:id="volumeSlider" maxHeight="30.0" maxWidth="200.0" prefHeight="20.0">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </Slider>
+            <Label fx:id="volumeLevel" />
          </children>
       </VBox>
    </center>
    <bottom>
-      <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onBackClick" text="Back to menu" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="15.0" />
-         </BorderPane.margin>
-      </Button>
+      <VBox alignment="CENTER" prefHeight="35.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <Button alignment="CENTER" mnemonicParsing="false" onAction="#onBackClick" prefHeight="25.0" prefWidth="100.0" text="Back to menu" textAlignment="CENTER">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </Button>
+      </VBox>
    </bottom>
 </BorderPane>

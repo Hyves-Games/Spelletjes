@@ -1,39 +1,25 @@
 package client;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import support.actions.ConnectServerAction;
-import support.actions.LoginServerAction;
-import support.exceptions.NoServerConnectionException;
+import support.enums.SceneEnum;
 import support.exceptions.ServerConnectionFailedException;
-import support.helpers.Mediaplayer;
-
-import java.io.IOException;
+import support.helpers.AudioPlayer;
+import support.helpers.SceneSwitcher;
 
 public class Application extends javafx.application.Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                Application.class.getResource("menu/menu.fxml")
-        );
+    public void start(Stage stage) {
+        new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
-        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
-
-        stage.setTitle("Lobby");
-        stage.setScene(scene);
-        stage.show();
-
-        Mediaplayer.play();
-        Mediaplayer.setVolume(0.05);
+        AudioPlayer.play();
+        AudioPlayer.setVolume(0);
     }
 
     public static void main(String[] args) {
         try {
             new ConnectServerAction("localhost", 7789);
-        } catch (ServerConnectionFailedException e) {
-            System.out.println("Connection failed");
-        }
+        } catch (ServerConnectionFailedException ignored) {}
 
         launch();
     }
