@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import support.enums.SceneEnum;
+import support.records.ClientScene;
 
 import java.io.IOException;
 import java.util.HashMap;
