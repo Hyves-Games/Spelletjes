@@ -30,8 +30,10 @@ public class ViewGameAction extends AbstractAction {
             default -> throw new GameNotImplementedException();
         }
 
-        this.gameBoard.setPlayer(Auth.getPlayer())
-                .setOpponent(new Player(data.get("OPPONENT").getAsString()));
+        Player player = Auth.getPlayer();
+        Player opponent = new Player(data.get("OPPONENT").getAsString());
+
+        this.gameBoard.start(player, opponent);
 
         Platform.runLater(() -> {
             SceneSwitcher.getInstance().change(this.scene);

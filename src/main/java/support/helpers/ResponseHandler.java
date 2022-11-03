@@ -1,7 +1,9 @@
 package support.helpers;
 
-import client.Application;
+import domain.game.actions.EndGameAction;
+import domain.game.actions.MoveGameAction;
 import domain.game.actions.ViewGameAction;
+import domain.game.actions.YourTurnAction;
 import support.services.Server;
 
 public class ResponseHandler extends Thread {
@@ -15,13 +17,10 @@ public class ResponseHandler extends Thread {
 
                 if (response != null) {
                     switch (response.getType()) {
+                        case YOURTURN -> new YourTurnAction();
+                        case MOVE -> new MoveGameAction(response.getData());
                         case MATCH -> new ViewGameAction(response.getData());
-                        case YOURTURN -> Application.getGameBoard().setYourTurn(true);
-                        case WIN -> {}
-                        case DRAW -> {}
-                        case LOSS -> {}
-                        case MOVE -> {}
-                        case PLAYERLIST -> {}
+                        case WIN, LOSS, DRAW -> new EndGameAction(response.getType());
                         case OK, ERROR -> this.server.responseHandled();
                     }
                 }
