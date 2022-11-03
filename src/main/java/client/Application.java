@@ -6,7 +6,6 @@ import domain.setting.enums.Settings;
 import domain.setting.model.Setting;
 import domain.setting.query.SettingQuery;
 import javafx.stage.Stage;
-import support.abstracts.AbstractGameBoard;
 import support.actions.ConnectServerAction;
 import support.enums.DatabaseTableEnum;
 import support.enums.SceneEnum;
@@ -18,22 +17,17 @@ import support.helpers.SceneSwitcher;
 import java.sql.SQLException;
 
 public class Application extends javafx.application.Application {
-    private static AbstractGameBoard gameBoard;
-
     @Override
     public void start(Stage stage) {
-
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
         Setting setting = new SettingQuery().filterByName("auto_login").findOne();
         if (setting != null) {
             try {
                 new LoginAction(setting.getStringValue());
-            } catch (LoginFailedException | NoServerConnectionException e) {
-                e.printStackTrace();
-            }
 
-            SceneEnum.LOBBY.switchTo();
+                SceneEnum.LOBBY.switchTo();
+            } catch (LoginFailedException | NoServerConnectionException ignored) {}
         }
 
         AudioPlayer.play();
@@ -47,13 +41,5 @@ public class Application extends javafx.application.Application {
         } catch (ServerConnectionFailedException ignored) {}
 
         launch();
-    }
-
-    public static AbstractGameBoard getGameBoard() {
-        return gameBoard;
-    }
-
-    public static void setGameBoard(AbstractGameBoard gameBoard) {
-        Application.gameBoard = gameBoard;
     }
 }

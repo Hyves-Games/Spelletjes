@@ -1,25 +1,30 @@
 package domain.game.actions;
 
-import client.Application;
 import com.google.gson.JsonObject;
-import support.abstracts.AbstractAction;
-import support.helpers.Auth;
+import domain.player.model.Player;
+import support.abstracts.AbstractGameAction;
 
-public class MoveGameAction extends AbstractAction {
+public class MoveGameAction extends AbstractGameAction {
     private final JsonObject data;
 
     public MoveGameAction(JsonObject data) {
         this.data = data;
 
-        try {this.handler();} catch (Exception ignored) {}
+        this.handler();
+    }
+
+    public MoveGameAction(JsonObject data, Player player) {
+        this.data = data;
+        this.player = player;
+
+        this.handler();
     }
 
     @Override
-    protected void handler() throws Exception {
+    protected void handler() {
         String username = this.data.get("PLAYER").getAsString();
+        Integer value = username.equals(player.getUsername()) ? 1 : -1;
 
-        Integer value = username.equals(Auth.getPlayer().getUsername()) ? 1 : -1;
-
-        Application.getGameBoard().setMove(this.data.get("MOVE").getAsInt(), value);
+        player.getGameBoard().setMove(this.data.get("MOVE").getAsInt(), value);
     }
 }

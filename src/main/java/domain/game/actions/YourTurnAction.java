@@ -1,15 +1,22 @@
 package domain.game.actions;
 
-import client.Application;
-import support.abstracts.AbstractAction;
+import domain.player.model.AI;
+import domain.player.model.Player;
+import support.abstracts.AbstractGameAction;
 
-public class YourTurnAction extends AbstractAction {
+public class YourTurnAction extends AbstractGameAction {
     public YourTurnAction() {
-        try {this.handler();} catch (Exception ignored) {}
+        this.handler();
+    }
+
+    public YourTurnAction(Player player) {
+        this.player = player;
+
+        this.handler();
     }
 
     @Override
-    protected void handler() throws Exception {
-        Application.getGameBoard().setPlayerTurn();
+    protected void handler() {
+        this.player.getGameBoard().setPlayerTurn();
     }
 }

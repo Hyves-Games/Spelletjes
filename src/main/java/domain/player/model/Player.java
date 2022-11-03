@@ -1,37 +1,40 @@
 package domain.player.model;
 
+import domain.game.model.Game;
+import support.abstracts.AbstractGameBoard;
 import support.enums.GameModeEnum;
 
 public class Player {
-    private final Boolean AI;
-    private final String username;
+    protected final String username;
 
-    private GameModeEnum lastGameMode;
-
-    public Player(String username, boolean AI) {
-        this.AI = AI;
-        this.username = username;
-    }
+    protected Game game;
+    protected GameModeEnum lastGameMode;
 
     public Player(String username) {
-        this(username, false);
+        this.username = username;
     }
 
     public String getUsername() {
         return this.username;
     }
 
-    public Boolean isAI() {
-        return this.AI;
-    }
-
     public GameModeEnum getLastGameMode() {
         return this.lastGameMode;
     }
 
-    public Player setLastGameMode(GameModeEnum lastGameMode) {
+    public void setLastGameMode(GameModeEnum lastGameMode) {
         this.lastGameMode = lastGameMode;
+    }
 
-        return this;
+    public AbstractGameBoard getGameBoard() {
+        return this.game.getGameBoard();
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }
