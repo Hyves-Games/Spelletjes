@@ -75,7 +75,7 @@ public class Server {
 
     public void write(String data) {
         int waited = 0;
-        int sleep = 100;
+        int sleep = 2;
 
         this.handled = false;
         this.lastResponseSuccessful = false;

@@ -8,7 +8,7 @@ import domain.player.model.AI;
 import support.actions.ChallengeAcceptServerAction;
 import support.services.Server;
 
-public class AIResponseHandler extends Thread {
+public class AIResponseHandler implements Runnable {
     private final AI player;
     private final Server connection;
 
