@@ -33,7 +33,7 @@ public class Application extends javafx.application.Application {
                 e.printStackTrace();
             }
 
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         }
 
         AudioPlayer.play();

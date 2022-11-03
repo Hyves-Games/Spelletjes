@@ -26,7 +26,7 @@ public abstract class AbstractServerAction extends AbstractAction {
             throw new NoServerConnectionException();
         } else {
             Auth.setPlayer(null);
-            SceneSwitcher.getInstance().change(SceneEnum.LOGIN);
+            SceneEnum.LOGIN.switchTo();
         }
     }
 }

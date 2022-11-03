@@ -44,9 +44,9 @@ public class SettingsController extends AbstractController {
         Settings.MUSIC_VOLUME_LOBBY.saveWithValue(volumeSlider.getValue());
 
         if (Auth.check()) {
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         } else {
-            SceneSwitcher.getInstance().change(SceneEnum.LOGIN);
+            SceneEnum.LOGIN.switchTo();
         }
     }
 

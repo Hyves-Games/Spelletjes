@@ -82,7 +82,7 @@ public class TicTacToeController {
                 new StopGameAction();
             } catch (NoServerConnectionException ignored) {}
 
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         }
     }
 

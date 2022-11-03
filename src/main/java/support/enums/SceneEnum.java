@@ -1,5 +1,6 @@
 package support.enums;
 
+import support.helpers.SceneSwitcher;
 import support.records.ClientScene;
 
 public enum SceneEnum {
@@ -20,5 +21,9 @@ public enum SceneEnum {
 
     public ClientScene getClientScene() {
         return this.clientScene;
+    }
+
+    public void switchTo() {
+        SceneSwitcher.getInstance().change(this);
     }
 }

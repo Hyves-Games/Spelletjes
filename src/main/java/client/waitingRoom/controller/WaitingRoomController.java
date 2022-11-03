@@ -18,6 +18,6 @@ public class WaitingRoomController {
             new StopGameAction();
         } catch (NoServerConnectionException ignored) {}
 
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
+        SceneEnum.GAME_MODE_SELECTOR.switchTo();
     }
 }
