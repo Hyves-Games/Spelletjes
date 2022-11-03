@@ -1,5 +1,7 @@
 package client;
 
+import domain.player.actions.LoginAction;
+import domain.player.exceptions.LoginFailedException;
 import domain.setting.enums.Settings;
 import domain.setting.model.Setting;
 import domain.setting.query.SettingQuery;
@@ -8,6 +10,7 @@ import support.abstracts.AbstractGameBoard;
 import support.actions.ConnectServerAction;
 import support.enums.DatabaseTableEnum;
 import support.enums.SceneEnum;
+import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.AudioPlayer;
 import support.helpers.SceneSwitcher;
@@ -20,6 +23,17 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws SQLException {
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
+
+        Setting setting = new SettingQuery().filterByName("auto_login").findOne();
+        if (setting != null) {
+            try {
+                new LoginAction(setting.getValue());
+            } catch (LoginFailedException | NoServerConnectionException e) {
+                e.printStackTrace();
+            }
+
+            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        }
 
         AudioPlayer.play();
         AudioPlayer.setVolume(Settings.MUSIC_VOLUME_LOBBY.getDoubleValue());
