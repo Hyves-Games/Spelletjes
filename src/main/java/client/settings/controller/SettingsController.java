@@ -24,8 +24,8 @@ public class SettingsController extends AbstractController {
     @FXML Slider volumeSlider;
 
     public void initialize() {
-        this.ip.setText(Settings.SERVER_IP_ADDRESS.getValue());
-        this.port.setText(Settings.SERVER_PORT.getValue());
+        this.ip.setText(Settings.SERVER_IP_ADDRESS.getStringValue());
+        this.port.setText(Settings.SERVER_PORT.getStringValue());
 
         this.errorMessage.setManaged(false);
 

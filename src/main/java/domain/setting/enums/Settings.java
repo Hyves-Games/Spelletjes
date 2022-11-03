@@ -10,19 +10,31 @@ import java.sql.Timestamp;
 public enum Settings {
     // server properties
     SERVER_IP_ADDRESS("server_ip_address","localhost"),
-    SERVER_PORT("server_port", "7789"),
+    SERVER_PORT("server_port", 7789),
 
     // audio properties
-    MUSIC_VOLUME_LOBBY("music_volume_lobby", "0.1");
+    MUSIC_VOLUME_LOBBY("music_volume_lobby", 0.1);
 
     private final String key;
-    private final String defaultValue;
-    private final Setting setting;
+    private final Serializable defaultValue;
 
-    Settings(String key, String defaultValue) {
+    Settings(String key, Serializable defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
-        this.setting = this.getSetting();
+    }
+
+    public static Settings getEnum(String key) {
+        for (Settings setting : Settings.values()) {
+            if (setting.getKey().equals(key)) {
+                return setting;
+            }
+        }
+
+        return null;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public Setting getSetting() {
@@ -34,11 +46,11 @@ public enum Settings {
         return setting;
     }
 
-    public String getDefaultValue() {
+    public Serializable getDefaultValue() {
         return defaultValue;
     }
 
-    public String getValue() {
+    public Serializable getValue() {
         Setting setting = new SettingQuery().filterByName(key).findOne();
         if (setting == null) {
             return defaultValue;
@@ -48,32 +60,35 @@ public enum Settings {
     }
 
     public Boolean getBooleanValue() {
-        return this.getSetting().getBooleanValue();
+        return Utils.convertSerializableToBoolean(getValue());
+    }
+
+    public String getStringValue() {
+        return Utils.convertSerializableToString(getValue());
     }
 
     public Integer getIntegerValue() {
-        return this.getSetting().getIntegerValue();
+        return Utils.convertSerializableToInteger(getValue());
     }
 
     public Double getDoubleValue() {
-        return this.getSetting().getDoubleValue();
+        return Utils.convertSerializableToDouble(getValue());
     }
 
     public Float getFloatValue() {
-        return this.getSetting().getFloatValue();
+        return Utils.convertSerializableToFloat(this.getValue());
     }
 
     public Timestamp getTimestampValue() {
-        return this.getSetting().getTimestampValue();
+        return Utils.convertSerializableToTimestamp(this.getValue());
     }
 
     public void saveWithValue(Serializable value) {
-        value = Utils.getValueForSerializable(value);
-
-        if (this.getSetting().getValue() == value) {
+        Setting setting = this.getSetting();
+        if (setting.getValue() == value) {
             return;
         }
 
-        this.setting.save();
+        setting.save();
     }
 }

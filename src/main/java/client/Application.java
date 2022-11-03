@@ -28,7 +28,7 @@ public class Application extends javafx.application.Application {
         Setting setting = new SettingQuery().filterByName("auto_login").findOne();
         if (setting != null) {
             try {
-                new LoginAction(setting.getValue());
+                new LoginAction(setting.getStringValue());
             } catch (LoginFailedException | NoServerConnectionException e) {
                 e.printStackTrace();
             }
@@ -43,7 +43,7 @@ public class Application extends javafx.application.Application {
     public static void main(String[] args) throws SQLException {
         DatabaseTableEnum.createTables();
         try {
-            new ConnectServerAction(Settings.SERVER_IP_ADDRESS.getValue(), Settings.SERVER_PORT.getIntegerValue());
+            new ConnectServerAction(Settings.SERVER_IP_ADDRESS.getStringValue(), Settings.SERVER_PORT.getIntegerValue());
         } catch (ServerConnectionFailedException ignored) {}
 
         launch();

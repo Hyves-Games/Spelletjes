@@ -1,7 +1,5 @@
 package support.database;
 
-import support.helpers.Utils;
-
 import java.io.Serializable;
 import java.lang.reflect.GenericDeclaration;
 import java.sql.PreparedStatement;
@@ -12,30 +10,30 @@ public class SQLiteValue {
 
     private Class type;
 
-    private String value;
+    private Serializable value;
 
     public <T> SQLiteValue(Serializable value) {
         this.type = value.getClass();
-        this.value = Utils.getValueForSerializable(value);
+        this.value = value;
     }
 
     public <T> GenericDeclaration getType() {
         return type;
     }
 
-    public String getValue() {
+    public Serializable getValue() {
         return value;
     }
 
     public void bindValueToPreparedStatement(PreparedStatement preparedStatement, int index) {
         try {
             switch (this.type.getSimpleName()) {
-                case "String" -> preparedStatement.setString(index, this.value);
-                case "Integer" -> preparedStatement.setInt(index, Integer.parseInt(this.value));
-                case "Float" -> preparedStatement.setFloat(index, Float.parseFloat(this.value));
-                case "Double" -> preparedStatement.setDouble(index, Double.parseDouble(this.value));
-                case "Boolean" -> preparedStatement.setBoolean(index, Boolean.parseBoolean(this.value));
-                case "Timestamp" -> preparedStatement.setTimestamp(index, new Timestamp(Long.parseLong(this.value)));
+                case "String" -> preparedStatement.setString(index, (String) this.value);
+                case "Integer" -> preparedStatement.setInt(index, (Integer) this.getValue());
+                case "Float" -> preparedStatement.setFloat(index, (Float) this.getValue());
+                case "Double" -> preparedStatement.setDouble(index, (Double) this.getValue());
+                case "Boolean" -> preparedStatement.setBoolean(index, (Boolean) this.getValue());
+                case "Timestamp" -> preparedStatement.setTimestamp(index, (Timestamp) this.getValue());
             }
         } catch (SQLException e) {
             e.printStackTrace();

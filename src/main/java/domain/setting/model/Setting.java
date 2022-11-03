@@ -1,5 +1,6 @@
 package domain.setting.model;
 
+import domain.setting.enums.Settings;
 import domain.setting.table.SettingTable;
 import support.abstracts.AbstractModel;
 import support.abstracts.AbstractTable;
@@ -7,11 +8,13 @@ import support.helpers.Utils;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Setting extends AbstractModel<Setting> {
 
     private String name;
-    private String value;
+    private Serializable value;
 
     @Override
     public AbstractTable getTable() {
@@ -20,9 +23,22 @@ public class Setting extends AbstractModel<Setting> {
 
     public Setting() {}
 
-    public Setting(String name, String value) {
+    public Setting(String name, Serializable value) {
         this.name = name;
-        this.value = value;
+
+        ArrayList<Class> allowedTypes = new ArrayList<>(Arrays.asList(
+                String.class,
+                Integer.class,
+                Float.class,
+                Double.class,
+                Boolean.class,
+                Timestamp.class
+        ));
+        if (allowedTypes.contains(value.getClass())) {
+            this.value = value;
+        } else {
+            throw new IllegalArgumentException("The type of the value is not allowed.");
+        }
     }
 
     public String getName() {
@@ -34,32 +50,40 @@ public class Setting extends AbstractModel<Setting> {
     }
 
     public Setting setValue(Serializable value) {
-        this.value = Utils.getValueForSerializable(value);
+        this.value = value;
 
         return this;
     }
 
-    public String getValue() {
-        return value;
+    public Serializable getDefaultValue() {
+        return Settings.valueOf(this.name).getDefaultValue();
+    }
+
+    public Serializable getValue() {
+        return this.value;
+    }
+
+    public String getStringValue() {
+        return Utils.convertSerializableToString(this.getValue());
     }
 
     public Integer getIntegerValue() {
-        return Integer.parseInt(this.getValue());
+        return Utils.convertSerializableToInteger(this.getValue());
     }
 
     public Double getDoubleValue() {
-        return Double.parseDouble(this.getValue());
+        return Utils.convertSerializableToDouble(this.getValue());
     }
 
     public Float getFloatValue() {
-        return Float.parseFloat(this.getValue());
+        return Utils.convertSerializableToFloat(this.getValue());
     }
 
     public Boolean getBooleanValue() {
-        return Boolean.parseBoolean(this.getValue());
+        return Utils.convertSerializableToBoolean(this.getValue());
     }
 
     public Timestamp getTimestampValue() {
-        return new Timestamp(Long.parseLong(this.getValue()));
+        return Utils.convertSerializableToTimestamp(this.getValue());
     }
 }

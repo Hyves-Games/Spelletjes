@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 abstract public class AbstractQuery<T extends AbstractQuery<T>> {
@@ -46,7 +45,7 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
         return null;
     }
 
-    private <M extends AbstractModel<M>> M getModelFromResultSet(ResultSet result) {
+    protected  <M extends AbstractModel<M>> M getModelFromResultSet(ResultSet result) {
         AbstractModel<M> model = this.getTable().getModel();
 
         try {
