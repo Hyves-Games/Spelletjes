@@ -89,6 +89,7 @@ public enum Settings {
             return;
         }
 
+        setting.setValue(value);
         setting.save();
     }
 }
