@@ -6,7 +6,7 @@ import domain.game.actions.ViewGameAction;
 import domain.game.actions.YourTurnAction;
 import support.services.Server;
 
-public class ResponseHandler extends Thread {
+public class ResponseHandler implements Runnable {
     private final Server connection = Server.getConnection();
 
     @Override
