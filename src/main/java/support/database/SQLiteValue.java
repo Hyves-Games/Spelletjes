@@ -54,6 +54,9 @@ public class SQLiteValue {
             switch (this.type.getSimpleName()) {
                 case "String" -> preparedStatement.setString(index, this.value);
                 case "Integer" -> preparedStatement.setInt(index, Integer.parseInt(this.value));
+                case "Float" -> preparedStatement.setFloat(index, Float.parseFloat(this.value));
+                case "Double" -> preparedStatement.setDouble(index, Double.parseDouble(this.value));
+                case "Boolean" -> preparedStatement.setBoolean(index, Boolean.parseBoolean(this.value));
                 case "Timestamp" -> preparedStatement.setTimestamp(index, new Timestamp(Long.parseLong(this.value)));
             }
         } catch (SQLException e) {

@@ -37,10 +37,13 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
         }
     }
 
-    public void preSave() {}
+    public boolean preSave() {return true;}
 
     public final T save() {
-        this.preSave();
+        boolean run = this.preSave();
+        if (!run) {
+            return (T) this;
+        }
 
         String sql = "";
         Field[] fields = this.getTable().getDeclaredFields();

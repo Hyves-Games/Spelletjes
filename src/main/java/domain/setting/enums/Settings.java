@@ -3,7 +3,6 @@ package domain.setting.enums;
 import domain.setting.model.Setting;
 import domain.setting.query.SettingQuery;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public enum Settings {
@@ -16,10 +15,12 @@ public enum Settings {
 
     private final String key;
     private final String defaultValue;
+    private final Setting setting;
 
     Settings(String key, String defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
+        this.setting = this.getSetting();
     }
 
     public Setting getSetting() {
@@ -45,54 +46,65 @@ public enum Settings {
     }
 
     public Boolean getBooleanValue() {
-        return Boolean.parseBoolean(getValue());
+        return this.getSetting().getBooleanValue();
     }
 
     public Integer getIntegerValue() {
-        return Integer.parseInt(getValue());
+        return this.getSetting().getIntegerValue();
     }
 
     public Double getDoubleValue() {
-        return Double.parseDouble(getValue());
+        return this.getSetting().getDoubleValue();
     }
 
     public Float getFloatValue() {
-        return Float.parseFloat(getValue());
+        return this.getSetting().getFloatValue();
     }
 
     public Timestamp getTimestampValue() {
-        return new Timestamp(Long.getLong(getValue()));
+        return this.getSetting().getTimestampValue();
     }
 
-    private void save(String value) {
-        if (this.getValue().equals(value)) {
+    private void save() {
+        if (this.getValue().equals(this.setting.getValue())) {
             return;
         }
 
-        this.getSetting().setValue(value).save();
+        this.getSetting().save();
     }
 
     public void saveWithValue(String value) {
-        this.save(value);
+        this.setting.setValue(value);
+
+        this.save();
     }
 
     public void saveWithValue(Double value) {
-        this.save(value.toString());
+        this.setting.setDoubleValue(value);
+
+        this.save();
     }
 
     public void saveWithValue(Integer value) {
-        this.save(value.toString());
+        this.setting.setIntegerValue(value);
+
+        this.save();
     }
 
     public void saveWithValue(Float value) {
-        this.save(value.toString());
+        this.setting.setFloatValue(value);
+        this.save();
     }
 
     public void saveWithValue(Boolean value) {
-        this.save(value.toString());
+        this.setting.setBooleanValue(value);
+
+        this.save();
     }
 
     public void saveWithValue(Timestamp value) {
-        this.save(Float.toString(value.getTime()));
+        this.setting.setTimestampValue(value);
+
+        this.save();
     }
 }

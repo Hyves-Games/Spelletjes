@@ -12,7 +12,7 @@ abstract public class AbstractTable {
 
     abstract protected <T extends AbstractModel<T>> T getModel();
 
-    public final void createTable() throws SQLException {
+    public final void createTable() {
         System.out.println("Create table: " + this.getTableName());
 
         String sql = "CREATE TABLE IF NOT EXISTS " + this.getTableName() + " (id integer PRIMARY KEY";
