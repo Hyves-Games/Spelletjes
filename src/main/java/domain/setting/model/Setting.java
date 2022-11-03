@@ -4,7 +4,7 @@ import domain.setting.table.SettingTable;
 import support.abstracts.AbstractModel;
 import support.abstracts.AbstractTable;
 
-public class Setting extends AbstractModel {
+public class Setting extends AbstractModel<Setting> {
 
     private String name;
     private String value;
@@ -14,9 +14,7 @@ public class Setting extends AbstractModel {
         return new SettingTable();
     }
 
-    public Setting() {
-        super();
-    }
+    public Setting() {}
 
     public Setting(
             String name,
@@ -38,7 +36,9 @@ public class Setting extends AbstractModel {
         return value;
     }
 
-    public void setValue(String value) {
+    public Setting setValue(String value) {
         this.value = value;
+
+        return this;
     }
 }

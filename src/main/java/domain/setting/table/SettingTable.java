@@ -15,7 +15,7 @@ public class SettingTable extends AbstractTable {
     }
 
     @Override
-    protected AbstractModel getModel() {
-        return new Setting();
+    protected <T extends AbstractModel<T>> T getModel() {
+        return (T) new Setting();
     }
 }

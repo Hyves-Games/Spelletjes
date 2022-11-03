@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-abstract public class AbstractModel {
+abstract public class AbstractModel<T extends AbstractModel<T>> {
     protected int id = 0;
 
     abstract public AbstractTable getTable();
@@ -39,7 +39,7 @@ abstract public class AbstractModel {
 
     public void preSave() {}
 
-    public final AbstractModel save() throws SQLException {
+    public final T save() {
         this.preSave();
 
         String sql = "";
@@ -52,12 +52,12 @@ abstract public class AbstractModel {
             sql = this.getUpdateQuery(fields);
         }
 
-        // prepare statement and bind values
-        PreparedStatement preparedStatement = SQLite.getInstance().getConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        try {
+            // prepare statement and bind values
+            PreparedStatement preparedStatement = SQLite.getInstance().getConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-        int index = 1;
-        for (Field field: fields) {
-            try {
+            int index = 1;
+            for (Field field: fields) {
                 Field modelField = this.getClass().getDeclaredField(field.getName());
                 modelField.setAccessible(true);
 
@@ -68,33 +68,26 @@ abstract public class AbstractModel {
                     default -> throw new RuntimeException("Unsupported field type: " + field.getType().getSimpleName());
                 }
 
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (NoSuchFieldException e) {
-                throw new RuntimeException(e);
+                index++;
             }
 
-            index++;
-        }
+            // add id to update query
+            if (!this.isNew()) {
+                preparedStatement.setInt(index, this.id);
+            }
 
-        // add id to update query
-        if (!this.isNew()) {
-            preparedStatement.setInt(index, this.id);
-        }
+            // execute insert SQL statement
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating row failed, no rows affected.");
+            }
 
-        // execute insert SQL statement
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows == 0) {
-            throw new SQLException("Creating row failed, no rows affected.");
-        }
-
-        try {
             this.id = preparedStatement.getGeneratedKeys().getInt(1);
-        } catch (SQLException e) {
+        } catch (SQLException|IllegalAccessException|NoSuchFieldException e) {
             e.printStackTrace();
         }
 
-        return this;
+        return (T) this;
     }
 
     private String getInsertQuery(Field[] fields) {

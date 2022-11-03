@@ -10,7 +10,7 @@ abstract public class AbstractTable {
 
     abstract protected String getTableName();
 
-    abstract protected AbstractModel getModel();
+    abstract protected <T extends AbstractModel<T>> T getModel();
 
     public final void createTable() throws SQLException {
         System.out.println("Create table: " + this.getTableName());

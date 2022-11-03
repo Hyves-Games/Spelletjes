@@ -1,7 +1,5 @@
 package support.database;
 
-import support.enums.DatabaseTableEnum;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,12 +17,12 @@ public class SQLite {
         this.connection = DriverManager.getConnection(DB_PATH);
     }
 
-    public static SQLite getInstance() throws SQLException {
+    public static SQLite getInstance() {
         if (SQLite.instance == null) {
             try {
                 SQLite.instance = new SQLite();
             } catch (SQLException e) {
-                throw new SQLException("Failed to connect to database: " + e.getMessage());
+                e.printStackTrace();
             }
         }
 

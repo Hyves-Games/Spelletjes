@@ -1,5 +1,6 @@
 package client;
 
+import domain.setting.enums.Settings;
 import domain.setting.model.Setting;
 import domain.setting.query.SettingQuery;
 import javafx.stage.Stage;
@@ -17,14 +18,11 @@ public class Application extends javafx.application.Application {
     private static AbstractGameBoard gameBoard;
 
     @Override
-    public void start(Stage stage) throws SQLException, NoSuchFieldException, IllegalAccessException {
+    public void start(Stage stage) throws SQLException {
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
-        SettingQuery settingQuery = new SettingQuery();
-        System.out.println(settingQuery.where("name", "=", "Appel").find()[0].getId());
-
         AudioPlayer.play();
-        AudioPlayer.setVolume(0);
+        AudioPlayer.setVolume(Settings.MUSIC_VOLUME_LOBBY.getDoubleValue());
 
         // initialize loaders
         DatabaseTableEnum.createTables();
@@ -32,7 +30,7 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
         try {
-            new ConnectServerAction("localhost", 7789);
+            new ConnectServerAction(Settings.SERVER_IP_ADDRESS.getValue(), Settings.SERVER_PORT.getIntegerValue());
         } catch (ServerConnectionFailedException ignored) {}
 
         launch();
