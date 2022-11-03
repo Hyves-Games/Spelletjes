@@ -22,6 +22,9 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws SQLException {
+        // initialize loaders
+        DatabaseTableEnum.createTables();
+
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
         Setting setting = new SettingQuery().filterByName("auto_login").findOne();
@@ -37,9 +40,6 @@ public class Application extends javafx.application.Application {
 
         AudioPlayer.play();
         AudioPlayer.setVolume(Settings.MUSIC_VOLUME_LOBBY.getDoubleValue());
-
-        // initialize loaders
-        DatabaseTableEnum.createTables();
     }
 
     public static void main(String[] args) {
