@@ -1,7 +1,7 @@
 package client.game.board.controller;
 
 import client.Application;
-import domain.game.model.TicTacToe;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -17,7 +17,6 @@ import support.exceptions.NoServerConnectionException;
 import support.helpers.SceneSwitcher;
 
 import java.util.Optional;
-import java.util.*;
 
 public class TicTacToeController {
 
@@ -39,33 +38,32 @@ public class TicTacToeController {
     @FXML Button btn_7;
     @FXML Button btn_8;
 
-    private Button[] board;
-
     @FXML VBox boardContainer;
 
+    private Button[] board;
     private final AbstractGameBoard gameBoard = Application.getGameBoard();
 
     public void initialize() {
         this.board = new Button[]{btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8};
 
-        player_1.setText(this.gameBoard.getPlayer().getUsername());
-        player_2.setText(this.gameBoard.getOpponent().getUsername());
+        player_1.setText("O " + this.gameBoard.getPlayer().getUsername());
+        player_2.setText("X " + this.gameBoard.getOpponent().getUsername());
 
-        this.setTurn();
+        this.gameBoard.setEventListenerForTurn(() -> {
+            Platform.runLater(this::changeTurn);
+        });
+
+        this.gameBoard.setEventListenerForBoard(() -> {
+            Platform.runLater(this::changeBoardView);
+        });
+
+        this.changeTurn();
     }
 
     public void onMoveClick(ActionEvent event) {
-        Integer index = Integer.valueOf(
-                ((Node)(event.getSource())).getId().split("_")[1]
-        );
+        int index = Integer.parseInt(((Node) (event.getSource())).getId().split("_")[1]);
 
-        this.changeTurn(!this.gameBoard.setMove(index));
-        
-        for (int i = 0; i < this.board.length; i++) {
-            if(i == index) {
-                this.board[i].setText("0");
-            }
-        }
+        this.gameBoard.doMove(index);
     }
 
     public void onLeaveClick(ActionEvent event) {
@@ -88,28 +86,41 @@ public class TicTacToeController {
         }
     }
 
-    private void setTurn() {
-        if (this.gameBoard.isYourTurn()) {
-            this.player_1_turn.setText("your turn");
-            this.player_2_turn.setText(null);
-
-            this.disableBoard(false);
+    private void changeTurn() {
+        if (this.gameBoard.isPlayerTurn()) {
+            this.setPlayerTurn();
         } else {
-            this.player_1_turn.setText(null);
-            this.player_2_turn.setText("your turn");
-
-            this.disableBoard(true);
+            this.setOpponentTurn();
         }
     }
 
-    private void changeTurn(Boolean condition) {
-        this.gameBoard.setYourTurn(condition);
+    private void setPlayerTurn() {
+        this.player_1_turn.setText("Your turn");
+        this.player_2_turn.setText(null);
 
-        this.setTurn();
+        this.boardContainer.setDisable(false);
     }
 
-    private void disableBoard(Boolean condition) {
-        this.boardContainer.setDisable(condition);
+    private void setOpponentTurn() {
+        this.player_1_turn.setText(null);
+        this.player_2_turn.setText("Your turn");
+
+        this.boardContainer.setDisable(true);
+    }
+
+    private void changeBoardView() {
+        Object[] values = this.gameBoard.getBoard();
+
+        for (int i = 0; i < values.length; i++) {
+            Integer value = (Integer) values[i];
+
+            if (value != 0) {
+                Button btn = this.board[i];
+
+                btn.setDisable(true);
+                btn.setText(value == 1 ? "O" : "X");
+            }
+        }
     }
 }
 
