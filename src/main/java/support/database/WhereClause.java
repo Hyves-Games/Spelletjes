@@ -1,11 +1,10 @@
 package support.database;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public record WhereClause(String column, String operator, SQLiteValue value) {
 
-    public String getWhereClause() {
+    public String sqlQuery() {
         return this.column + " " + this.operator + " ?";
     }
 

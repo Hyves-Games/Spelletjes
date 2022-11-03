@@ -41,7 +41,7 @@ public class SettingsController extends AbstractController {
     public void onBackClick() {
         Settings.SERVER_IP_ADDRESS.saveWithValue(ip.getText());
         Settings.SERVER_PORT.saveWithValue(port.getText());
-        Settings.MUSIC_VOLUME_LOBBY.saveWithValue(volumeSlider.getValue());
+        Settings.MUSIC_VOLUME_LOBBY.saveWithValue(volumeSlider.getValue() / 100);
 
         if (Auth.check()) {
             SceneEnum.LOBBY.switchTo();

@@ -9,21 +9,21 @@ public class SQLite {
 
     public static final String DB_PATH = "jdbc:sqlite:src/main/resources/databases/" + DB_NAME;
 
-    private final Connection connection;
+    private Connection connection;
 
     private static SQLite instance;
 
-    public SQLite() throws SQLException {
-        this.connection = DriverManager.getConnection(DB_PATH);
+    public SQLite() {
+        try {
+            this.connection = DriverManager.getConnection(DB_PATH);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static SQLite getInstance() {
         if (SQLite.instance == null) {
-            try {
-                SQLite.instance = new SQLite();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            SQLite.instance = new SQLite();
         }
 
         return SQLite.instance;

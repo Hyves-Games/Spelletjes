@@ -4,6 +4,8 @@ import support.database.SQLite;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 abstract public class AbstractTable {
@@ -13,8 +15,6 @@ abstract public class AbstractTable {
     abstract protected <T extends AbstractModel<T>> T getModel();
 
     public final void createTable() {
-        System.out.println("Create table: " + this.getTableName());
-
         String sql = "CREATE TABLE IF NOT EXISTS " + this.getTableName() + " (id integer PRIMARY KEY";
 
         for (Field field : this.getDeclaredFields()) {
@@ -35,7 +35,7 @@ abstract public class AbstractTable {
         SQLite.getInstance().execute(sql);
     }
 
-    public final Field[] getDeclaredFields() {
-        return this.getClass().getDeclaredFields();
+    public final ArrayList<Field> getDeclaredFields() {
+        return new ArrayList<>(Arrays.asList(this.getModel().getClass().getDeclaredFields()));
     }
 }

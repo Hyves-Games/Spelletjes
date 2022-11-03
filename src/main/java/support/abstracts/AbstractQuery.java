@@ -4,6 +4,7 @@ import support.database.SQLite;
 import support.database.SQLiteValue;
 import support.database.WhereClause;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,56 +13,57 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 abstract public class AbstractQuery<T extends AbstractQuery<T>> {
-    private final StringBuilder query;
 
+    private final StringBuilder query = new StringBuilder("SELECT * FROM " + this.getTable().getTableName());
     private final ArrayList<WhereClause> whereClauses = new ArrayList<>();
-
-    public AbstractQuery() {
-        this.query = new StringBuilder("SELECT * FROM " + this.getTable().getTableName());
-    }
 
     abstract public AbstractTable getTable();
 
-    private PreparedStatement getStatement() throws SQLException {
+    private PreparedStatement getStatement() {
         // add where clauses to query
-
-        boolean first = true;
         for (WhereClause whereClause : this.whereClauses) {
-            if (first) {
-                this.query.append(" WHERE ").append(whereClause.getWhereClause());
-                first = false;
+            if (whereClauses.get(0) == whereClause) {
+                this.query.append(" WHERE ").append(whereClause.sqlQuery());
             } else {
-                this.query.append(" AND ").append(whereClause.getWhereClause());
+                this.query.append(" AND ").append(whereClause.sqlQuery());
             }
         }
 
-        PreparedStatement statement = SQLite.getInstance().getConnection().prepareStatement(this.query.toString());
-
         // bind data to where clauses
-        int index = 1;
-        for (WhereClause whereClause : this.whereClauses) {
-            whereClause.bindValue(statement, index);
+        try {
+            PreparedStatement statement = SQLite.getInstance().getConnection().prepareStatement(this.query.toString());
 
-            index++;
+            for (WhereClause whereClause : this.whereClauses) {
+                whereClause.bindValue(statement, whereClauses.indexOf(whereClause) + 1);
+            }
+
+            return statement;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        return statement;
+
+        return null;
     }
 
-    private <M extends AbstractModel<M>> M getModelFromResultSet(ResultSet result) throws SQLException, NoSuchFieldException, IllegalAccessException {
+    private <M extends AbstractModel<M>> M getModelFromResultSet(ResultSet result) {
         AbstractModel<M> model = this.getTable().getModel();
 
-        // set id
-        Field idField = model.getClass().getSuperclass().getDeclaredField("id");
+        try {
+            // set id
+            Field idField = model.getClass().getSuperclass().getDeclaredField("id");
 
-        idField.setAccessible(true);
-        idField.set(model, result.getInt("id"));
+            idField.setAccessible(true);
+            idField.set(model, result.getInt("id"));
 
-        // set other fields
-        for (Field field : model.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
+            // set other fields
+            for (Field field : model.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
 
-            field.set(model, result.getObject(field.getName()));
+                field.set(model, result.getObject(field.getName()));
+            }
+        } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
         }
 
         return (M) model;
@@ -75,7 +77,7 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
             while (result.next()) {
                 models.add(this.getModelFromResultSet(result));
             }
-        } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -89,7 +91,7 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
             if (result.next()) {
                 return this.getModelFromResultSet(result);
             }
-        } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -112,50 +114,8 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
         return this.findOne();
     }
 
-    public T where(String column, String operator, String value) {
-        this.whereClauses.add(
-            new WhereClause(column, operator, new SQLiteValue(String.class, value))
-        );
-
-        return (T) this;
-    }
-
-    public T where(String column, String operator, Integer value) {
-        this.whereClauses.add(
-                new WhereClause(column, operator, new SQLiteValue(Integer.class, value))
-        );
-
-        return (T) this;
-    }
-
-    public T where(String column, String operator, Float value) {
-        this.whereClauses.add(
-                new WhereClause(column, operator, new SQLiteValue(Float.class, value))
-        );
-
-        return (T) this;
-    }
-
-    public T where(String column, String operator, Double value) {
-        this.whereClauses.add(
-                new WhereClause(column, operator, new SQLiteValue(Double.class, value))
-        );
-
-        return (T) this;
-    }
-
-    public T where(String column, String operator, Boolean value) {
-        this.whereClauses.add(
-                new WhereClause(column, operator, new SQLiteValue(Boolean.class, value))
-        );
-
-        return (T) this;
-    }
-
-    public T where(String column, String operator, Timestamp value) {
-        this.whereClauses.add(
-                new WhereClause(column, operator, new SQLiteValue(Timestamp.class, value))
-        );
+    public T where(String column, String operator, Serializable value) {
+        this.whereClauses.add(new WhereClause(column, operator, new SQLiteValue(value)));
 
         return (T) this;
     }

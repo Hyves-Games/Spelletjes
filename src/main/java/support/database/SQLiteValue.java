@@ -1,5 +1,8 @@
 package support.database;
 
+import support.helpers.Utils;
+
+import java.io.Serializable;
 import java.lang.reflect.GenericDeclaration;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,34 +14,9 @@ public class SQLiteValue {
 
     private String value;
 
-    public <T> SQLiteValue(Class<T> type, String value) {
-        this.type = type;
-        this.value = value;
-    }
-
-    public <T> SQLiteValue(Class<T> type, Integer value) {
-        this.type = type;
-        this.value = value.toString();
-    }
-
-    public <T> SQLiteValue(Class<T> type, Float value) {
-        this.type = type;
-        this.value = value.toString();
-    }
-
-    public <T> SQLiteValue(Class<T> type, Double value) {
-        this.type = type;
-        this.value = value.toString();
-    }
-
-    public <T> SQLiteValue(Class<T> type, Boolean value) {
-        this.type = type;
-        this.value = value.toString();
-    }
-
-    public <T> SQLiteValue(Class<T> type, Timestamp value) {
-        this.type = type;
-        this.value = Long.toString(value.getTime());
+    public <T> SQLiteValue(Serializable value) {
+        this.type = value.getClass();
+        this.value = Utils.getValueForSerializable(value);
     }
 
     public <T> GenericDeclaration getType() {

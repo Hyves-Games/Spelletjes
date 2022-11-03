@@ -2,7 +2,9 @@ package domain.setting.enums;
 
 import domain.setting.model.Setting;
 import domain.setting.query.SettingQuery;
+import support.helpers.Utils;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 public enum Settings {
@@ -65,46 +67,13 @@ public enum Settings {
         return this.getSetting().getTimestampValue();
     }
 
-    private void save() {
-        if (this.getValue().equals(this.setting.getValue())) {
+    public void saveWithValue(Serializable value) {
+        value = Utils.getValueForSerializable(value);
+
+        if (this.getSetting().getValue() == value) {
             return;
         }
 
         this.setting.save();
-    }
-
-    public void saveWithValue(String value) {
-        this.setting.setValue(value);
-
-        this.save();
-    }
-
-    public void saveWithValue(Double value) {
-        this.setting.setDoubleValue(value);
-
-        this.save();
-    }
-
-    public void saveWithValue(Integer value) {
-        this.setting.setIntegerValue(value);
-
-        this.save();
-    }
-
-    public void saveWithValue(Float value) {
-        this.setting.setFloatValue(value);
-        this.save();
-    }
-
-    public void saveWithValue(Boolean value) {
-        this.setting.setBooleanValue(value);
-
-        this.save();
-    }
-
-    public void saveWithValue(Timestamp value) {
-        this.setting.setTimestampValue(value);
-
-        this.save();
     }
 }

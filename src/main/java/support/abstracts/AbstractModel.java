@@ -5,6 +5,7 @@ import support.database.SQLite;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 abstract public class AbstractModel<T extends AbstractModel<T>> {
     protected int id = 0;
@@ -19,10 +20,14 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
         return id;
     }
 
+    public void preDelete() {}
+
     public void delete() {
         if (this.isNew()) {
             throw new RuntimeException("Cannot delete a new model");
         }
+
+        this.preDelete();
 
         String sql = "DELETE FROM " + this.getTable().getTableName() + " WHERE id = ?";
 
@@ -37,30 +42,23 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
         }
     }
 
-    public boolean preSave() {return true;}
+    public void preSave() {}
 
     public final T save() {
-        boolean run = this.preSave();
-        if (!run) {
-            return (T) this;
-        }
-
-        String sql = "";
-        Field[] fields = this.getTable().getDeclaredFields();
+        this.preSave();
 
         // create sql query for insert or update
-        if (this.isNew()) {
-            sql = this.getInsertQuery(fields);
-        } else {
-            sql = this.getUpdateQuery(fields);
-        }
+        ArrayList<Field> fields = this.getTable().getDeclaredFields();
+        String sql = this.isNew() ? this.getInsertQuery(fields) : this.getUpdateQuery(fields);
 
         try {
             // prepare statement and bind values
-            PreparedStatement preparedStatement = SQLite.getInstance().getConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = SQLite.getInstance()
+                    .getConnection()
+                    .prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            int index = 1;
             for (Field field: fields) {
+                int index = fields.indexOf(field) + 1;
                 Field modelField = this.getClass().getDeclaredField(field.getName());
                 modelField.setAccessible(true);
 
@@ -71,12 +69,9 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
                     default -> throw new RuntimeException("Unsupported field type: " + field.getType().getSimpleName());
                 }
 
-                index++;
-            }
-
-            // add id to update query
-            if (!this.isNew()) {
-                preparedStatement.setInt(index, this.id);
+                if (!this.isNew() && fields.get(fields.size() - 1) == field) {
+                    preparedStatement.setInt(index + 1, this.id);
+                }
             }
 
             // execute insert SQL statement
@@ -93,16 +88,12 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
         return (T) this;
     }
 
-    private String getInsertQuery(Field[] fields) {
+    private String getInsertQuery(ArrayList<Field> fields) {
         StringBuilder sql = new StringBuilder("INSERT INTO " + this.getTable().getTableName() + " (");
-
-        boolean first = true;
 
         // generate field names for insert
         for (Field field : fields) {
-            if (first) {
-                first = false;
-            } else {
+            if (fields.get(0) != field) {
                 sql.append(", ");
             }
 
@@ -111,22 +102,18 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
 
         // generate binding values for insert
         sql.append(") VALUES (?");
-        sql.append(", ?".repeat(Math.max(0, fields.length - 1)));
+        sql.append(", ?".repeat(Math.max(0, fields.size() - 1)));
         sql.append(");");
 
         return sql.toString();
     }
 
-    private String getUpdateQuery(Field[] fields) {
+    private String getUpdateQuery(ArrayList<Field> fields) {
         StringBuilder sql = new StringBuilder("UPDATE " + this.getTable().getTableName() + " SET ");
-
-        boolean first = true;
 
         // generate field names for update
         for (Field field : fields) {
-            if (first) {
-                first = false;
-            } else {
+            if (fields.get(0) != field) {
                 sql.append(", ");
             }
 
@@ -134,7 +121,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
         }
 
         // add where clause
-        sql.append("WHERE id = ?;");
+        sql.append(" WHERE id = ?;");
 
         return sql.toString();
     }

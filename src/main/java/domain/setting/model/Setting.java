@@ -3,7 +3,9 @@ package domain.setting.model;
 import domain.setting.table.SettingTable;
 import support.abstracts.AbstractModel;
 import support.abstracts.AbstractTable;
+import support.helpers.Utils;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class Setting extends AbstractModel<Setting> {
@@ -18,10 +20,7 @@ public class Setting extends AbstractModel<Setting> {
 
     public Setting() {}
 
-    public Setting(
-            String name,
-            String value
-    ) {
+    public Setting(String name, String value) {
         this.name = name;
         this.value = value;
     }
@@ -34,38 +33,8 @@ public class Setting extends AbstractModel<Setting> {
         this.name = name;
     }
 
-    public Setting setValue(String value) {
-        this.value = value;
-
-        return this;
-    }
-
-    public Setting setIntegerValue(Integer value) {
-        this.value = value.toString();
-
-        return this;
-    }
-
-    public Setting setDoubleValue(Double value) {
-        this.value = value.toString();
-
-        return this;
-    }
-
-    public Setting setFloatValue(Float value) {
-        this.value = value.toString();
-
-        return this;
-    }
-
-    public Setting setBooleanValue(Boolean value) {
-        this.value = value.toString();
-
-        return this;
-    }
-
-    public Setting setTimestampValue(Timestamp value) {
-        this.value = Float.toString(value.getTime());
+    public Setting setValue(Serializable value) {
+        this.value = Utils.getValueForSerializable(value);
 
         return this;
     }
@@ -75,22 +44,22 @@ public class Setting extends AbstractModel<Setting> {
     }
 
     public Integer getIntegerValue() {
-        return Integer.parseInt(value);
+        return Integer.parseInt(this.getValue());
     }
 
     public Double getDoubleValue() {
-        return Double.parseDouble(value);
+        return Double.parseDouble(this.getValue());
     }
 
     public Float getFloatValue() {
-        return Float.parseFloat(value);
+        return Float.parseFloat(this.getValue());
     }
 
     public Boolean getBooleanValue() {
-        return Boolean.parseBoolean(value);
+        return Boolean.parseBoolean(this.getValue());
     }
 
     public Timestamp getTimestampValue() {
-        return new Timestamp(Long.parseLong(value));
+        return new Timestamp(Long.parseLong(this.getValue()));
     }
 }
