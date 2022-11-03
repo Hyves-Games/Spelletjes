@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class SceneSwitcher {
+    private SceneEnum scene;
     private final Stage stage;
     private static SceneSwitcher instance;
 
@@ -27,8 +28,8 @@ public class SceneSwitcher {
 
     public SceneSwitcher(Stage stage) {
         this.stage = stage;
-        this.stage.setWidth(1300);
-        this.stage.setHeight(800);
+        this.stage.setWidth(900);
+        this.stage.setHeight(600);
 
         SceneSwitcher.instance = this;
     }
@@ -49,11 +50,13 @@ public class SceneSwitcher {
                     Application.class.getResource(clientScene.path())
             );
 
-            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight() - 28);
+            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight());
 
             this.stage.setTitle(clientScene.title());
             this.stage.setScene(scene);
             this.stage.show();
+
+            this.scene = sceneEnum;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,5 +64,9 @@ public class SceneSwitcher {
 
     public Stage getStage() {
         return this.stage;
+    }
+
+    public SceneEnum getScene() {
+        return this.scene;
     }
 }

@@ -1,6 +1,9 @@
 package support.helpers;
 
+import domain.game.actions.EndGameAction;
+import domain.game.actions.MoveGameAction;
 import domain.game.actions.ViewGameAction;
+import domain.game.actions.YourTurnAction;
 import support.services.Server;
 
 public class ResponseHandler extends Thread {
@@ -14,18 +17,15 @@ public class ResponseHandler extends Thread {
 
                 if (response != null) {
                     switch (response.getType()) {
+                        case YOURTURN -> new YourTurnAction();
+                        case MOVE -> new MoveGameAction(response.getData());
                         case MATCH -> new ViewGameAction(response.getData());
-                        case YOURTURN -> {}
-                        case WIN -> {}
-                        case DRAW -> {}
-                        case LOSS -> {}
-                        case MOVE -> {}
-                        case PLAYERLIST -> {}
+                        case WIN, LOSS, DRAW -> new EndGameAction(response.getType());
                         case OK, ERROR -> this.server.responseHandled();
                     }
                 }
             } catch (Exception e) {
-                System.err.println(e.toString());
+                throw new RuntimeException(e);
             }
         }
     }

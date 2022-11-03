@@ -13,11 +13,11 @@ import javafx.scene.layout.VBox;
 import support.abstracts.AbstractGameBoard;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 import java.util.HashMap;
 
 public class GameSelectorController {
-
     @FXML HBox container;
 
     public void initialize() {
@@ -31,9 +31,9 @@ public class GameSelectorController {
             ImageView icon = this.createImage(gameProperties.getIconPath(), 60, 60);
 
             gameButton.setGraphic(icon);
-            gameButton.setOnAction(this::onGameChoose);
-            gameButton.setId(gameProperties.getName());
             gameContainer.setSpacing(10);
+            gameButton.setId(type.toString());
+            gameButton.setOnAction(this::onGameChoose);
 
             gameContainer.getChildren().add(gameButton);
             gameContainer.getChildren().add(gameName);
@@ -42,8 +42,9 @@ public class GameSelectorController {
     }
 
     public void onGameChoose(ActionEvent event) {
-        //Gamemode print
-        System.out.println(((Node)event.getSource()).getId());
+        Auth.getPlayer().setLastGameMode(GameModeEnum.valueOf(
+                ((Node)event.getSource()).getId()
+        ));
 
         SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
     }

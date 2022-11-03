@@ -1,6 +1,7 @@
 package domain.game.model;
 
 import client.Application;
+
 import support.abstracts.AbstractGameBoard;
 
 public class TicTacToe extends AbstractGameBoard {
