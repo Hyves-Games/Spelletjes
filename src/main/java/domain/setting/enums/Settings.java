@@ -70,7 +70,7 @@ public enum Settings {
             return;
         }
 
-        this.getSetting().save();
+        this.setting.save();
     }
 
     public void saveWithValue(String value) {
