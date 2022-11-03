@@ -13,8 +13,9 @@ import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 public class ViewGameAction extends AbstractAction {
-    private SceneEnum scene;
     private final JsonObject data;
+
+    private SceneEnum scene;
     private AbstractGameBoard gameBoard;
 
     public ViewGameAction(JsonObject data) throws GameNotImplementedException {

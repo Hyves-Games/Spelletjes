@@ -12,9 +12,7 @@ public class EndGameAction extends AbstractAction {
     public EndGameAction(ServerResponseEnum type) {
         this.type = type;
 
-        try {
-            this.handler();
-        } catch (Exception ignored) {}
+        try {this.handler();} catch (Exception ignored) {}
     }
 
     @Override
