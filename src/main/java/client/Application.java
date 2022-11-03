@@ -21,9 +21,7 @@ public class Application extends javafx.application.Application {
     private static AbstractGameBoard gameBoard;
 
     @Override
-    public void start(Stage stage) throws SQLException {
-        // initialize loaders
-        DatabaseTableEnum.createTables();
+    public void start(Stage stage) {
 
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
@@ -42,7 +40,8 @@ public class Application extends javafx.application.Application {
         AudioPlayer.setVolume(Settings.MUSIC_VOLUME_LOBBY.getDoubleValue());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        DatabaseTableEnum.createTables();
         try {
             new ConnectServerAction(Settings.SERVER_IP_ADDRESS.getValue(), Settings.SERVER_PORT.getIntegerValue());
         } catch (ServerConnectionFailedException ignored) {}
