@@ -15,17 +15,6 @@ public class SceneSwitcher {
     private final Stage stage;
     private static SceneSwitcher instance;
 
-    private final HashMap<SceneEnum, ClientScene> availableScenes = new HashMap<>() {{
-        put(SceneEnum.LOGIN, new ClientScene("authenticator", "login", "Login"));
-        put(SceneEnum.LOBBY, new ClientScene("lobby", "lobby", "Lobby"));
-        put(SceneEnum.SETTING, new ClientScene("settings", "settings", "Settings"));
-        put(SceneEnum.TIC_TAC_TOE, new ClientScene("game/board", "ticTacToe", "Tic-Tac-Toe"));
-        put(SceneEnum.PLAYER_LIST, new ClientScene("playerList", "playerList","Players list"));
-        put(SceneEnum.GAME_MODE_SELECTOR, new ClientScene("game","gameModeSelector", "Game mode"));
-        put(SceneEnum.GAME_SELECTOR, new ClientScene("game","gameSelector", "Game"));
-        put(SceneEnum.WAIT_ROOM, new ClientScene("waitingRoom", "waitingRoom","Finding a game"));
-    }};
-
     public SceneSwitcher(Stage stage) {
         this.stage = stage;
         this.stage.setWidth(900);
@@ -43,7 +32,7 @@ public class SceneSwitcher {
     }
 
     public void change(SceneEnum sceneEnum) {
-        ClientScene clientScene = this.availableScenes.get(sceneEnum);
+        ClientScene clientScene = sceneEnum.getClientScene();
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
