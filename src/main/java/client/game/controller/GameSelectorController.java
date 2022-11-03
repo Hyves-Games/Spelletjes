@@ -46,11 +46,11 @@ public class GameSelectorController {
                 ((Node)event.getSource()).getId()
         ));
 
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
+        SceneEnum.GAME_MODE_SELECTOR.switchTo();
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        SceneEnum.LOBBY.switchTo();
     }
 
     private AbstractGameBoard getGameBoard(GameModeEnum type) {

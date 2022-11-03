@@ -1,6 +1,5 @@
 package client.game.board.controller;
 
-import client.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +12,7 @@ import javafx.stage.Stage;
 import support.abstracts.AbstractGameBoard;
 import support.actions.StopGameAction;
 import support.enums.SceneEnum;
-import support.exceptions.NoServerConnectionException;
-import support.helpers.SceneSwitcher;
+import support.helpers.Auth;
 
 import java.util.Optional;
 
@@ -41,7 +39,7 @@ public class TicTacToeController {
     @FXML VBox boardContainer;
 
     private Button[] board;
-    private final AbstractGameBoard gameBoard = Application.getGameBoard();
+    private final AbstractGameBoard gameBoard = Auth.getPlayer().getGameBoard();
 
     public void initialize() {
         this.board = new Button[]{btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8};
@@ -49,11 +47,11 @@ public class TicTacToeController {
         player_1.setText("O " + this.gameBoard.getPlayer().getUsername());
         player_2.setText("X " + this.gameBoard.getOpponent().getUsername());
 
-        this.gameBoard.setEventListenerForTurn(() -> {
+        this.gameBoard.addEventListenerForTurn(() -> {
             Platform.runLater(this::changeTurn);
         });
 
-        this.gameBoard.setEventListenerForBoard(() -> {
+        this.gameBoard.addEventListenerForBoard(() -> {
             Platform.runLater(this::changeBoardView);
         });
 
@@ -78,11 +76,9 @@ public class TicTacToeController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.get() == ButtonType.OK) {
-            try {
-                new StopGameAction();
-            } catch (NoServerConnectionException ignored) {}
+            new StopGameAction();
 
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         }
     }
 

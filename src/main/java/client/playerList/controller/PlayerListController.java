@@ -38,7 +38,7 @@ public class PlayerListController {
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        SceneEnum.LOBBY.switchTo();
     }
 
     public void onInviteClick(ActionEvent event) {

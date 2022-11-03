@@ -4,8 +4,6 @@ import support.abstracts.AbstractServerAction;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.ResponseHandler;
 
-import java.util.Set;
-
 public class ConnectServerAction extends AbstractServerAction {
     private final String host;
     private final Integer port;
@@ -20,14 +18,10 @@ public class ConnectServerAction extends AbstractServerAction {
     @Override
     protected void handler() throws ServerConnectionFailedException {
         if (this.isConnected()) {
-            this.server.disconnect();
+            this.connection.disconnect();
         }
 
-        boolean success = this.server.connect(this.host, this.port);
-
-        if (!success) {
-            throw new ServerConnectionFailedException();
-        }
+        this.connection.connect(this.host, this.port);
 
         new Thread(new ResponseHandler()).start();
     }

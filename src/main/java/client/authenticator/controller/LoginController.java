@@ -36,7 +36,7 @@ public class LoginController extends AbstractController {
 
             new LoginAction(loginFieldText.trim());
 
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         } catch (LoginFailedException e) {
             this.setError(this.errorMessage, "Failed to login");
         } catch (NoServerConnectionException e) {
@@ -45,7 +45,7 @@ public class LoginController extends AbstractController {
     }
 
     public void onSettingsClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.SETTING);
+        SceneEnum.SETTING.switchTo();
     }
 
 }

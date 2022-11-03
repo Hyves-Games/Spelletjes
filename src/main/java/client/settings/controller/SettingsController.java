@@ -1,5 +1,6 @@
 package client.settings.controller;
 
+import domain.setting.enums.Settings;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.fxml.FXML;
@@ -23,28 +24,29 @@ public class SettingsController extends AbstractController {
     @FXML Slider volumeSlider;
 
     public void initialize() {
-        this.port.setText("7789");
-        this.ip.setText("localhost");
+        this.ip.setText(Settings.SERVER_IP_ADDRESS.getStringValue());
+        this.port.setText(Settings.SERVER_PORT.getStringValue());
 
         this.errorMessage.setManaged(false);
 
         this.volumeSlider.setValue(AudioPlayer.getVolume() * 100);
         this.volumeLevel.setText(Long.toString(Math.round(volumeSlider.getValue())));
 
-        this.volumeSlider.valueProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                AudioPlayer.setVolume(volumeSlider.getValue() / 100);
-                volumeLevel.setText(Long.toString(Math.round(volumeSlider.getValue())));
-            }
+        this.volumeSlider.valueProperty().addListener(observable -> {
+            AudioPlayer.setVolume(volumeSlider.getValue() / 100);
+            volumeLevel.setText(Long.toString(Math.round(volumeSlider.getValue())));
         });
     }
 
     public void onBackClick() {
+        Settings.SERVER_IP_ADDRESS.saveWithValue(ip.getText());
+        Settings.SERVER_PORT.saveWithValue(port.getText());
+        Settings.MUSIC_VOLUME_LOBBY.saveWithValue(volumeSlider.getValue() / 100);
+
         if (Auth.check()) {
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         } else {
-            SceneSwitcher.getInstance().change(SceneEnum.LOGIN);
+            SceneEnum.LOGIN.switchTo();
         }
     }
 

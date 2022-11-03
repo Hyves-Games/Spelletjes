@@ -7,21 +7,22 @@ import domain.game.actions.YourTurnAction;
 import support.services.Server;
 
 public class ResponseHandler extends Thread {
-    private final Server server = Server.getConnection();
+    private final Server connection = Server.getConnection();
 
     @Override
     public void run() {
-        while(this.server.isConnected()) {
+        while(this.connection.isConnected()) {
             try {
-                ServerResponse response = this.server.read();
+                ServerResponse response = this.connection.read();
 
                 if (response != null) {
                     switch (response.getType()) {
                         case YOURTURN -> new YourTurnAction();
                         case MOVE -> new MoveGameAction(response.getData());
                         case MATCH -> new ViewGameAction(response.getData());
+                        case CHALLENGE -> System.out.println(response.getData().toString());
                         case WIN, LOSS, DRAW -> new EndGameAction(response.getType());
-                        case OK, ERROR -> this.server.responseHandled();
+                        case OK, ERROR -> this.connection.responseHandled();
                     }
                 }
             } catch (Exception e) {

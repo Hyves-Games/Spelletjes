@@ -17,14 +17,14 @@ public class LobbyController
     }
 
     public void onPlayGameClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_SELECTOR);
+        SceneEnum.GAME_SELECTOR.switchTo();
     }
 
     public void onSettingsClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.SETTING);
+        SceneEnum.SETTING.switchTo();
     }
 
     public void onPlayerListClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.PLAYER_LIST);
+        SceneEnum.PLAYER_LIST.switchTo();
     }
 }

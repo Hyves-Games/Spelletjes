@@ -7,17 +7,17 @@ import support.helpers.SceneSwitcher;
 import support.services.Server;
 
 public abstract class AbstractServerAction extends AbstractAction {
-    protected Server server = Server.getConnection();
+    protected Server connection = Server.getConnection();
 
     protected Boolean isConnected() {
-        return this.server.isConnected();
+        return this.connection.isConnected();
     }
 
-    protected Boolean isSuccessFull() {return this.server.isLastResponseSuccessful(); }
+    protected Boolean isSuccessFull() {return this.connection.isLastResponseSuccessful(); }
 
     protected void command(String command) throws NoServerConnectionException {
         if (this.isConnected()) {
-            this.server.write(command);
+            this.connection.write(command);
 
             return;
         }
@@ -26,7 +26,7 @@ public abstract class AbstractServerAction extends AbstractAction {
             throw new NoServerConnectionException();
         } else {
             Auth.setPlayer(null);
-            SceneSwitcher.getInstance().change(SceneEnum.LOGIN);
+            SceneEnum.LOGIN.switchTo();
         }
     }
 }
