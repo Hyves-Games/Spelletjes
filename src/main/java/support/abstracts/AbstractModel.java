@@ -1,7 +1,9 @@
 package support.abstracts;
 
 import support.database.SQLite;
+import support.helpers.Utils;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -66,7 +68,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
                     case "string" -> preparedStatement.setString(index, (String) modelField.get(this));
                     case "integer" -> preparedStatement.setInt(index, (Integer) modelField.get(this));
                     case "boolean" -> preparedStatement.setBoolean(index, (Boolean) modelField.get(this));
-                    case "serializable" -> preparedStatement.setObject(index, modelField.get(this));
+                    case "serializable" -> preparedStatement.setString(index, Utils.convertSerializableToString((Serializable) modelField.get(this)));
                     default -> throw new RuntimeException("Unsupported field type: " + field.getType().getSimpleName());
                 }
 
