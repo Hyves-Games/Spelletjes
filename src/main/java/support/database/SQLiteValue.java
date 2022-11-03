@@ -1,5 +1,7 @@
 package support.database;
 
+import support.helpers.Utils;
+
 import java.io.Serializable;
 import java.lang.reflect.GenericDeclaration;
 import java.sql.PreparedStatement;
@@ -28,12 +30,12 @@ public class SQLiteValue {
     public void bindValueToPreparedStatement(PreparedStatement preparedStatement, int index) {
         try {
             switch (this.type.getSimpleName()) {
-                case "String" -> preparedStatement.setString(index, (String) this.value);
-                case "Integer" -> preparedStatement.setInt(index, (Integer) this.getValue());
-                case "Float" -> preparedStatement.setFloat(index, (Float) this.getValue());
-                case "Double" -> preparedStatement.setDouble(index, (Double) this.getValue());
-                case "Boolean" -> preparedStatement.setBoolean(index, (Boolean) this.getValue());
-                case "Timestamp" -> preparedStatement.setTimestamp(index, (Timestamp) this.getValue());
+                case "String" -> preparedStatement.setString(index, Utils.convertSerializableToString(this.value));
+                case "Integer" -> preparedStatement.setInt(index, Utils.convertSerializableToInteger(this.value));
+                case "Float" -> preparedStatement.setFloat(index, Utils.convertSerializableToFloat(this.value));
+                case "Double" -> preparedStatement.setDouble(index, Utils.convertSerializableToDouble(this.value));
+                case "Boolean" -> preparedStatement.setBoolean(index, Utils.convertSerializableToBoolean(this.value));
+                case "Timestamp" -> preparedStatement.setTimestamp(index, Utils.convertSerializableToTimestamp(this.value));
             }
         } catch (SQLException e) {
             e.printStackTrace();
