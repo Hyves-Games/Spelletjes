@@ -1,50 +1,29 @@
 package domain.game.actions;
 
-import client.Application;
 import com.google.gson.JsonObject;
-import domain.game.exceptions.GameNotImplementedException;
-import domain.game.model.TicTacToe;
 import domain.player.model.Player;
-import javafx.application.Platform;
-import support.abstracts.AbstractAction;
-import support.abstracts.AbstractGameBoard;
-import support.enums.SceneEnum;
-import support.helpers.Auth;
-import support.helpers.SceneSwitcher;
+import support.abstracts.AbstractGameAction;
 
-public class ViewGameAction extends AbstractAction {
+public class ViewGameAction extends AbstractGameAction {
     private final JsonObject data;
 
-    private SceneEnum scene;
-    private AbstractGameBoard gameBoard;
-
-    public ViewGameAction(JsonObject data) throws GameNotImplementedException {
+    public ViewGameAction(JsonObject data) {
         this.data = data;
 
         this.handler();
     }
 
-    @Override
-    protected void handler() throws GameNotImplementedException {
-        switch (Auth.getPlayer().getLastGameMode()) {
-            case TIC_TAC_TOE -> this.setGame(SceneEnum.TIC_TAC_TOE, new TicTacToe());
-            default -> throw new GameNotImplementedException();
-        }
+    public ViewGameAction(JsonObject data, Player player) {
+        this.data = data;
+        this.player = player;
 
-        Player player = Auth.getPlayer();
-        Player opponent = new Player(data.get("OPPONENT").getAsString());
-
-        this.gameBoard.start(player, opponent);
-
-        Platform.runLater(() -> {
-            SceneSwitcher.getInstance().change(this.scene);
-        });
+        this.handler();
     }
 
-    private void setGame(SceneEnum scene, AbstractGameBoard gameBoard) {
-        this.scene = scene;
-        this.gameBoard = gameBoard;
+    @Override
+    protected void handler() {
+        Player opponent = new Player(data.get("OPPONENT").getAsString());
 
-        Application.setGameBoard(gameBoard);
+        this.player.getGame().start(opponent);
     }
 }

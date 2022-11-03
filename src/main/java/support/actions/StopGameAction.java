@@ -4,12 +4,14 @@ import support.abstracts.AbstractServerAction;
 import support.exceptions.NoServerConnectionException;
 
 public class StopGameAction extends AbstractServerAction {
-    public StopGameAction() throws NoServerConnectionException {
+    public StopGameAction() {
         this.handler();
     }
 
     @Override
-    protected void handler() throws NoServerConnectionException {
-        this.command("forfeit");
+    protected void handler() {
+        try {
+            this.command("forfeit");
+        } catch (NoServerConnectionException ignored) {}
     }
 }

@@ -5,6 +5,7 @@ module hyvesgamesspelletjes {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires com.google.gson;
+    requires javafaker;
     requires java.sql;
 
     opens client.authenticator.controller to javafx.fxml;
