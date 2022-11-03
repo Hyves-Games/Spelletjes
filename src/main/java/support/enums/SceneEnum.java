@@ -4,8 +4,8 @@ import support.helpers.SceneSwitcher;
 import support.records.ClientScene;
 
 public enum SceneEnum {
-    LOBBY(new ClientScene("authenticator", "login", "Login")),
-    LOGIN(new ClientScene("lobby", "lobby", "Lobby")),
+    LOGIN(new ClientScene("authenticator", "login", "Login")),
+    LOBBY(new ClientScene("lobby", "lobby", "Lobby")),
     TIC_TAC_TOE(new ClientScene("game/board", "ticTacToe", "Tic-Tac-Toe")),
     SETTING(new ClientScene("settings", "settings", "Settings")),
     PLAYER_LIST(new ClientScene("playerList", "playerList","Players list")),
