@@ -17,9 +17,12 @@ public class ChallengeAcceptServerAction extends AbstractServerAction {
 
     public ChallengeAcceptServerAction(JsonObject data, Server connection) {
         this.data = data;
+        this.skip = true;
         this.connection = connection;
 
         this.handler();
+
+        connection.responseHandled();
     }
 
     @Override

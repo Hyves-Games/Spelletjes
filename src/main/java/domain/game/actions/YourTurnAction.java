@@ -1,6 +1,5 @@
 package domain.game.actions;
 
-import domain.player.model.AI;
 import domain.player.model.Player;
 import support.abstracts.AbstractGameAction;
 

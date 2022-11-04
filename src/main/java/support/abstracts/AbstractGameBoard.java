@@ -6,15 +6,19 @@ import domain.player.model.Player;
 import support.actions.MoveServerAction;
 import support.enums.GameEndStateEnum;
 import support.enums.SceneEnum;
+import support.services.Server;
 
 import java.util.ArrayList;
 
 public abstract class AbstractGameBoard {
-    private Player player;
-    private Player opponent;
+    private Server connection;
 
+    private Boolean useAI = false;
     private Boolean ended = false;
     private Boolean playerTurn = false;
+
+    private String playerUsername;
+    private String opponentUsername;
 
     private GameEndStateEnum endState;
 
@@ -31,16 +35,21 @@ public abstract class AbstractGameBoard {
     }
 
     public void start(Player player, Player opponent) {
-        this.player = player;
-        this.opponent = opponent;
+        this.playerUsername = player.getUsername();
+        this.opponentUsername = opponent.getUsername();
+
+        if (player instanceof AI) {
+            this.useAI = true;
+            this.connection = ((AI) player).getConnection();
+        }
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public String getPlayerUsername() {
+        return this.playerUsername;
     }
 
-    public Player getOpponent() {
-        return this.opponent;
+    public String getOpponentUsername() {
+        return this.opponentUsername;
     }
 
     public Boolean isPlayerTurn() {
@@ -50,8 +59,8 @@ public abstract class AbstractGameBoard {
     public void setPlayerTurn() {
         this.playerTurn = true;
 
-        if (this.player instanceof AI) {
-            this.player.getGameBoard().runAI();
+        if (this.useAI) {
+            this.runAI();
         }
 
         this.runEventListeners(this.eventListenersForTurn);
@@ -88,8 +97,8 @@ public abstract class AbstractGameBoard {
     public void doMove(Integer index) {
         if (this.checkMove(index) && this.isPlayerTurn()) {
             try {
-                if (this.player instanceof AI) {
-                    new MoveServerAction(index, ((AI) this.player).getConnection());
+                if (this.useAI) {
+                    new MoveServerAction(index, this.connection);
                 } else {
                     new MoveServerAction(index);
                 }

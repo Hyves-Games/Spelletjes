@@ -74,11 +74,15 @@ public class Server {
     }
 
     public void write(String data) {
-        int waited = 0;
-        int sleep = 2;
+        this.write(data, false);
+    }
 
-        this.handled = false;
-        this.lastResponseSuccessful = false;
+    public void write(String data, Boolean skip) {
+        int waited = 0;
+        int sleep = 1;
+
+        this.handled = skip;
+        this.lastResponseSuccessful = skip;
 
         this.data.println(data);
 

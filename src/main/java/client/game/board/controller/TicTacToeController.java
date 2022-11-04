@@ -44,8 +44,8 @@ public class TicTacToeController {
     public void initialize() {
         this.board = new Button[]{btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8};
 
-        player_1.setText("O " + this.gameBoard.getPlayer().getUsername());
-        player_2.setText("X " + this.gameBoard.getOpponent().getUsername());
+        player_1.setText("O " + this.gameBoard.getPlayerUsername());
+        player_2.setText("X " + this.gameBoard.getOpponentUsername());
 
         this.gameBoard.addEventListenerForTurn(() -> {
             Platform.runLater(this::changeTurn);

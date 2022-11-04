@@ -29,7 +29,10 @@ public class AI extends Player {
         if (Server.getConnection().isConnected()) {
             this.connection = new Server().connect();
 
-            new Thread(new AIResponseHandler(this)).start();
+            Thread thread = new Thread(new AIResponseHandler(this));
+
+            thread.setPriority(Thread.MAX_PRIORITY);
+            thread.start();
         }
     }
 
