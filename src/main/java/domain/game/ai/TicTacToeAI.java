@@ -2,8 +2,6 @@ package domain.game.ai;
 
 import support.abstracts.AbstractAI;
 
-import java.util.Arrays;
-
 public class TicTacToeAI extends AbstractAI {
     final int maximisingPlayerPiece = 1;
     final int minimisingPlayerPiece = -1;
