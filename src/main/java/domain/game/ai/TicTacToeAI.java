@@ -99,7 +99,9 @@ public class TicTacToeAI extends AbstractAI {
         int bestMove = movesLeft[0];
 
         if (movesLeft.length == 1) {
-            return new Integer[]{movesLeft[0], evaluateBoard(board)};
+            Integer[] new_board = board.clone();
+            new_board[movesLeft[0]] = isMaximisingPlayer ? maximisingPlayerPiece : minimisingPlayerPiece;
+            return new Integer[]{movesLeft[0], evaluateBoard(new_board)};
         }
 
         int bestScore = isMaximisingPlayer ? -maxScore : maxScore;
