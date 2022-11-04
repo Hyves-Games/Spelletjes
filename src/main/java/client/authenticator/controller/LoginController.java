@@ -2,6 +2,7 @@ package client.authenticator.controller;
 
 import domain.player.actions.LoginAction;
 import domain.player.exceptions.LoginFailedException;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import support.abstracts.AbstractController;
@@ -48,4 +49,7 @@ public class LoginController extends AbstractController {
         SceneEnum.SETTING.switchTo();
     }
 
+    public void onTournamentClick() {
+        SceneEnum.TOURNAMENT_ROOM.switchTo();
+    }
 }

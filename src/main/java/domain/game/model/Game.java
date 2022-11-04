@@ -27,11 +27,11 @@ public class Game {
     public void start(Player opponent) {
         this.gameBoard.start(this.player, opponent);
 
-        if (!(this.player instanceof AI)) {
+//        if (!(this.player instanceof AI)) {
             Platform.runLater(() -> {
                 SceneSwitcher.getInstance().change(this.gameBoard.getScene());
             });
-        }
+//        }
     }
 
     public void setPlayer(Player player) {

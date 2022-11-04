@@ -17,4 +17,5 @@ module hyvesgamesspelletjes {
     opens client.game.board.controller to javafx.fxml;
 
     exports client;
+    opens client.tournamentRoom.controller to javafx.fxml;
 }
