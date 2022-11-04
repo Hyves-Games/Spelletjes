@@ -7,6 +7,7 @@ import support.helpers.SceneSwitcher;
 import support.services.Server;
 
 public abstract class AbstractServerAction extends AbstractAction {
+    protected Boolean skip = false;
     protected Server connection = Server.getConnection();
 
     protected Boolean isConnected() {
@@ -17,7 +18,7 @@ public abstract class AbstractServerAction extends AbstractAction {
 
     protected void command(String command) throws NoServerConnectionException {
         if (this.isConnected()) {
-            this.connection.write(command);
+            this.connection.write(command, this.skip);
 
             return;
         }

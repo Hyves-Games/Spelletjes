@@ -15,6 +15,7 @@ public class MoveServerAction extends AbstractServerAction {
     }
 
     public MoveServerAction(int index, Server connection) throws MoveNotAllowedException {
+        this.skip = true;
         this.index = index;
         this.connection = connection;
 
