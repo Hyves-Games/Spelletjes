@@ -25,7 +25,7 @@ public class EndGameAction extends AbstractGameAction {
 
     @Override
     protected void handler() {
-        AbstractGameBoard gameBoard = Auth.getPlayer().getGameBoard();
+        AbstractGameBoard gameBoard = this.player.getGameBoard();
 
         gameBoard.setEndState(GameEndStateEnum.valueOf(this.type.toString()));
         gameBoard.setGameEnd();

@@ -11,7 +11,8 @@ public enum SceneEnum {
     PLAYER_LIST(new ClientScene("playerList", "playerList","Players list")),
     GAME_SELECTOR(new ClientScene("game","gameSelector", "Game")),
     GAME_MODE_SELECTOR(new ClientScene("game","gameModeSelector", "Game mode")),
-    WAIT_ROOM(new ClientScene("waitingRoom", "waitingRoom","Finding a game"));
+    WAIT_ROOM(new ClientScene("waitingRoom", "waitingRoom","Finding a game")),
+    TOURNAMENT_ROOM(new ClientScene("waitingRoom", "waitingTournamentRoom", "Tournament"));
 
     private final ClientScene clientScene;
 

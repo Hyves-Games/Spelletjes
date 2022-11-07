@@ -7,6 +7,7 @@ module hyvesgamesspelletjes {
     requires com.google.gson;
     requires javafaker;
     requires java.sql;
+    requires org.jetbrains.annotations;
 
     opens client.authenticator.controller to javafx.fxml;
     opens client.lobby.controller to javafx.fxml;

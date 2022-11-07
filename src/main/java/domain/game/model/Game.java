@@ -1,6 +1,5 @@
 package domain.game.model;
 
-import domain.game.ai.TicTacToeAI;
 import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.model.AI;
 import domain.player.model.Player;
@@ -27,7 +26,7 @@ public class Game {
     public void start(Player opponent) {
         this.gameBoard.start(this.player, opponent);
 
-        if (!(this.player instanceof AI)) {
+        if (Auth.getPlayer().equals(this.player)) {
             Platform.runLater(() -> {
                 SceneSwitcher.getInstance().change(this.gameBoard.getScene());
             });
@@ -46,7 +45,7 @@ public class Game {
 
     public void setAIPlayer() {
         try {
-            AI player = new AI();;
+            AI player = new AI();
 
             this.setPlayer(player);
 

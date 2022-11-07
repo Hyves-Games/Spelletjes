@@ -1,8 +1,13 @@
 package domain.game.actions;
 
 import com.google.gson.JsonObject;
+import domain.game.model.Game;
+import domain.game.model.TicTacToe;
 import domain.player.model.Player;
+import domain.setting.enums.Settings;
 import support.abstracts.AbstractGameAction;
+import support.enums.GameModeEnum;
+import support.helpers.Auth;
 
 public class ViewGameAction extends AbstractGameAction {
     private final JsonObject data;

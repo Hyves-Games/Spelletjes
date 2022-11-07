@@ -1,5 +1,6 @@
 package client.game.board.controller;
 
+import domain.player.model.AI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,6 +54,14 @@ public class TicTacToeController {
 
         this.gameBoard.addEventListenerForBoard(() -> {
             Platform.runLater(this::changeBoardView);
+        });
+
+        this.gameBoard.addEventListenerForEnd(() -> {
+            if (Auth.getPlayer() instanceof AI) {
+                Platform.runLater(SceneEnum.TOURNAMENT_ROOM::switchTo);
+            } else {
+                // do something
+            }
         });
 
         this.changeTurn();
