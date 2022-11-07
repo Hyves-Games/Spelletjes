@@ -103,7 +103,7 @@ public class Server {
         try {
             String[] split = response.split(" ");
 
-            System.out.println(this.socket.getLocalPort() + " -> " + response);
+//            System.out.println(this.socket.getLocalPort() + " -> " + response);
 
             switch (split[0]) {
                 case "OK":
