@@ -29,13 +29,6 @@ public class ViewGameAction extends AbstractGameAction {
     protected void handler() {
         Player opponent = new Player(data.get("OPPONENT").getAsString());
 
-        if (Settings.TOURNAMENT.getBooleanValue()) {
-            Game game = Auth.getPlayer().getLastGameMode().create();
-            game.setPlayer(this.player);
-            this.player.setGame(game);
-            game.start(opponent);
-        } else {
-            this.player.getGame().start(opponent);
-        }
+        this.player.getGame().start(opponent);
     }
 }

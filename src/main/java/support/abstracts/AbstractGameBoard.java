@@ -3,6 +3,7 @@ package support.abstracts;
 import domain.game.exceptions.MoveNotAllowedException;
 import domain.player.model.AI;
 import domain.player.model.Player;
+import org.jetbrains.annotations.NotNull;
 import support.actions.MoveServerAction;
 import support.enums.GameEndStateEnum;
 import support.enums.SceneEnum;
@@ -34,7 +35,7 @@ public abstract class AbstractGameBoard {
         }
     }
 
-    public void start(Player player, Player opponent) {
+    public void start(@NotNull Player player, @NotNull Player opponent) {
         this.playerUsername = player.getUsername();
         this.opponentUsername = opponent.getUsername();
 

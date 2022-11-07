@@ -13,9 +13,7 @@ public enum Settings {
     SERVER_PORT("server_port", 7789),
 
     // audio properties
-    MUSIC_VOLUME_LOBBY("music_volume_lobby", 0.1),
-    // tournament checkbox
-    TOURNAMENT("tournament", false);
+    MUSIC_VOLUME_LOBBY("music_volume_lobby", 0.1);
 
     private final String key;
     private final Serializable defaultValue;
