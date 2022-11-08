@@ -4,6 +4,7 @@ import domain.game.actions.EndGameAction;
 import domain.game.actions.MoveGameAction;
 import domain.game.actions.ViewGameAction;
 import domain.game.actions.YourTurnAction;
+import support.records.ServerResponse;
 import support.services.Server;
 
 public class ResponseHandler implements Runnable {
@@ -16,12 +17,12 @@ public class ResponseHandler implements Runnable {
                 ServerResponse response = this.connection.read();
 
                 if (response != null) {
-                    switch (response.getType()) {
+                    switch (response.type()) {
                         case YOURTURN -> new YourTurnAction();
-                        case MOVE -> new MoveGameAction(response.getData());
-                        case MATCH -> new ViewGameAction(response.getData());
-                        case CHALLENGE -> System.out.println(response.getData().toString());
-                        case WIN, LOSS, DRAW -> new EndGameAction(response.getType());
+                        case MOVE -> new MoveGameAction(response.data());
+                        case MATCH -> new ViewGameAction(response.data());
+                        case CHALLENGE -> System.out.println(response.data().toString());
+                        case WIN, LOSS, DRAW -> new EndGameAction(response.type());
                         case OK, ERROR -> this.connection.responseHandled();
                     }
                 }

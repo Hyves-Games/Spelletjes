@@ -5,7 +5,6 @@ import support.abstracts.AbstractGameAction;
 import support.abstracts.AbstractGameBoard;
 import support.enums.GameEndStateEnum;
 import support.enums.ServerResponseEnum;
-import support.helpers.Auth;
 
 public class EndGameAction extends AbstractGameAction {
     private final ServerResponseEnum type;

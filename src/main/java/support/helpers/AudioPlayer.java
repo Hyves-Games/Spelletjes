@@ -4,8 +4,6 @@ import client.Application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.util.Objects;
-
 public class AudioPlayer {
 
     private static MediaPlayer player;

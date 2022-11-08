@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
-import support.helpers.ServerResponse;
+import support.records.ServerResponse;
 import support.enums.ServerResponseEnum;
 
 public class Server {

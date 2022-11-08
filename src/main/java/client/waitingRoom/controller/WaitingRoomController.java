@@ -4,8 +4,6 @@ import domain.game.exceptions.GameNotImplementedException;
 import support.actions.StopGameAction;
 import support.actions.SubscribeServerAction;
 import support.enums.SceneEnum;
-import support.exceptions.NoServerConnectionException;
-import support.helpers.SceneSwitcher;
 
 public class WaitingRoomController {
     public void initialize() {

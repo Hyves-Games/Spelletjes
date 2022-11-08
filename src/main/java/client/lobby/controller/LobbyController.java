@@ -3,7 +3,6 @@ package client.lobby.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import support.enums.SceneEnum;
-import support.helpers.SceneSwitcher;
 import support.services.Server;
 
 public class LobbyController
