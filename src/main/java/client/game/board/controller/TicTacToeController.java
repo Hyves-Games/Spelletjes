@@ -14,6 +14,7 @@ import support.abstracts.AbstractGameBoard;
 import support.actions.StopGameAction;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
+import support.helpers.SceneSwitcher;
 
 import java.util.Optional;
 
@@ -57,14 +58,18 @@ public class TicTacToeController {
         });
 
         this.gameBoard.addEventListenerForEnd(() -> {
-            if (Auth.getPlayer() instanceof AI) {
+            if (this.isPlayerAI()) {
                 Platform.runLater(SceneEnum.TOURNAMENT_ROOM::switchTo);
             } else {
-                // do something
+                // open popup
             }
         });
 
         this.changeTurn();
+    }
+
+    private Boolean isPlayerAI() {
+        return Auth.getPlayer() instanceof AI;
     }
 
     public void onMoveClick(ActionEvent event) {
@@ -74,7 +79,7 @@ public class TicTacToeController {
     }
 
     public void onLeaveClick(ActionEvent event) {
-        Stage stage = (Stage) container.getScene().getWindow();
+        Stage stage = SceneSwitcher.getInstance().getStage();
 
         Alert.AlertType type = Alert.AlertType.CONFIRMATION;
         Alert alert = new Alert(type, "Are you sure? you will lose the game.");
@@ -103,7 +108,7 @@ public class TicTacToeController {
         this.player_1_turn.setText("Your turn");
         this.player_2_turn.setText(null);
 
-        this.boardContainer.setDisable(false);
+        this.boardContainer.setDisable(this.isPlayerAI());
     }
 
     private void setOpponentTurn() {
