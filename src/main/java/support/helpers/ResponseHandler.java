@@ -4,6 +4,7 @@ import domain.game.actions.EndGameAction;
 import domain.game.actions.MoveGameAction;
 import domain.game.actions.ViewGameAction;
 import domain.game.actions.YourTurnAction;
+import domain.player.actions.PlayerListAction;
 import support.services.Server;
 
 public class ResponseHandler implements Runnable {
@@ -23,6 +24,7 @@ public class ResponseHandler implements Runnable {
                         case CHALLENGE -> System.out.println(response.getData().toString());
                         case WIN, LOSS, DRAW -> new EndGameAction(response.getType());
                         case OK, ERROR -> this.connection.responseHandled();
+                        case PLAYERLIST -> new PlayerListAction(response.getData());
                     }
                 }
             } catch (Exception e) {

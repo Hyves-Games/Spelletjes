@@ -26,7 +26,7 @@ public class Setting extends AbstractModel<Setting> {
     public Setting(String name, Serializable value) {
         this.name = name;
 
-        ArrayList<Class> allowedTypes = new ArrayList<>(Arrays.asList(
+        ArrayList<Class<?>> allowedTypes = new ArrayList<>(Arrays.asList(
                 String.class,
                 Integer.class,
                 Float.class,

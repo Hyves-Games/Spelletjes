@@ -13,13 +13,13 @@ import support.helpers.SceneSwitcher;
 public class Game {
     private Player player;
 
-    private final AbstractGameBoard gameBoard;
+    private final AbstractGameBoard<?> gameBoard;
 
-    public Game(AbstractGameBoard gameBoard) {
+    public Game(AbstractGameBoard<?> gameBoard) {
         this.gameBoard = gameBoard;
     }
 
-    public AbstractGameBoard getGameBoard() {
+    public AbstractGameBoard<?> getGameBoard() {
         return this.gameBoard;
     }
 

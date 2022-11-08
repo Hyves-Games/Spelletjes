@@ -67,8 +67,12 @@ public class Server {
 
     public ServerResponse read() {
         try {
-            return this.getServerResponse(this.input.readLine());
+            ServerResponse r=  this.getServerResponse(this.input.readLine());
+            System.out.println(r.getData());
+            return r;
         } catch (Exception e) {
+            e.printStackTrace();
+
             return null;
         }
     }

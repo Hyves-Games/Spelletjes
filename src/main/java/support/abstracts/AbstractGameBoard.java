@@ -11,7 +11,7 @@ import support.services.Server;
 
 import java.util.ArrayList;
 
-public abstract class AbstractGameBoard {
+public abstract class AbstractGameBoard<T> {
     private Server connection;
 
     private Boolean useAI = false;

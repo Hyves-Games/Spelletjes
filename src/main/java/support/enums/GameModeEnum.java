@@ -9,9 +9,9 @@ import java.lang.reflect.InvocationTargetException;
 public enum GameModeEnum {
     TIC_TAC_TOE(TicTacToe.class);
 
-    private final AbstractGameBoard gameBoard;
+    private final AbstractGameBoard<?> gameBoard;
 
-    GameModeEnum(Class<? extends AbstractGameBoard> gameBoard) {
+    GameModeEnum(Class<? extends AbstractGameBoard<?>> gameBoard) {
         try {
             this.gameBoard = gameBoard.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

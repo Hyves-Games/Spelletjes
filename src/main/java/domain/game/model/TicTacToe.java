@@ -6,7 +6,7 @@ import domain.game.ai.TicTacToeAI;
 import support.abstracts.AbstractGameBoard;
 import support.enums.SceneEnum;
 
-public class TicTacToe extends AbstractGameBoard {
+public class TicTacToe extends AbstractGameBoard<TicTacToe> {
     public TicTacToe() {this.generate(9);}
 
     @Override
