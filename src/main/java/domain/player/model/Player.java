@@ -4,7 +4,7 @@ import domain.game.model.Game;
 import support.abstracts.AbstractGameBoard;
 import support.enums.GameModeEnum;
 
-public class Player {
+public class Player<T> {
     protected final String username;
 
     protected Game game;

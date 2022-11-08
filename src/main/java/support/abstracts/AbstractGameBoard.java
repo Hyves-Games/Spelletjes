@@ -85,6 +85,10 @@ public abstract class AbstractGameBoard<T> {
         this.ended = true;
 
         this.runEventListeners(this.eventListenersForEnd);
+
+        if (this.useAI && this.connection != null) {
+            this.connection.disconnectWithoutAuth();
+        }
     }
 
     public GameEndStateEnum getEndState() {

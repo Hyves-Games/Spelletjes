@@ -8,7 +8,6 @@ import support.enums.SceneEnum;
 import support.records.ClientScene;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class SceneSwitcher {
     private SceneEnum scene;

@@ -3,8 +3,6 @@ package support.actions;
 import domain.player.exceptions.LoginFailedException;
 import support.abstracts.AbstractServerAction;
 import support.exceptions.NoServerConnectionException;
-import support.helpers.ServerResponse;
-import support.services.Server;
 
 public class GetServerPlayerListAction extends AbstractServerAction {
 

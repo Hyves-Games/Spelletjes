@@ -17,7 +17,6 @@ import support.actions.GetServerPlayerListAction;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
-import support.helpers.SceneSwitcher;
 
 public class PlayerListController {
     @FXML VBox playerContainer;

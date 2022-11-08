@@ -26,7 +26,6 @@ public class GameModeSelectorController {
                 game.create().setAuthPlayer();
                 game.create().setAIPlayer();
             }
-            case "ava" -> {}
         }
     }
 }

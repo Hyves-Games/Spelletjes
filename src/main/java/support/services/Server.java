@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
-import support.helpers.ServerResponse;
+import support.records.ServerResponse;
 import support.enums.ServerResponseEnum;
 
 public class Server {
@@ -65,14 +65,16 @@ public class Server {
         } catch (IOException ignored) {}
     }
 
+    public void disconnectWithoutAuth() {
+        try {
+            this.socket.close();
+        } catch (IOException ignored) {}
+    }
+
     public ServerResponse read() {
         try {
-            ServerResponse r=  this.getServerResponse(this.input.readLine());
-            System.out.println(r.getData());
-            return r;
+            return this.getServerResponse(this.input.readLine());
         } catch (Exception e) {
-            e.printStackTrace();
-
             return null;
         }
     }

@@ -36,6 +36,12 @@ public class AI extends Player {
         }
     }
 
+    public void disConnect() {
+        if (Server.getConnection().isConnected()) {
+            this.connection.disconnect();
+        }
+    }
+
     private void login(Integer retries) throws FailedToCreateAIException {
         try {
             new LoginServerAction(this.username, this.connection);

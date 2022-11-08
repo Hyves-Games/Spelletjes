@@ -14,8 +14,6 @@ import support.abstracts.AbstractGameBoard;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
-import support.helpers.SceneSwitcher;
-import java.util.HashMap;
 
 public class GameSelectorController {
     @FXML HBox container;

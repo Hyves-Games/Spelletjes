@@ -4,15 +4,13 @@ import domain.player.actions.LoginAction;
 import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.exceptions.LoginFailedException;
 import domain.player.model.AI;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import support.abstracts.AbstractController;
+import support.abstracts.controllers.AbstractController;
 import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
-import support.helpers.SceneSwitcher;
 import support.services.Server;
 
 public class LoginController extends AbstractController {

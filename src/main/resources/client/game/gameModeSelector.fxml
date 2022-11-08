@@ -30,7 +30,6 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="ava" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onChooseGameMode" prefWidth="104.0" text="AI vs AI" />
          </children>
          <BorderPane.margin>
             <Insets top="30.0" />
