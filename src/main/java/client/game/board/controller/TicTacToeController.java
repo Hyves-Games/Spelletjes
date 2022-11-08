@@ -9,7 +9,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
 import support.actions.StopGameAction;
+import support.enums.GameEndStateEnum;
+import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 import java.util.Optional;
@@ -43,7 +46,7 @@ public class TicTacToeController extends AbstractGameBoardController {
             if (this.isPlayerAI()) {
                 Platform.runLater(SceneEnum.TOURNAMENT_ROOM::switchTo);
             } else {
-                // open popup
+                Platform.runLater(this::showEndScreen);
             }
         });
 
@@ -96,5 +99,40 @@ public class TicTacToeController extends AbstractGameBoardController {
             }
         }
     }
+
+    protected void showEndScreen() {
+
+        Stage stage = SceneSwitcher.getInstance().getStage();
+
+        ButtonBar.ButtonData done = ButtonBar.ButtonData.OK_DONE;
+
+        ButtonType lobbyButton = new ButtonType("To the lobby", done);
+        ButtonType rematchButton = new ButtonType("Rematch!");
+
+        String message = "";
+
+        switch (this.gameBoard.getEndState()) {
+            case WIN -> message = "You have won the game!";
+            case LOSS -> message = "You have lost the game from " + this.gameBoard.getOpponentUsername() + ".";
+            case DRAW -> message = "It is a draw!";
+        }
+
+        Alert alert = new Alert(Alert.AlertType.NONE, message, lobbyButton, rematchButton);
+
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(stage);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+       if(result.isPresent() && result.get().getButtonData() == done) {
+            SceneEnum.LOBBY.switchTo();
+       } else {
+           //Start a new game against AI
+           GameModeEnum game = Auth.getPlayer().getLastGameMode();
+           game.create().setAuthPlayer();
+           game.create().setAIPlayer();
+       }
+    }
+
 }
 
