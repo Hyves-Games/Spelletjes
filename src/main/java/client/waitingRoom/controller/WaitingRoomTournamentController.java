@@ -1,13 +1,13 @@
 package client.waitingRoom.controller;
 
 import support.actions.StopGameAction;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.services.Server;
 
-public class WaitingTournamentRoomController {
+public class WaitingRoomTournamentController {
     public void initialize() {
-        GameModeEnum.TIC_TAC_TOE.create().setAuthPlayer();
+        GameEnum.TIC_TAC_TOE.create().setAuthPlayer();
     }
 
     public void onCancel() {
