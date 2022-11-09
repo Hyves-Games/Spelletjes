@@ -13,7 +13,7 @@ public class SubscribeServerAction extends AbstractServerAction {
     @Override
     protected void handler() throws GameNotImplementedException {
         try {
-            String key = Auth.getPlayer().getLastGameMode().getKey();
+            String key = Auth.getLastGame().getKey();
 
             this.command(String.format("subscribe %s", key));
         } catch (NoServerConnectionException ignored) {}

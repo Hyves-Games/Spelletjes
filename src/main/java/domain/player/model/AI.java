@@ -36,8 +36,8 @@ public class AI extends Player {
         }
     }
 
-    public void disConnect() {
-        if (Server.getConnection().isConnected()) {
+    public void disconnect() {
+        if (this.connection != null) {
             this.connection.disconnect();
         }
     }

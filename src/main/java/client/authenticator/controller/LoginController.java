@@ -55,7 +55,7 @@ public class LoginController extends AbstractController {
         try {
             Auth.setPlayer(new AI());
 
-            SceneEnum.TOURNAMENT_ROOM.switchTo();
+            SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();
         } catch (ServerConnectionFailedException | FailedToCreateAIException e) {
             throw new RuntimeException(e);
         }

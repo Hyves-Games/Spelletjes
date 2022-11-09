@@ -2,13 +2,11 @@ package domain.player.model;
 
 import domain.game.model.Game;
 import support.abstracts.AbstractGameBoard;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 
-public class Player<T> {
-    protected final String username;
-
+public class Player {
     protected Game game;
-    protected GameModeEnum lastGameMode;
+    protected final String username;
 
     public Player(String username) {
         this.username = username;
@@ -18,23 +16,15 @@ public class Player<T> {
         return this.username;
     }
 
-    public GameModeEnum getLastGameMode() {
-        return this.lastGameMode;
-    }
-
-    public void setLastGameMode(GameModeEnum lastGameMode) {
-        this.lastGameMode = lastGameMode;
-    }
-
-    public AbstractGameBoard getGameBoard() {
-        return this.game.getGameBoard();
+    public Game getGame() {
+        return game;
     }
 
     public void setGame(Game game) {
         this.game = game;
     }
 
-    public Game getGame() {
-        return game;
+    public AbstractGameBoard getGameBoard() {
+        return this.game.getGameBoard();
     }
 }
