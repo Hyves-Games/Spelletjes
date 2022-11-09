@@ -2,7 +2,7 @@ package client.game.controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -14,7 +14,7 @@ public class GameModeSelectorController {
     }
 
     public void onChooseGameMode(ActionEvent event) {
-        GameModeEnum game = Auth.getPlayer().getLastGameMode();
+        GameEnum game = Auth.getLastGame();
 
         switch (((Node) event.getSource()).getId()) {
             case "pvp" -> {

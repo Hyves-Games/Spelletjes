@@ -15,7 +15,7 @@ public class EndGameAction extends AbstractGameAction {
         this.handler();
     }
 
-    public EndGameAction(ServerResponseEnum type, Player player) {
+    public EndGameAction(ServerResponseEnum type, Player<?> player) {
         this.type = type;
         this.player = player;
 

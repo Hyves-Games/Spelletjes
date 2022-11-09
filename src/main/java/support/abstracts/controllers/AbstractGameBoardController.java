@@ -19,7 +19,7 @@ public abstract class AbstractGameBoardController {
     @FXML public VBox boardContainer;
 
     protected Button[] board;
-    protected final AbstractGameBoard gameBoard = Auth.getPlayer().getGameBoard();
+    protected final AbstractGameBoard<?> gameBoard = Auth.getPlayer().getGameBoard();
 
     protected Boolean isPlayerAI() {
         return Auth.getPlayer() instanceof AI;

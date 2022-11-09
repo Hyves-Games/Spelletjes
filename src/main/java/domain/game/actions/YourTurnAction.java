@@ -8,7 +8,7 @@ public class YourTurnAction extends AbstractGameAction {
         this.handler();
     }
 
-    public YourTurnAction(Player player) {
+    public YourTurnAction(Player<?> player) {
         this.player = player;
 
         this.handler();

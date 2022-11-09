@@ -35,7 +35,7 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
-    public void start(@NotNull Player player, @NotNull Player opponent) {
+    public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
         this.playerUsername = player.getUsername();
         this.opponentUsername = opponent.getUsername();
 

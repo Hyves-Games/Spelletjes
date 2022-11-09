@@ -11,7 +11,7 @@ import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 public class Game {
-    private Player player;
+    private Player<?> player;
 
     private final AbstractGameBoard<?> gameBoard;
 
@@ -23,7 +23,7 @@ public class Game {
         return this.gameBoard;
     }
 
-    public void start(Player opponent) {
+    public void start(Player<?> opponent) {
         this.gameBoard.start(this.player, opponent);
 
         if (Auth.getPlayer().equals(this.player)) {
@@ -33,7 +33,7 @@ public class Game {
         }
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(Player<?> player) {
         player.setGame(this);
 
         this.player = player;

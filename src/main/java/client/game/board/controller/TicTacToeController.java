@@ -9,8 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
 import support.actions.StopGameAction;
-import support.enums.GameEndStateEnum;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -44,7 +43,7 @@ public class TicTacToeController extends AbstractGameBoardController {
 
         this.gameBoard.addEventListenerForEnd(() -> {
             if (this.isPlayerAI()) {
-                Platform.runLater(SceneEnum.TOURNAMENT_ROOM::switchTo);
+                Platform.runLater(SceneEnum.WAIT_ROOM_TOURNAMENT::switchTo);
             } else {
                 Platform.runLater(this::showEndScreen);
             }
@@ -128,7 +127,7 @@ public class TicTacToeController extends AbstractGameBoardController {
             SceneEnum.LOBBY.switchTo();
        } else {
            //Start a new game against AI
-           GameModeEnum game = Auth.getPlayer().getLastGameMode();
+           GameEnum game = Auth.getLastGame();
            game.create().setAuthPlayer();
            game.create().setAIPlayer();
        }

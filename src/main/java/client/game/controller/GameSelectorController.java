@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import support.abstracts.AbstractGameBoard;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
 
@@ -19,7 +19,7 @@ public class GameSelectorController {
     @FXML HBox container;
 
     public void initialize() {
-        for (GameModeEnum type : GameModeEnum.values()) {
+        for (GameEnum type : GameEnum.values()) {
             AbstractGameBoard gameProperties = this.getGameBoard(type);
 
             VBox gameContainer = new VBox();
@@ -40,7 +40,7 @@ public class GameSelectorController {
     }
 
     public void onGameChoose(ActionEvent event) {
-        Auth.getPlayer().setLastGameMode(GameModeEnum.valueOf(
+        Auth.setLastGame(GameEnum.valueOf(
                 ((Node)event.getSource()).getId()
         ));
 
@@ -51,7 +51,7 @@ public class GameSelectorController {
         SceneEnum.LOBBY.switchTo();
     }
 
-    private AbstractGameBoard getGameBoard(GameModeEnum type) {
+    private AbstractGameBoard getGameBoard(GameEnum type) {
         return switch (type) {
             case TIC_TAC_TOE -> new TicTacToe();
         };

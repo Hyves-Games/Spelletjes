@@ -2,7 +2,6 @@ package client.playerList.controller;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import domain.game.model.TicTacToe;
 import domain.player.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import support.actions.ChallengeServerAction;
-import support.actions.GetServerPlayerListAction;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
 
@@ -61,9 +59,9 @@ public class PlayerListController {
 
     public void onInviteClick(ActionEvent event) {
         // Hier kan de client & server verder gaan met het inviten van een player in de player variabele hieronder zit de naam van de player.
-        Player opponent = new Player(((Node)event.getSource()).getId());
+        Player<?> opponent = new Player<>(((Node)event.getSource()).getId());
 
-        new ChallengeServerAction(opponent, GameModeEnum.TIC_TAC_TOE.getKey());
+        new ChallengeServerAction(opponent, GameEnum.TIC_TAC_TOE.getKey());
 
         SceneEnum.WAIT_ROOM_CHALLENGE.switchTo();
     }

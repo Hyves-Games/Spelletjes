@@ -13,7 +13,7 @@ public class MoveGameAction extends AbstractGameAction {
         this.handler();
     }
 
-    public MoveGameAction(JsonObject data, Player player) {
+    public MoveGameAction(JsonObject data, Player<?> player) {
         this.data = data;
         this.player = player;
 

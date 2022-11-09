@@ -4,7 +4,7 @@ import domain.game.model.Game;
 import support.abstracts.AbstractGameBoard;
 import support.enums.GameEnum;
 
-public class Player {
+public class Player<T> {
     protected Game game;
     protected final String username;
 
@@ -24,7 +24,7 @@ public class Player {
         this.game = game;
     }
 
-    public AbstractGameBoard getGameBoard() {
+    public AbstractGameBoard<?> getGameBoard() {
         return this.game.getGameBoard();
     }
 }
