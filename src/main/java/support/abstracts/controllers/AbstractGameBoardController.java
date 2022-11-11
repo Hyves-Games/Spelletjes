@@ -25,11 +25,19 @@ public abstract class AbstractGameBoardController {
         return Auth.getPlayer() instanceof AI;
     }
 
+    protected String getPlayerUsername() {
+        return this.gameBoard.getPlayer().getUsername();
+    }
+
     protected void setPlayerTurn() {
         this.player_1_turn.setText("Your turn");
         this.player_2_turn.setText(null);
 
         this.boardContainer.setDisable(this.isPlayerAI());
+    }
+
+    protected String getOpponentUsername() {
+        return this.gameBoard.getOpponent().getUsername();
     }
 
     protected void setOpponentTurn() {

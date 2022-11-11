@@ -7,12 +7,20 @@ import support.abstracts.AbstractGameBoard;
 import java.lang.reflect.InvocationTargetException;
 
 public enum GameEnum {
-    TIC_TAC_TOE;
+    TIC_TAC_TOE(TicTacToe.class);
 
-    private AbstractGameBoard getInstance() {
-        return switch (this) {
-            case TIC_TAC_TOE -> new TicTacToe();
-        };
+    private final Class<? extends AbstractGameBoard<?>> gameBoard;
+
+    GameEnum(Class<? extends AbstractGameBoard<?>> gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    private AbstractGameBoard<?> getInstance() {
+        try {
+            return this.gameBoard.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Game create() {

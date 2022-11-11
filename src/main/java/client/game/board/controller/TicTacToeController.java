@@ -1,5 +1,6 @@
 package client.game.board.controller;
 
+import client.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,8 +9,9 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
+import support.actions.ChallengeServerAction;
 import support.actions.StopGameAction;
-import support.enums.GameEnum;
+import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -30,8 +32,8 @@ public class TicTacToeController extends AbstractGameBoardController {
     public void initialize() {
         this.board = new Button[]{btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8};
 
-        this.player_1.setText("O " + this.gameBoard.getPlayerUsername());
-        this.player_2.setText("X " + this.gameBoard.getOpponentUsername());
+        this.player_1.setText("O " + this.getPlayerUsername());
+        this.player_2.setText("X " + this.getOpponentUsername());
 
         this.gameBoard.addEventListenerForTurn(() -> {
             Platform.runLater(this::changeTurn);
@@ -72,6 +74,10 @@ public class TicTacToeController extends AbstractGameBoardController {
         if(result.get() == ButtonType.OK) {
             new StopGameAction();
 
+            if (Auth.getLastGameMode().equals(GameModeEnum.PVA)) {
+                Application.removeAI(this.gameBoard.getOpponent());
+            }
+
             SceneEnum.LOBBY.switchTo();
         }
     }
@@ -100,7 +106,7 @@ public class TicTacToeController extends AbstractGameBoardController {
     }
 
     protected void showEndScreen() {
-
+        GameModeEnum GameMode = Auth.getLastGameMode();
         Stage stage = SceneSwitcher.getInstance().getStage();
 
         ButtonBar.ButtonData done = ButtonBar.ButtonData.OK_DONE;
@@ -108,13 +114,11 @@ public class TicTacToeController extends AbstractGameBoardController {
         ButtonType lobbyButton = new ButtonType("To the lobby", done);
         ButtonType rematchButton = new ButtonType("Rematch!");
 
-        String message = "";
-
-        switch (this.gameBoard.getEndState()) {
-            case WIN -> message = "You have won the game!";
-            case LOSS -> message = "You have lost the game from " + this.gameBoard.getOpponentUsername() + ".";
-            case DRAW -> message = "It is a draw!";
-        }
+        String message = switch (this.gameBoard.getEndState()) {
+            case WIN -> "You have won the game!";
+            case LOSS -> "You have lost the game from " + this.getOpponentUsername() + ".";
+            case DRAW -> "It is a draw!";
+        };
 
         Alert alert = new Alert(Alert.AlertType.NONE, message, lobbyButton, rematchButton);
 
@@ -124,12 +128,15 @@ public class TicTacToeController extends AbstractGameBoardController {
         Optional<ButtonType> result = alert.showAndWait();
 
        if(result.isPresent() && result.get().getButtonData() == done) {
-            SceneEnum.LOBBY.switchTo();
+           if (GameMode.equals(GameModeEnum.PVA)) {
+               Application.removeAI(this.gameBoard.getOpponent());
+           }
+
+           SceneEnum.LOBBY.switchTo();
        } else {
-           //Start a new game against AI
-           GameEnum game = Auth.getLastGame();
-           game.create().setAuthPlayer();
-           game.create().setAIPlayer();
+           GameMode.create(false);
+
+           new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
        }
     }
 

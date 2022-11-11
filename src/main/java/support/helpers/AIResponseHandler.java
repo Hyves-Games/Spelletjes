@@ -29,7 +29,7 @@ public class AIResponseHandler implements Runnable {
                         case YOURTURN -> new YourTurnAction(this.player);
                         case MOVE -> new MoveGameAction(response.data(), this.player);
                         case MATCH -> new ViewGameAction(response.data(), this.player);
-                        case CHALLENGE -> new ChallengeAcceptServerAction(response.data(), this.connection);
+                        case CHALLENGE -> new ChallengeAcceptServerAction(response.data(), this.player);
                         case WIN, LOSS, DRAW -> new EndGameAction(response.type(), this.player);
                         case OK, ERROR -> this.connection.responseHandled();
                     }

@@ -7,11 +7,11 @@ import support.enums.SceneEnum;
 
 public class WaitingRoomController {
     public void initialize() {
-        try {
-            new SubscribeServerAction();
-        } catch (GameNotImplementedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            new SubscribeServerAction();
+//        } catch (GameNotImplementedException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void onCancel() {

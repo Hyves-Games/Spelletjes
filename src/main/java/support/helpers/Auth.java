@@ -2,12 +2,15 @@ package support.helpers;
 
 import domain.player.model.Player;
 import support.enums.GameEnum;
+import support.enums.GameModeEnum;
 
 public class Auth {
     private static Auth auth;
 
     private Player<?> player = null;
+
     private GameEnum lastGame;
+    private GameModeEnum lastGameMode;
 
     private static Auth getInstance() {
         if (Auth.auth == null) {
@@ -35,5 +38,13 @@ public class Auth {
 
     public static void setLastGame(GameEnum lastGame) {
         Auth.getInstance().lastGame = lastGame;
+    }
+
+    public static GameModeEnum getLastGameMode() {
+        return Auth.getInstance().lastGameMode;
+    }
+
+    public static void setLastGameMode(GameModeEnum lastGameMode) {
+        Auth.getInstance().lastGameMode = lastGameMode;
     }
 }

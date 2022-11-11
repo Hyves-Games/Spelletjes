@@ -18,8 +18,8 @@ public abstract class AbstractGameBoard<T> {
     private Boolean ended = false;
     private Boolean playerTurn = false;
 
-    private String playerUsername;
-    private String opponentUsername;
+    private Player<?> player;
+    private Player<?> opponent;
 
     private GameEndStateEnum endState;
 
@@ -36,8 +36,8 @@ public abstract class AbstractGameBoard<T> {
     }
 
     public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
-        this.playerUsername = player.getUsername();
-        this.opponentUsername = opponent.getUsername();
+        this.player = player;
+        this.opponent = opponent;
 
         if (player instanceof AI) {
             this.useAI = true;
@@ -45,12 +45,12 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
-    public String getPlayerUsername() {
-        return this.playerUsername;
+    public Player<?> getPlayer() {
+        return this.player;
     }
 
-    public String getOpponentUsername() {
-        return this.opponentUsername;
+    public Player<?> getOpponent() {
+        return this.opponent;
     }
 
     public Boolean isPlayerTurn() {

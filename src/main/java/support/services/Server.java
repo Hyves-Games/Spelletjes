@@ -60,14 +60,6 @@ public class Server {
     public void disconnect() {
         try {
             this.socket.close();
-
-            Auth.setPlayer(null);
-        } catch (IOException ignored) {}
-    }
-
-    public void disconnectWithoutAuth() {
-        try {
-            this.socket.close();
         } catch (IOException ignored) {}
     }
 

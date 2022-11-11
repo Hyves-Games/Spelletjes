@@ -45,11 +45,7 @@ public class Game {
 
     public void setAIPlayer() {
         try {
-            AI player = new AI();
-
-            this.setPlayer(player);
-
-            new ChallengeServerAction(player, this.gameBoard.getKey());
+            new ChallengeServerAction(new AI(), this.gameBoard.getKey());
         } catch (FailedToCreateAIException | ServerConnectionFailedException e) {
             throw new RuntimeException(e);
         }

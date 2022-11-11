@@ -20,12 +20,12 @@
    <center>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="pvp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onChooseGameMode" text="Player vs Player">
+            <Button fx:id="PVP" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onChooseGameMode" text="Player vs Player">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="pva" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onChooseGameMode" prefWidth="104.0" text="Player vs AI">
+            <Button fx:id="PVA" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onChooseGameMode" prefWidth="104.0" text="Player vs AI">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>

@@ -2,8 +2,12 @@ package support.actions;
 
 import com.google.gson.JsonObject;
 import domain.game.exceptions.FailedToAcceptChallengeException;
+import domain.game.model.Game;
+import domain.player.model.AI;
+import domain.player.model.Player;
 import support.abstracts.AbstractServerAction;
 import support.exceptions.NoServerConnectionException;
+import support.helpers.Auth;
 import support.services.Server;
 
 public class ChallengeAcceptServerAction extends AbstractServerAction {
@@ -15,14 +19,14 @@ public class ChallengeAcceptServerAction extends AbstractServerAction {
         this.handler();
     }
 
-    public ChallengeAcceptServerAction(JsonObject data, Server connection) {
+    public ChallengeAcceptServerAction(JsonObject data, AI player) {
         this.data = data;
         this.skip = true;
-        this.connection = connection;
+        this.connection = player.getConnection();
+
+        Auth.getLastGame().create().setPlayer(player);
 
         this.handler();
-
-        connection.responseHandled();
     }
 
     @Override

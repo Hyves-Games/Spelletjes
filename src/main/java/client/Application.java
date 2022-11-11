@@ -2,6 +2,8 @@ package client;
 
 import domain.player.actions.LoginAction;
 import domain.player.exceptions.LoginFailedException;
+import domain.player.model.AI;
+import domain.player.model.Player;
 import domain.setting.enums.Settings;
 import domain.setting.model.Setting;
 import domain.setting.query.SettingQuery;
@@ -15,8 +17,11 @@ import support.helpers.AudioPlayer;
 import support.helpers.SceneSwitcher;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Application extends javafx.application.Application {
+    private static ArrayList<AI> AIList = new ArrayList<AI>();
+
     @Override
     public void start(Stage stage) {
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
@@ -41,5 +46,21 @@ public class Application extends javafx.application.Application {
         } catch (ServerConnectionFailedException ignored) {}
 
         launch();
+    }
+
+    public static void addAI(AI player) {
+        AIList.add(player);
+    }
+
+    public static void removeAI(Player player) {
+        for (AI AIPlayer : AIList) {
+            if (AIPlayer.getUsername().equals(player.getUsername())) {
+                AIPlayer.disconnect();
+
+                AIList.remove(AIPlayer);
+
+                return;
+            }
+        }
     }
 }
