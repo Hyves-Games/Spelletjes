@@ -1,6 +1,5 @@
-/*
-Current implementation seems significantly slower than array approach. Do *not* use this.
- */
+// Current implementation seems significantly slower than array approach and produces wrong results. Do *not* use this.
+
 // Method of resolving moves by bitwise operations was adapted and modified from Hans Wennborg's C code; https://www.hanshq.net/othello.html#moves
 
 package domain.game.ai.ReversiAI.Helpers;

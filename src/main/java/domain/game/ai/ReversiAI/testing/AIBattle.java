@@ -21,10 +21,11 @@ public class AIBattle {
 
         boolean isWhiteTurn = false;
         boolean wasPass = false;
+        // Play a round
         while (true) {
             int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
             if (moves.length == 0) {
-                if (wasPass == true) {
+                if (wasPass) {
                     // No more moves, game over
                     System.out.println("Game over!");
                     break;
@@ -49,7 +50,5 @@ public class AIBattle {
             }
             isWhiteTurn = !isWhiteTurn;
         }
-        //System.out.println("\nEnd state board:");
-        //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, true);
     }
 }

@@ -29,7 +29,7 @@ public class demo {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
             //MakeMoveBeta.makeMove(test1,test2, true, 42); // 100M: 26000 ms (and wrong answer)
 
-            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
+            MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
             //MakeMove.makeMove(test1,test2, true, 42); // 100M: 2900 ms
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
@@ -38,7 +38,7 @@ public class demo {
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
-        int[] availableMoves = MoveFinder.findAvailableMoves(test1, test2, false);
+        int[] availableMoves = MoveFinder.findAvailableMoves(test1, test2, true);
         boolean[] highlightMoves = new boolean[boardSquareCount];
         for (int availableMove : availableMoves) {
             highlightMoves[availableMove] = true;
