@@ -1,5 +1,4 @@
-package ReversiAI.Heuristics;
-import ReversiAI.Helpers.*;
+package domain.game.ai.ReversiAI.Heuristics;
 
 public class MovesMaximizerEvaluation {
     public static int evaluate(boolean[] playerWhitePieces, boolean[] playerBlackPieces) {

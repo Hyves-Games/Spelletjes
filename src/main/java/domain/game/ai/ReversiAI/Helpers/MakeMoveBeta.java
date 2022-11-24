@@ -3,7 +3,7 @@ Current implementation seems significantly slower than array approach. Do *not* 
  */
 // Method of resolving moves by bitwise operations was adapted and modified from Hans Wennborg's C code; https://www.hanshq.net/othello.html#moves
 
-package ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.Helpers;
 
 import static ReversiAI.Constants.Constants.*;
 

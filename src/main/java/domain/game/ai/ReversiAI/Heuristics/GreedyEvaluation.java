@@ -1,4 +1,4 @@
-package ReversiAI.Heuristics;
+package domain.game.ai.ReversiAI.Heuristics;
 
 public class GreedyEvaluation {
     public static int evaluate(boolean[] playerWhitePieces, boolean[] playerBlackPieces) {

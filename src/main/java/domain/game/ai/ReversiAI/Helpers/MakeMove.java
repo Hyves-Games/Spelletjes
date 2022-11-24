@@ -2,7 +2,7 @@
 @TODO: Make function that accepts long
  */
 
-package ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.Helpers;
 
 import static ReversiAI.Constants.Constants.boardWidth;
 

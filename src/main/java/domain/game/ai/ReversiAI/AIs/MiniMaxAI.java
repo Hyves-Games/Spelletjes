@@ -1,6 +1,6 @@
-package ReversiAI.AIs;
+package domain.game.ai.ReversiAI.AIs;
 
-import ReversiAI.Helpers.MoveFinder;
+import domain.game.ai.ReversiAI.Helpers.MoveFinder;
 
 public class MiniMaxAI {
     public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {

@@ -1,11 +1,11 @@
-package ReversiAI.testing;
+package domain.game.ai.ReversiAI.testing;
 
-import ReversiAI.AIs.RandomAI;
-import ReversiAI.AIs.GreedyAI;
-import ReversiAI.Helpers.MakeMoveBeta;
-import ReversiAI.Helpers.MoveFinder;
-import ReversiAI.Helpers.MakeMove;
-import ReversiAI.Helpers.BoardPrinter;
+import domain.game.ai.ReversiAI.AIs.RandomAI;
+import domain.game.ai.ReversiAI.AIs.GreedyAI;
+import domain.game.ai.ReversiAI.Helpers.MakeMoveBeta;
+import domain.game.ai.ReversiAI.Helpers.MoveFinder;
+import domain.game.ai.ReversiAI.Helpers.MakeMove;
+import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 
 import static ReversiAI.Constants.Constants.boardSquareCount;
 

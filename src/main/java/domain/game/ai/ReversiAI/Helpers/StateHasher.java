@@ -2,7 +2,7 @@
 Needs heavy optimisation for performance.
  */
 
-package ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.Helpers;
 
 import static ReversiAI.Constants.Constants.boardSquareCount;
 

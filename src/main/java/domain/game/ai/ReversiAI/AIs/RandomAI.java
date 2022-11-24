@@ -1,5 +1,6 @@
-package ReversiAI.AIs;
-import ReversiAI.Helpers.MoveFinder;
+package domain.game.ai.ReversiAI.AIs;
+
+import domain.game.ai.ReversiAI.Helpers.MoveFinder;
 
 import java.util.Random;
 

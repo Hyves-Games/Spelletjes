@@ -1,15 +1,15 @@
-package ReversiAI.AIs;
+package domain.game.ai.ReversiAI.AIs;
 
-import ReversiAI.Helpers.MoveFinder;
-import ReversiAI.Helpers.MakeMove;
-import ReversiAI.Constants.Constants;
-import ReversiAI.Heuristics.GreedyEvaluation;
+import domain.game.ai.ReversiAI.Helpers.MoveFinder;
+import domain.game.ai.ReversiAI.Helpers.MakeMove;
+import static ReversiAI.Constants.Constants.*;
+import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
 
 public class GreedyAI {
     public static int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
         int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         int bestMove = moves[0];
-        int bestScore = isWhiteTurn ? -Constants.hugeScore : Constants.hugeScore;
+        int bestScore = isWhiteTurn ? -ReversiAI.Constants.Constants.hugeScore : ReversiAI.Constants.Constants.hugeScore;
         for (int m : moves) {
             boolean[] playerWhitePiecesClone = playerWhitePieces.clone();
             boolean[] playerBlackPiecesClone = playerBlackPieces.clone();

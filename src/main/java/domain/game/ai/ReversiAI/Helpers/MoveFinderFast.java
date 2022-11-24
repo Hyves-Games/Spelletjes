@@ -5,7 +5,7 @@ Moving masks and shifts out of shifting function almost quadrupled performance.
 Changing the shifts from long to byte increased performance slightly.
  */
 
-package ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.Helpers;
 
 import java.util.Arrays;
 
