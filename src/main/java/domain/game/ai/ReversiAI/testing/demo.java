@@ -26,7 +26,7 @@ public class demo {
         Hashtable h = new Hashtable(10000000);
         for (int i = 0; i < 100000000; i++) {
             //GreedyEvaluation.evaluate(test1, test2); // 100M: 4301 ms
-            MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
+            //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
             //MakeMoveBeta.makeMove(test1,test2, true, 42); // 100M: 26000 ms (and wrong answer)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
