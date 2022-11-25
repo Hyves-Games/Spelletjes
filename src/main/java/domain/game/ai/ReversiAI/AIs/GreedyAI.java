@@ -30,6 +30,6 @@ public class GreedyAI extends AI {
     }
 
     public String getAIName() {
-        return "Greedy AI - depth 1";
+        return "Greedy AI (depth 1)";
     }
 }

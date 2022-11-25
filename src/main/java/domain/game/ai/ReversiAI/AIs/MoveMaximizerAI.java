@@ -3,27 +3,27 @@ package domain.game.ai.ReversiAI.AIs;
 import domain.game.ai.ReversiAI.Helpers.MakeMove;
 import domain.game.ai.ReversiAI.Helpers.MoveFinder;
 import domain.game.ai.ReversiAI.Helpers.MoveFinderFast;
-import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 
-import static domain.game.ai.ReversiAI.Constants.Constants.hugeScore;
+import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
-public class MoveMaximizer extends AI {
+public class MoveMaximizerAI extends AI {
     public static String AIName = "Move Count Maximizer AI - depth 1";
 
     public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
         int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         int bestMove = moves[0];
-        int bestScore = 0;
+        int bestScore = maxMovesMemoryLimit;
         for (int m : moves) {
             boolean[] playerWhitePiecesClone = playerWhitePieces.clone();
             boolean[] playerBlackPiecesClone = playerBlackPieces.clone();
 
             MakeMove.makeMove(playerWhitePiecesClone, playerBlackPiecesClone, isWhiteTurn, m);
 
-            int score = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn).length;
-            if (isWhiteTurn && score > bestScore) {
-                bestScore = score;
+            // Pick the move which leaves opponent with the least available moves
+            int opponentScore = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, !isWhiteTurn).length;
+            if (isWhiteTurn && opponentScore < bestScore) {
+                bestScore = opponentScore;
                 bestMove = m;
             }
         }
@@ -31,6 +31,6 @@ public class MoveMaximizer extends AI {
     }
 
     public String getAIName() {
-        return "Move Count Maximizer AI - depth 1";
+        return "Move Count Maximizer AI (depth 1)";
     }
 }

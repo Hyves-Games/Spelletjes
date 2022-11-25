@@ -8,6 +8,6 @@ public class ATHENA extends AI {
     }
 
     public String getAIName() {
-        return "ATHENA AI - multithreaded";
+        return "ATHENA AI (multithreaded)";
     }
 }

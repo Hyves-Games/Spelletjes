@@ -1,10 +1,8 @@
-package domain.game.ai.ReversiAI.testing;
+package domain.game.ai.ReversiAI.Testing;
 
 import domain.game.ai.ReversiAI.AIs.*;
-import domain.game.ai.ReversiAI.Helpers.MakeMoveBeta;
 import domain.game.ai.ReversiAI.Helpers.MoveFinder;
 import domain.game.ai.ReversiAI.Helpers.MakeMove;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.Helpers.PieceCounter;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 
@@ -14,12 +12,12 @@ public class AIBattle {
     public static void main(String[] args) {
         //////////////////////////////
         int GAME_COUNT = 10000;
-        AI FIRSTAI = new GreedyAI();
-        AI SECONDAI = new RandomAI();
+        AI AIOne = new RandomAI();
+        AI AITwo = new MoveMaximizerAI();
         //////////////////////////////
 
-        int whiteWinCount = 0;
-        int blackWinCount = 0;
+        int AIOneWinCount = 0;
+        int AITwoWinCount = 0;
 
         int barLength = 20;
         int lastFilledCount = 0;
@@ -31,6 +29,8 @@ public class AIBattle {
         System.out.print("]");
 
         // Run the games
+        AI WhiteAI = AIOne;
+        AI BlackAI = AITwo;
         for (int i = 1; i <= GAME_COUNT; i++) {
             // Set up board, default position
             boolean[] playerWhitePieces = new boolean[boardSquareCount];
@@ -58,11 +58,11 @@ public class AIBattle {
                     wasPass = false;
                     if (isWhiteTurn) {
                         // WHITE
-                        int bestMove = FIRSTAI.getBestMove(playerWhitePieces, playerBlackPieces, true);
+                        int bestMove = WhiteAI.getBestMove(playerWhitePieces, playerBlackPieces, true);
                         MakeMove.makeMove(playerWhitePieces, playerBlackPieces, true, bestMove);
                     } else {
                         // BLACK
-                        int bestMove = SECONDAI.getBestMove(playerWhitePieces, playerBlackPieces, false);
+                        int bestMove = BlackAI.getBestMove(playerWhitePieces, playerBlackPieces, false);
                         MakeMove.makeMove(playerWhitePieces, playerBlackPieces, false, bestMove);
                     }
                 }
@@ -72,14 +72,30 @@ public class AIBattle {
             // Determine winner and add to count
             int[] results = PieceCounter.countPieces(playerWhitePieces, playerBlackPieces);
             if (results[0] > results[1]) {
-                whiteWinCount++;
+                // White wins
+                if (WhiteAI == AIOne) {
+                    AIOneWinCount++;
+                }
+                if (WhiteAI == AITwo) {
+                    AITwoWinCount++;
+                }
             } else {
-                blackWinCount++;
+                // Black wins
+                if (BlackAI == AIOne) {
+                    AIOneWinCount++;
+                }
+                if (BlackAI == AITwo) {
+                    AITwoWinCount++;
+                }
             }
+
+            // Assign AI to play the other color for a next game;
+            AI temp = WhiteAI;
+            WhiteAI = BlackAI;
+            BlackAI = temp;
 
             // Update console
             int filledCount = i * barLength / GAME_COUNT;
-
             if (filledCount > lastFilledCount) {
                 for (int e = 0; e < barLength + 1; e++) {
                     System.out.print("\b");
@@ -95,7 +111,8 @@ public class AIBattle {
             }
             lastFilledCount = filledCount;
         }
+
         // Print results
-        System.out.println("\n" + FIRSTAI.getAIName() + " has won " + whiteWinCount + " games.\n" + SECONDAI.getAIName() + " won " + blackWinCount + " games.");
+        System.out.println("\n" + AIOne.getAIName() + " has won " + AIOneWinCount + " games.\n" + AITwo.getAIName() + " won " + AITwoWinCount + " games.");
     }
 }

@@ -14,6 +14,6 @@ public class MiniMaxAI extends AI {
     }
 
     public String getAIName() {
-        return "Minimax AI - depth 1";
+        return "Minimax AI (depth 1)";
     }
 }

@@ -1,12 +1,11 @@
-package domain.game.ai.ReversiAI.testing;
+package domain.game.ai.ReversiAI.Testing;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 import domain.game.ai.ReversiAI.Helpers.*;
-import domain.game.ai.ReversiAI.Heuristics.*;
 
 import java.util.Hashtable;
 
-public class demo {
+public class experimenting {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         System.out.println("start");
