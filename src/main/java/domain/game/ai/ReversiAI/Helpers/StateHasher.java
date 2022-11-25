@@ -4,7 +4,7 @@ Needs heavy optimisation for performance.
 
 package domain.game.ai.ReversiAI.Helpers;
 
-import static ReversiAI.Constants.Constants.boardSquareCount;
+import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class StateHasher {
     private static long boolArrayToLong(boolean[] a) {

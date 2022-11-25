@@ -1,6 +1,6 @@
 package domain.game.ai.ReversiAI.testing;
 
-import static ReversiAI.Constants.Constants.*;
+import static domain.game.ai.ReversiAI.Constants.Constants.*;
 import domain.game.ai.ReversiAI.Helpers.*;
 import domain.game.ai.ReversiAI.Heuristics.*;
 
@@ -29,11 +29,12 @@ public class demo {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
             //MakeMoveBeta.makeMove(test1,test2, true, 42); // 100M: 26000 ms (and wrong answer)
 
-            MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
+            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
             //MakeMove.makeMove(test1,test2, true, 42); // 100M: 2900 ms
+
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
-            //h.put(i, test3); // 100M:ch 13000 ms (10M in 1300 ms); eats memory/heap space errors when iterations 10M -> 100M.
+            //h.put(i, test3); // 100M: 13000 ms (10M in 1300 ms); eats memory/heap space errors when iterations 10M -> 100M.
         }
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration");

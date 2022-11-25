@@ -4,7 +4,7 @@
 
 package domain.game.ai.ReversiAI.Helpers;
 
-import static ReversiAI.Constants.Constants.*;
+import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MakeMoveBeta {
 

@@ -4,7 +4,7 @@
 
 package domain.game.ai.ReversiAI.Helpers;
 
-import static ReversiAI.Constants.Constants.boardWidth;
+import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MakeMove {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};

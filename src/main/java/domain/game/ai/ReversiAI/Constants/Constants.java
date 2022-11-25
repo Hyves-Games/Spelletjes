@@ -1,4 +1,4 @@
-package ReversiAI.Constants;
+package domain.game.ai.ReversiAI.Constants;
 
 public class Constants {
     public static final int boardWidth = 8;
