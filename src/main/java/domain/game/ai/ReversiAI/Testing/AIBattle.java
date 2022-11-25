@@ -11,17 +11,17 @@ import static domain.game.ai.ReversiAI.Constants.Constants.*;
 public class AIBattle {
     public static void main(String[] args) {
         //////////////////////////////
-        int GAME_COUNT = 10000;
+        int GameCount = 10000;
         AI AIOne = new RandomAI();
-        AI AITwo = new MoveMaximizerAI();
+        AI AITwo = new RandomAI();
         //////////////////////////////
 
         int AIOneWinCount = 0;
         int AITwoWinCount = 0;
 
-        int barLength = 20;
+        int barLength = 40;
         int lastFilledCount = 0;
-        System.out.println("Running " + GAME_COUNT + " games...");
+        System.out.println("Running " + GameCount + " games...");
         System.out.print("[");
         for (int b = 0; b < barLength; b++) {
             System.out.print("░");
@@ -31,7 +31,7 @@ public class AIBattle {
         // Run the games
         AI WhiteAI = AIOne;
         AI BlackAI = AITwo;
-        for (int i = 1; i <= GAME_COUNT; i++) {
+        for (int i = 1; i <= GameCount; i++) {
             // Set up board, default position
             boolean[] playerWhitePieces = new boolean[boardSquareCount];
             boolean[] playerBlackPieces = new boolean[boardSquareCount];
@@ -89,12 +89,13 @@ public class AIBattle {
             BlackAI = temp;
 
             // Update console
-            int filledCount = i * barLength / GAME_COUNT;
+            int filledCount = (i * barLength) / GameCount;
             if (filledCount > lastFilledCount) {
                 for (int e = 0; e < barLength + 1; e++) {
                     System.out.print("\b");
                 }
                 for (int b = 0; b < barLength; b++) {
+
                     if (b < filledCount) {
                         System.out.print("▓");
                     } else {
@@ -107,6 +108,6 @@ public class AIBattle {
         }
 
         // Print results
-        System.out.println("\n" + AIOne.getAIName() + " has won " + AIOneWinCount + " games.\n" + AITwo.getAIName() + " won " + AITwoWinCount + " games.");
+        System.out.println("\n" + AIOne.getAIName() + " won " + AIOneWinCount + " games.\n" + AITwo.getAIName() + " won " + AITwoWinCount + " games.");
     }
 }

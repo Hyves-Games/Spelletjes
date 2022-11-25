@@ -22,7 +22,7 @@ public class experimenting {
 
         long test3 = 81644180471808L;
 
-        Hashtable h = new Hashtable(10000000);
+        //Hashtable h = new Hashtable(10000000);
         for (int i = 0; i < 100000000; i++) {
             //GreedyEvaluation.evaluate(test1, test2); // 100M: 4301 ms
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
