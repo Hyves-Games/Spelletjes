@@ -55,16 +55,10 @@ public class AIBattle {
                     }
                 } else {
                     // A move can be played
+                    AI selectedAI = isWhiteTurn ? WhiteAI : BlackAI;
                     wasPass = false;
-                    if (isWhiteTurn) {
-                        // WHITE
-                        int bestMove = WhiteAI.getBestMove(playerWhitePieces, playerBlackPieces, true);
-                        MakeMove.makeMove(playerWhitePieces, playerBlackPieces, true, bestMove);
-                    } else {
-                        // BLACK
-                        int bestMove = BlackAI.getBestMove(playerWhitePieces, playerBlackPieces, false);
-                        MakeMove.makeMove(playerWhitePieces, playerBlackPieces, false, bestMove);
-                    }
+                    int bestMove = selectedAI.getBestMove(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+                    MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
                 }
                 isWhiteTurn = !isWhiteTurn;
             }
