@@ -2,6 +2,7 @@ package domain.game.ai.ReversiAI.Testing;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 import domain.game.ai.ReversiAI.Helpers.*;
+import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
 
 import java.util.Hashtable;
 
@@ -22,18 +23,20 @@ public class experimenting {
 
         long test3 = 81644180471808L;
 
-        //Hashtable h = new Hashtable(10000000);
+        //Hashtable h = new Hashtable(40000000);
         for (int i = 0; i < 100000000; i++) {
             //GreedyEvaluation.evaluate(test1, test2); // 100M: 4301 ms
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
-            //MakeMoveBeta.makeMove(test1,test2, true, 42); // 100M: 26000 ms (and wrong answer)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
             //MakeMove.makeMove(test1,test2, true, 42); // 100M: 2900 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
-            //h.put(i, test3); // 100M: 13000 ms (10M in 1300 ms); eats memory/heap space errors when iterations 10M -> 100M.
+            //h.put(i, test3); // 100M: 7100ms when combined with fast hasher function and greedy evaluation (net: 100M in ~2800 ms)
+
+            //long hash = StateHasher.Hash(test3, test3, true);
+            //h.put(hash, GreedyEvaluation.evaluate(test1, test2));
         }
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
