@@ -3,7 +3,10 @@ package domain.game.ai.ReversiAI.Testing;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 import domain.game.ai.ReversiAI.Helpers.*;
 import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
+import domain.game.ai.ReversiAI.Board.*;
 
+import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Hashtable;
 
 public class experimenting {
@@ -25,10 +28,13 @@ public class experimenting {
 
         //Hashtable h = new Hashtable(40000000);
         for (int i = 0; i < 100000000; i++) {
-            //GreedyEvaluation.evaluate(test1, test2); // 100M: 4301 ms
-            //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 124000 ms (unoptimised)
+            //GreedyEvaluation.evaluate(test1, test2, true); // 100M: 4301 ms (boolean array)
+            //GreedyEvaluation.evaluate(test3, test3, true); // 100M: 4200 ms (long type)
 
-            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 18400 ms
+            //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
+            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 14700 ms (optimised) / 17900 ms
+            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8400 ms (board mostly empty) / 5500 ms without conversion step
+
             //MakeMove.makeMove(test1,test2, true, 42); // 100M: 2900 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
@@ -37,16 +43,19 @@ public class experimenting {
 
             //long hash = StateHasher.Hash(test3, test3, true);
             //h.put(hash, GreedyEvaluation.evaluate(test1, test2));
+
         }
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
         int[] availableMoves = MoveFinder.findAvailableMoves(test1, test2, true);
+        int[] availableMoves2 = MoveFinderFast.findAvailableMoves(test1, test2, true);
+
         boolean[] highlightMoves = new boolean[boardSquareCount];
-        for (int availableMove : availableMoves) {
+        for (int availableMove : availableMoves2) {
             highlightMoves[availableMove] = true;
         }
-
-        BoardPrinter.printBoard(test1, test2, highlightMoves, true);
+        
+        //BoardPrinter.printBoard(test1, test2, highlightMoves, true);
     }
 }

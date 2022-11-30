@@ -20,7 +20,7 @@ public class GreedyAI extends AI {
 
             MakeMove.makeMove(playerWhitePiecesClone, playerBlackPiecesClone, isWhiteTurn, m);
 
-            int score = GreedyEvaluation.evaluate(playerWhitePieces, playerBlackPieces);
+            int score = GreedyEvaluation.evaluate(playerWhitePieces, playerBlackPieces, isWhiteTurn);
             if (isWhiteTurn && score > bestScore) {
                 bestScore = score;
                 bestMove = m;

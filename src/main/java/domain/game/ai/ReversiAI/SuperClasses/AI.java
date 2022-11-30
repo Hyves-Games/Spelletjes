@@ -1,7 +1,7 @@
 package domain.game.ai.ReversiAI.SuperClasses;
 
 public class AI {
-    public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
+    public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return 0;
     }
 

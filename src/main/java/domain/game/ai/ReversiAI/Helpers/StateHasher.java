@@ -19,7 +19,7 @@ public class StateHasher {
         return boolArrayToLong(playerWhitePieces) + boolArrayToLong(playerBlackPieces) + (isWhiteTurn ? 1 : 0); // @TODO: Evaluate if hashes are unique.
     }
     public static long Hash(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
-        // NOT EQUAVALENT WITH OTHER METHOD
+        // NOT EQUIVALENT WITH OTHER METHOD
         //return boolArrayToLong(playerWhitePieces) + (isWhiteTurn ? "1" : "0") + boolArrayToLong(playerBlackPieces);
         //return playerWhitePieces + playerBlackPieces + (isWhiteTurn ? 1 : 0); // @TODO: Evaluate if hashes are unique.
         return playerWhitePieces * playerBlackPieces + (isWhiteTurn ? 1 : 0); // @TODO: Evaluate if hashes are unique.

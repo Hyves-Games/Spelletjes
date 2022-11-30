@@ -59,4 +59,17 @@ public class MakeMove {
             }
         }
     }
+
+    public static void makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
+        boolean[] whiteBoolean = new boolean[boardSquareCount];
+        boolean[] blackBoolean = new boolean[boardSquareCount];
+        for (int i = 0; i < 64; i++) {
+            if (((playerWhitePieces >> i) & 1) == 1) {
+                whiteBoolean[i] = true;
+            } else if (((playerBlackPieces >> i) & 1) == 1) {
+                blackBoolean[i] = true;
+            }
+        }
+        makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
+    }
 }

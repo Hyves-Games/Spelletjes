@@ -3,8 +3,11 @@ package domain.game.ai.ReversiAI.Testing;
 import domain.game.ai.ReversiAI.AIs.*;
 import domain.game.ai.ReversiAI.Helpers.MoveFinder;
 import domain.game.ai.ReversiAI.Helpers.MakeMove;
+import domain.game.ai.ReversiAI.Helpers.MoveFinderFast;
 import domain.game.ai.ReversiAI.Helpers.PieceCounter;
+import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
+import domain.game.ai.ReversiAI.Board.*;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
@@ -33,18 +36,15 @@ public class AIBattle {
         AI BlackAI = AITwo;
         for (int i = 1; i <= GameCount; i++) {
             // Set up board, default position
-            boolean[] playerWhitePieces = new boolean[boardSquareCount];
-            boolean[] playerBlackPieces = new boolean[boardSquareCount];
-            playerWhitePieces[27] = true;
-            playerWhitePieces[36] = true;
-            playerBlackPieces[28] = true;
-            playerBlackPieces[35] = true;
+            BoardPosition board = DefaultBoard.getBoard();
+            long playerWhitePieces = board.playerWhitePieces;
+            long playerBlackPieces = board.playerBlackPieces;
 
             // Play a round
             boolean isWhiteTurn = false;
             boolean wasPass = false;
             while (true) {
-                int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+                int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
                 if (moves.length == 0) {
                     if (wasPass) {
                         // No more moves, game over
