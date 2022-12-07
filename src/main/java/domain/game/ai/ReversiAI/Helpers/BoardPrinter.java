@@ -3,7 +3,7 @@ package domain.game.ai.ReversiAI.Helpers;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class BoardPrinter {
-    public static void printBoard(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean[] highlightPieces, boolean displayScore) {
+    public static void printBoard(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean[] highlightPieces) {
         for (int i = 0; i < boardSquareCount; i++) {
             String printPiece = emptyPiece;
             if (playerWhitePieces[i]) {
@@ -27,39 +27,31 @@ public class BoardPrinter {
             blackCount += b ? 1 : 0;
         }
         System.out.println("White: " + whiteCount + "\t Black: " + blackCount);
-        System.out.printf("\n");
     }
 
-    public static void printBoard(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean displayScore) {
-        printBoard(playerWhitePieces, playerBlackPieces, new boolean[boardSquareCount], displayScore);
-    }
-
-    public static void printBoard(long playerWhitePieces, long playerBlackPieces, long highlightPieces, boolean displayScore) {
-        boolean[] white = new boolean[64];
-        boolean[] black = new boolean[64];
-        boolean[] highlight = new boolean[64];
+    public static void printBoard(long playerWhitePieces, long playerBlackPieces, int[] highlightPieces) {
+        boolean[] white = new boolean[boardSquareCount];
+        boolean[] black = new boolean[boardSquareCount];
+        boolean[] highlight = new boolean[boardSquareCount];
 
         for (byte i = 0; i < boardSquareCount; i++) {
-            long mask = 0b1000000000000000000000000000000000000000000000000000000000000000L >> i;
+            long mask = 0b0000000000000000000000000000000000000000000000000000000000000001L << i;
             if ((playerWhitePieces & mask) > 0) {
-                white[i] = true;
+                white[boardSquareCount - i - 1] = true;
             }
             if ((playerBlackPieces & mask) > 0) {
-                black[i] = true;
-            }
-            if ((highlightPieces & mask) > 0) {
-                highlight[i] = true;
+                black[boardSquareCount - i - 1] = true;
             }
         }
-        printBoard(white, black, displayScore);
+
+        for (int i : highlightPieces) {
+            highlight[i] = true;
+        }
+
+        printBoard(white, black, highlight);
     }
 
-    public static void printBoard(long playerWhitePieces, long playerBlackPieces, boolean displayScore) {
-        printBoard(playerWhitePieces, playerBlackPieces, 0, displayScore);
-    }
-
-    public static void printBoard(long highlightPieces) {
-        long e = 0x0L;
-        printBoard(e, e, highlightPieces, false);
+    public static void printBoard(long playerWhitePieces, long playerBlackPieces) {
+        printBoard(playerWhitePieces, playerBlackPieces, new int[boardSquareCount]);
     }
 }

@@ -4,13 +4,15 @@
 
 package domain.game.ai.ReversiAI.Helpers;
 
+import domain.game.ai.ReversiAI.Board.BoardPosition;
+
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MakeMove {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};
     static byte[] directionsY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    public static void makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex){
+    public static BoardPosition makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex){
         boolean[] oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
         boolean[] sameColoredPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
 
@@ -55,9 +57,19 @@ public class MakeMove {
                     }
                     break;
                 }
-
             }
         }
+        BoardPosition b = new BoardPosition();
+        b.playerBlackPieces = boolArrayToLong(playerBlackPieces);
+        b.playerWhitePieces = boolArrayToLong(playerWhitePieces);
+        return b;
+    }
+
+    private static long boolArrayToLong(boolean[] a) {
+        long n = 0;
+        for (boolean b : a)
+            n = (n << 1) | (b ? 1 : 0);
+        return n;
     }
 
     public static void makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {

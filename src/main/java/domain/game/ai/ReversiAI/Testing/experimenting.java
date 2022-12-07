@@ -33,9 +33,10 @@ public class experimenting {
 
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 14700 ms (optimised) / 17900 ms
-            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8400 ms (board mostly empty) / 5500 ms without conversion step
+            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8200 ms (board mostly empty) / 5500 ms without conversion step
 
-            //MakeMove.makeMove(test1,test2, true, 42); // 100M: 2900 ms
+            //MakeMove.makeMove(test1,test2, true, 42); // 100M: 10200 ms (2900 ms without conversion step)
+            //MakeMoveFast.makeMove(test1,test2, true, 42); // 100M: 10200 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
@@ -48,14 +49,13 @@ public class experimenting {
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
-        int[] availableMoves = MoveFinder.findAvailableMoves(test1, test2, true);
-        int[] availableMoves2 = MoveFinderFast.findAvailableMoves(test1, test2, true);
+        //int[] availableMoves2 = MoveFinder.findAvailableMoves(test1, test2, true);
+        //int[] availableMoves = MoveFinderFast.findAvailableMoves(test1, test2, true);
 
-        boolean[] highlightMoves = new boolean[boardSquareCount];
-        for (int availableMove : availableMoves2) {
-            highlightMoves[availableMove] = true;
-        }
-        
-        //BoardPrinter.printBoard(test1, test2, highlightMoves, true);
+        long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
+        long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
+        int[] availableMoves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, true);
+
+        BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, availableMoves);
     }
 }

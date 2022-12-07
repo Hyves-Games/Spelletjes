@@ -45,6 +45,7 @@ public class AIBattle {
             boolean wasPass = false;
             while (true) {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+                System.out.println(moves.length);
                 if (moves.length == 0) {
                     if (wasPass) {
                         // No more moves, game over
@@ -64,8 +65,7 @@ public class AIBattle {
             }
 
             // Determine winner and add to count
-            int[] results = PieceCounter.countPieces(playerWhitePieces, playerBlackPieces);
-            if (results[0] > results[1]) {
+            if (PieceCounter.countPieces(playerWhitePieces) > PieceCounter.countPieces(playerBlackPieces)) {
                 // White wins
                 if (WhiteAI == AIOne) {
                     AIOneWinCount++;

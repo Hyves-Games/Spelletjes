@@ -1,20 +1,15 @@
-// Method of generating moves by bitwise operations was adapted and modified from Hans Wennborg's C code; https://www.hanshq.net/othello.html#moves
-
-/* Notes:
-Moving masks and shifts out of shifting function almost quadrupled performance.
-Changing the shifts from long to byte increased performance slightly.
+/*
+@TODO: Make function that accepts long
  */
 
 package domain.game.ai.ReversiAI.Helpers;
 
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Objects;
+import domain.game.ai.ReversiAI.Board.BoardPosition;
 
-import static domain.game.ai.ReversiAI.Constants.Constants.*;
-import static domain.game.ai.ReversiAI.Helpers.BoardPrinter.printBoard; // REMOVE
+import static domain.game.ai.ReversiAI.Constants.Constants.boardSquareCount;
+import static domain.game.ai.ReversiAI.Constants.Constants.boardWidth;
 
-public class MoveFinderFast {
+public class MakeMoveFast {
     static long[] bitMask = { // No this is not pretty, yes it increases performance.
             0b1000000000000000000000000000000000000000000000000000000000000000L,
             0b0100000000000000000000000000000000000000000000000000000000000000L,
@@ -82,69 +77,60 @@ public class MoveFinderFast {
             0b0000000000000000000000000000000000000000000000000000000000000001L,
     };
 
-    static long[] masks = {
-            0x7F7F7F7F7F7F7F7FL, /* Right. */
-            0x007F7F7F7F7F7F7FL, /* Down-right. */
-            0xFFFFFFFFFFFFFFFFL, /* Down. */
-            0x00FEFEFEFEFEFEFEL, /* Down-left. */
-            0xFEFEFEFEFEFEFEFEL, /* Left. */
-            0xFEFEFEFEFEFEFE00L, /* Up-left. */
-            0xFFFFFFFFFFFFFFFFL, /* Up. */
-            0x7F7F7F7F7F7F7F00L  /* Up-right. */
-    };
+    static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};
+    static byte[] directionsY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    static byte[] leftShifts = {
-            0, /* Right. */
-            0, /* Down-right. */
-            0, /* Down. */
-            0, /* Down-left. */
-            1, /* Left. */
-            9, /* Up-left. */
-            8, /* Up. */
-            7  /* Up-right. */
-    };
+    public static BoardPosition makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex){
+        boolean[] oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
+        boolean[] sameColoredPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
 
-    static byte[] rightShifts = {
-            1, /* Right. */
-            9, /* Down-right. */
-            8, /* Down. */
-            7, /* Down-left. */
-            0, /* Left. */
-            0, /* Up-left. */
-            0, /* Up. */
-            0  /* Up-right. */
-    };
+        byte x = (byte) (moveIndex % boardWidth);
+        byte y = (byte) (moveIndex / boardWidth);
+        for (int d = 0; (d < directionsX.length); d++) {
+            // For each directional line
 
-    private static long shift(long pieces, int dir) {
-        if (dir < halfBoardWidth) {
-            return (pieces >> rightShifts[dir]) & masks[dir];
-        } else {
-            return (pieces << leftShifts[dir]) & masks[dir];
+            byte exploreX = x;
+            byte exploreY = y;
+
+            boolean oppositeColorNeighbourFound = false;
+            int length = 0;
+            while (true) {
+                // For each position in directional line
+
+                exploreX += directionsX[d];
+                exploreY += directionsY[d];
+                int exploreIndex = exploreY * boardWidth + exploreX;
+                if (exploreX < 0 || exploreY < 0 || exploreX >= boardWidth || exploreY >= boardWidth) {
+                    // Out of bounds for this direction
+                    break;
+                }
+
+                length++; // Used to traverse back while flipping
+                if (!sameColoredPieces[exploreIndex] && !oppositeColoredPieces[exploreIndex]) {
+                    // Empty square
+                    break;
+                } else if (oppositeColoredPieces[exploreIndex]) {
+                    // Valid opposite colored neighbour found
+                    oppositeColorNeighbourFound = true;
+                } else if (!oppositeColorNeighbourFound) { // } else if (!oppositeColorNeighbourFound && sameColoredPieces[exploreIndex]) {
+                    // Not a valid direction
+                    break;
+                } else { // } else if (oppositeColorNeighbourFound && sameColoredPieces[exploreIndex]) {
+                    // Valid direction
+                    for (int i = 0; i <= length; i++) {
+                        // 'Flip' over pieces (and add starting piece)
+                        int i1 = (exploreY - i * directionsY[d]) * boardWidth + (exploreX - i * directionsX[d]);
+                        sameColoredPieces[i1] = true;
+                        oppositeColoredPieces[i1] = false;
+                    }
+                    break;
+                }
+            }
         }
-    }
-
-    private static long generateMoves(long my_disks, long opp_disks) {
-        byte dir;
-        long x;
-        long empty_cells = ~(my_disks | opp_disks);
-        long legal_moves = 0;
-
-        for (dir = 0; dir < boardWidth; dir++) {
-            // Get opponent disks adjacent to my disks in direction dir.
-            x = shift(my_disks, dir) & opp_disks;
-
-            // Add opponent disks adjacent to those, and so on.
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-
-            // Empty cells adjacent to those are valid moves.
-            legal_moves |= shift(x, dir) & empty_cells;
-        }
-
-        return legal_moves;
+        BoardPosition b = new BoardPosition();
+        b.playerBlackPieces = boolArrayToLong(playerBlackPieces);
+        b.playerWhitePieces = boolArrayToLong(playerWhitePieces);
+        return b;
     }
 
     private static long boolArrayToLong(boolean[] a) {
@@ -154,25 +140,17 @@ public class MoveFinderFast {
         return n;
     }
 
-    private static int[] longToMoves(long l) {
-        int[] moves = new int[Long.bitCount(l)];
-
-        byte moveCount = 0;
-        byte bc = (byte) Long.bitCount(l);
-        for (int i = Long.numberOfLeadingZeros(l); moveCount < bc; i++) {
-            if ((l & bitMask[i]) != 0) {
-                moves[moveCount] = i;
-                moveCount++;
+    public static void makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
+        boolean[] whiteBoolean = new boolean[boardSquareCount];
+        boolean[] blackBoolean = new boolean[boardSquareCount];
+        for (byte i = 0; i < 64; i++) {
+            if ((bitMask[i] & playerWhitePieces) > 0) {
+                whiteBoolean[i] = true;
+            } else if((bitMask[i] & playerBlackPieces) > 0) {
+                blackBoolean[i] = true;
             }
         }
-        return moves;
-    }
 
-    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        return longToMoves(generateMoves(boolArrayToLong(isWhiteTurn ? playerWhitePieces : playerBlackPieces), boolArrayToLong(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
-    }
-
-    public static int[] findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
-        return longToMoves(generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces));
+        makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
     }
 }
