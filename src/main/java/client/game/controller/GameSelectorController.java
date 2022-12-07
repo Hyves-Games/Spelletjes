@@ -1,5 +1,6 @@
 package client.game.controller;
 
+import domain.game.model.Reversi;
 import domain.game.model.TicTacToe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,6 +55,7 @@ public class GameSelectorController {
     private AbstractGameBoard getGameBoard(GameEnum type) {
         return switch (type) {
             case TIC_TAC_TOE -> new TicTacToe();
+            case REVERSI -> new Reversi();
         };
     }
 

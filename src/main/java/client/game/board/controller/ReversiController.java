@@ -4,8 +4,14 @@ import client.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
@@ -16,24 +22,45 @@ import support.enums.SceneEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-public class TicTacToeController extends AbstractGameBoardController {
-    @FXML Button btn_0;
-    @FXML Button btn_1;
-    @FXML Button btn_2;
-    @FXML Button btn_3;
-    @FXML Button btn_4;
-    @FXML Button btn_5;
-    @FXML Button btn_6;
-    @FXML Button btn_7;
-    @FXML Button btn_8;
+public class ReversiController extends AbstractGameBoardController {
+    @FXML GridPane board_grid;
 
     public void initialize() {
-        this.board = new Button[]{btn_0, btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8};
-
         this.player_1.setText("O " + this.getPlayerUsername());
         this.player_2.setText("X " + this.getOpponentUsername());
+        int col = 0;
+        int row = 0;
+
+        Button[] buttons = new Button[64];
+        for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
+            Button btn = new Button();
+            btn.setId("btn_" + (i+1));
+            if (this.gameBoard.getBoard()[i] == 1) {
+                // Player's moves
+                btn.setText("X");
+            } else if (this.gameBoard.getBoard()[i] == -1) {
+                // Opponents moves
+                btn.setText("O");
+            } else {
+                // Open spots
+                btn.setText("[]");
+            }
+            btn.setPrefHeight(60.0);
+            btn.setPrefWidth(60.0);
+            btn.setPadding(new Insets(10));
+            btn.setOnAction(this::onMoveClick);
+            if (i != 0 && i % 8 == 0) {
+                row++;
+                col = 0;
+            }
+            this.board_grid.add(btn, col, row);
+            col++;
+            buttons[i] = btn;
+        }
+        this.board = buttons;
 
         this.gameBoard.addEventListenerForTurn(() -> {
             Platform.runLater(this::changeTurn);
@@ -42,7 +69,6 @@ public class TicTacToeController extends AbstractGameBoardController {
         this.gameBoard.addEventListenerForBoard(() -> {
             Platform.runLater(this::changeBoardView);
         });
-
         this.gameBoard.addEventListenerForEnd(() -> {
             if (this.isPlayerAI()) {
                 Platform.runLater(SceneEnum.WAIT_ROOM_TOURNAMENT::switchTo);
@@ -50,7 +76,6 @@ public class TicTacToeController extends AbstractGameBoardController {
                 Platform.runLater(this::showEndScreen);
             }
         });
-
         this.changeTurn();
     }
 
@@ -58,6 +83,30 @@ public class TicTacToeController extends AbstractGameBoardController {
         int index = Integer.parseInt(((Node) (event.getSource())).getId().split("_")[1]);
 
         this.gameBoard.doMove(index);
+    }
+    @Override
+    protected void changeTurn() {
+        if (this.gameBoard.isPlayerTurn()) {
+            this.setPlayerTurn();
+        } else {
+            this.setOpponentTurn();
+        }
+    }
+
+    @Override
+    protected void changeBoardView() {
+        Object[] values = this.gameBoard.getBoard();
+
+        for (int i = 0; i < values.length; i++) {
+            Integer value = (Integer) values[i];
+
+            if (value != 0) {
+                Button btn = this.board[i];
+
+                btn.setDisable(true);
+                btn.setText(value == 1 ? "O" : "X");
+            }
+        }
     }
 
     public void onLeaveClick(ActionEvent event) {
@@ -81,30 +130,6 @@ public class TicTacToeController extends AbstractGameBoardController {
             SceneEnum.LOBBY.switchTo();
         }
     }
-
-    protected void changeTurn() {
-        if (this.gameBoard.isPlayerTurn()) {
-            this.setPlayerTurn();
-        } else {
-            this.setOpponentTurn();
-        }
-    }
-
-    protected void changeBoardView() {
-        Object[] values = this.gameBoard.getBoard();
-
-        for (int i = 0; i < values.length; i++) {
-            Integer value = (Integer) values[i];
-
-            if (value != 0) {
-                Button btn = this.board[i];
-
-                btn.setDisable(true);
-                btn.setText(value == 1 ? "O" : "X");
-            }
-        }
-    }
-
     protected void showEndScreen() {
         GameModeEnum GameMode = Auth.getLastGameMode();
         Stage stage = SceneSwitcher.getInstance().getStage();
@@ -127,18 +152,16 @@ public class TicTacToeController extends AbstractGameBoardController {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-       if(result.isPresent() && result.get().getButtonData() == done) {
-           if (GameMode.equals(GameModeEnum.PVA)) {
-               Application.removeAI(this.gameBoard.getOpponent());
-           }
+        if(result.isPresent() && result.get().getButtonData() == done) {
+            if (GameMode.equals(GameModeEnum.PVA)) {
+                Application.removeAI(this.gameBoard.getOpponent());
+            }
 
-           SceneEnum.LOBBY.switchTo();
-       } else {
-           GameMode.create(false, false);
+            SceneEnum.LOBBY.switchTo();
+        } else {
+            GameMode.create(false, false);
 
-           new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
-       }
+            new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
+        }
     }
-
 }
-
