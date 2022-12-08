@@ -1,6 +1,8 @@
 package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Helpers.MakeMoveFast;
+import domain.game.ai.ReversiAI.Helpers.MoveFinderFast;
+import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 
 import java.util.concurrent.CountDownLatch;
@@ -15,8 +17,16 @@ class SearchCounter {
         this.wins[move]++;
     }
 
+    public synchronized void addWins(int move, int amount) {
+        this.wins[move] += amount;
+    }
+
     public synchronized void incrementLosses(int move) {
         this.losses[move]++;
+    }
+
+    public synchronized void addLosses(int move, int amount) {
+        this.losses[move] += amount;
     }
 
     public int getWins(int move) {
@@ -49,11 +59,20 @@ class Worker extends Thread {
         test2[35] = true;
         test2[28] = true;
         test2[26] = true; test2[29] = true; test2[30] = true; test2[34] = true;
-        for (int ii = 1; ii < 10000000; ii++) {
+        long test3 = 81644180471808L;
+
+        int[] threadWins = new int[boardSquareCount];
+        for (int ii = 1; ii < 30000000; ii++) {
+            // 'simulate' move
+            GreedyEvaluation.evaluate(test3, test3, true);
             MakeMoveFast.makeMove(test1, test2, true, 42);
-            if (ii % 60 == 0) {
-                sc.incrementWins(1);
+            MoveFinderFast.findAvailableMoves(test3, test3, true);
+            if (ii % 60 == 0) { // Assume every game takes 60 moves
+                threadWins[1]++;
             }
+        }
+        for (int i = 0; i < 64; i++) {
+            sc.addWins(i, threadWins[i]);
         }
         System.out.println("stop");
         System.out.println((System.currentTimeMillis() - start) + " ms duration thread");
@@ -61,20 +80,20 @@ class Worker extends Thread {
     }
 }
 
-public class ATHENA extends AI {
+public class MCTS_MT extends AI {
     public static int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int maxTimeSeconds, int headroomMilliSeconds) {
         return 0;
     }
 
     public String getAIName() {
-        return "ATHENA AI (multithreaded)";
+        return "MonteCarloTreeSearch (multithreaded)";
     }
 
     public static void main(String[] args) throws InterruptedException {
         long start = System.currentTimeMillis();
         System.out.println("start m");
 
-        int threadCount = 1;
+        int threadCount = 4;
         SearchCounter sc = new SearchCounter();
         CountDownLatch l = new CountDownLatch(threadCount);
 
@@ -82,9 +101,11 @@ public class ATHENA extends AI {
             Thread t1 = new Worker(sc, l);
             t1.setPriority(9);
             t1.start();
+            t1.interrupt();
         }
 
-        l.await();
+        //l.await();
+        l.wait(5000);
 
         System.out.println("search counter wins: " + sc.getWins(1));
 
