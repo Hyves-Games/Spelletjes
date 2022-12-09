@@ -8,6 +8,7 @@ module hyvesgamesspelletjes {
     requires javafaker;
     requires java.sql;
     requires org.jetbrains.annotations;
+    requires java.instrument;
 
     opens client.authenticator.controller to javafx.fxml;
     opens client.lobby.controller to javafx.fxml;

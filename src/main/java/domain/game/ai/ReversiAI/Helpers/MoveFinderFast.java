@@ -165,6 +165,17 @@ public class MoveFinderFast {
                 moveCount++;
             }
         }
+
+        /*
+        BitSet b = BitSet.valueOf(new long[]{l});
+        byte moveCount = 0;
+        for (int i = 0; i < 64; i++) {
+            if (b.get(i)) {
+                moves[moveCount] = i;
+                moveCount++;
+            }
+        }*/
+
         return moves;
     }
 
