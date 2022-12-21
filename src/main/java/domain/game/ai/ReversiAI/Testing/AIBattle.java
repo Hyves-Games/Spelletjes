@@ -1,6 +1,7 @@
 package domain.game.ai.ReversiAI.Testing;
 
 import domain.game.ai.ReversiAI.AIs.*;
+import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.MoveFinder;
 import domain.game.ai.ReversiAI.Helpers.MakeMove;
 import domain.game.ai.ReversiAI.Helpers.MoveFinderFast;
@@ -45,7 +46,6 @@ public class AIBattle {
             boolean wasPass = false;
             while (true) {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-                System.out.println(moves.length);
                 if (moves.length == 0) {
                     if (wasPass) {
                         // No more moves, game over
@@ -58,7 +58,7 @@ public class AIBattle {
                     // A move can be played
                     AI selectedAI = isWhiteTurn ? WhiteAI : BlackAI;
                     wasPass = false;
-                    int bestMove = selectedAI.getBestMove(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+                    int bestMove = selectedAI.getBestMove(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
                     MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
                 }
                 isWhiteTurn = !isWhiteTurn;

@@ -51,6 +51,9 @@ public class experimenting {
             //BitSet bise = new BitSet();
             //bise = BitSet.valueOf(new long[]{test3});
             //long[] l = b.toLongArray();
+
+            long l = test3 & 0b1000000100000000000000000000000000000000000000000000000010000001L;
+            int c = Long.bitCount(l);
         }
 
 
@@ -66,5 +69,6 @@ public class experimenting {
         System.out.println("bitset: " + b);
 
         BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, availableMoves);
+        BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
     }
 }
