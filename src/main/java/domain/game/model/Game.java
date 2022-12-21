@@ -25,8 +25,8 @@ public class Game {
         return this.gameBoard;
     }
 
-    public void start(Player<?> opponent) {
-        this.gameBoard.start(this.player, opponent);
+    public void start(Player<?> opponent, Player<?> toStart) {
+        this.gameBoard.start(this.player, opponent, toStart);
 
         if (Auth.getPlayer().equals(this.player)) {
             Platform.runLater(() -> {

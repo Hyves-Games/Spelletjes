@@ -21,6 +21,9 @@ public abstract class AbstractGameBoardController {
     protected Button[] board;
     protected final AbstractGameBoard<?> gameBoard = Auth.getPlayer().getGameBoard();
 
+    protected String playerLabel;
+    protected String opponentLabel;
+
     protected Boolean isPlayerAI() {
         return Auth.getPlayer() instanceof AI;
     }
@@ -45,6 +48,10 @@ public abstract class AbstractGameBoardController {
         this.player_2_turn.setText("Your turn");
 
         this.boardContainer.setDisable(true);
+    }
+
+    protected void setStartingPlayer() {
+
     }
 
     protected abstract void changeTurn();

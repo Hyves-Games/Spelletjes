@@ -9,10 +9,6 @@ public class Reversi extends AbstractGameBoard<Reversi> {
     public Reversi() {
         // TODO: Starting moves [27: white, 28: black, 35: black, 36: white]
         this.generate(64);
-        this.setMove(27, 1);
-        this.setMove(28, -1);
-        this.setMove(35, -1);
-        this.setMove(36, 1);
     }
     @Override
     public String getKey() {

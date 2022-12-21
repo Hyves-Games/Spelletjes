@@ -1,6 +1,13 @@
 package client.game.board.controller;
 
 import client.Application;
+import domain.game.ai.ReversiAI.Board.BoardPosition;
+import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
+import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
+import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
+import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
+import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
+import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,34 +26,44 @@ import support.actions.ChallengeServerAction;
 import support.actions.StopGameAction;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
+import support.enums.ServerResponseEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class ReversiController extends AbstractGameBoardController {
     @FXML GridPane board_grid;
 
+    private boolean[] whitePieces;
+    private boolean[] blackPieces;
+
     public void initialize() {
-        this.player_1.setText("O " + this.getPlayerUsername());
-        this.player_2.setText("X " + this.getOpponentUsername());
+        boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.getPlayer().getUsername());
+        this.gameBoard.setMove(27, playerIsStarter ? -1 : 1, true);
+        this.gameBoard.setMove(28, playerIsStarter ? 1 : -1, true);
+        this.gameBoard.setMove(35, playerIsStarter ? 1 : -1, true);
+        this.gameBoard.setMove(36, playerIsStarter ? -1 : 1, true);
+        this.player_1.setText(playerIsStarter ? "X " + this.getPlayerUsername() : "O " + this.getPlayerUsername());
+        this.player_2.setText(playerIsStarter ? "O " + this.getOpponentUsername() : "X " + this.getOpponentUsername());
         int col = 0;
         int row = 0;
 
         Button[] buttons = new Button[64];
         for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
             Button btn = new Button();
-            btn.setId("btn_" + (i+1));
+            btn.setId("btn_" + (i));
             if (this.gameBoard.getBoard()[i] == 1) {
                 // Player's moves
-                btn.setText("X");
+                btn.setText(playerIsStarter ? "X" : "O");
             } else if (this.gameBoard.getBoard()[i] == -1) {
                 // Opponents moves
-                btn.setText("O");
+                btn.setText(playerIsStarter ? "O" : "X");
             } else {
                 // Open spots
-                btn.setText("[]");
+                btn.setText("");
             }
             btn.setPrefHeight(60.0);
             btn.setPrefWidth(60.0);
@@ -84,6 +101,55 @@ public class ReversiController extends AbstractGameBoardController {
 
         this.gameBoard.doMove(index);
     }
+
+    private void runLogic() {
+        boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername());
+        boolean[] playerPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), 1);
+        boolean[] opponentPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), -1);
+
+        int index = this.gameBoard.getLastMove();
+//        boolean isWhite = this.gameBoard.isPlayerTurn() ? playerIsStarter ? false : true : playerIsStarter ?
+        boolean isWhite = playerIsStarter ? false : true;
+//        if (playerIsStarter && this.gameBoard.isPlayerTurn()) {
+//            isWhiteTurn = false;
+//        }
+//        if (!playerIsStarter && !this.gameBoard.isPlayerTurn()) {
+//            isWhiteTurn = false;
+//        }
+        System.out.println("Last move was:");
+        System.out.println(index);
+        this.whitePieces = playerIsStarter ? opponentPieces : playerPieces;
+        this.blackPieces = playerIsStarter ? playerPieces : opponentPieces;
+        MakeMove.makeMove(
+                this.whitePieces,
+                this.blackPieces,
+                isWhite,
+                index);
+//        System.out.println(pieces.playerWhitePieces);
+//        this.whitePieces = LongToBoolArray.convert(pieces.playerWhitePieces);
+//        this.blackPieces = LongToBoolArray.convert(pieces.playerBlackPieces);
+        System.out.println("White pieces");
+        for (int i = 0; i < playerPieces.length; i++) {
+            if (playerPieces[i]) {
+                System.out.println(i);
+            }
+        }
+        System.out.println("Black pieces");
+        for (int i = 0; i < this.blackPieces.length; i++) {
+            if (this.blackPieces[i]) {
+                System.out.println(i);
+            }
+        }
+        for (int i = 0; i < 64; i++) {
+            if (this.whitePieces[i]) {
+                this.gameBoard.setMove(i, isWhite ? 1 : -1, true);
+            }
+            else if (this.blackPieces[i]) {
+                this.gameBoard.setMove(i, isWhite ? -1 : 1, true);
+            }
+        }
+        BoardPrinter.printBoard(BoolArrayToLong.convert(this.whitePieces), BoolArrayToLong.convert(this.blackPieces)); //MakeMoveFast.boolArrayToLong(this.whitePieces),MakeMoveFast.boolArrayToLong(this.blackPieces));
+    }
     @Override
     protected void changeTurn() {
         if (this.gameBoard.isPlayerTurn()) {
@@ -91,12 +157,13 @@ public class ReversiController extends AbstractGameBoardController {
         } else {
             this.setOpponentTurn();
         }
+        this.runLogic();
     }
 
     @Override
     protected void changeBoardView() {
         Object[] values = this.gameBoard.getBoard();
-
+        boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.getPlayer().getUsername());
         for (int i = 0; i < values.length; i++) {
             Integer value = (Integer) values[i];
 
@@ -104,7 +171,7 @@ public class ReversiController extends AbstractGameBoardController {
                 Button btn = this.board[i];
 
                 btn.setDisable(true);
-                btn.setText(value == 1 ? "O" : "X");
+                btn.setText(value == 1 ? playerIsStarter ? "X" : "O" : playerIsStarter ? "O" : "X");
             }
         }
     }

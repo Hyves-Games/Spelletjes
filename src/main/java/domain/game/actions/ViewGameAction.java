@@ -22,8 +22,9 @@ public class ViewGameAction extends AbstractGameAction {
 
     @Override
     protected void handler() {
+        Player toStart = new Player(data.get("PLAYERTOMOVE").getAsString());
         Player opponent = new Player(data.get("OPPONENT").getAsString());
 
-        this.player.getGame().start(opponent);
+        this.player.getGame().start(opponent, toStart);
     }
 }

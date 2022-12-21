@@ -20,10 +20,12 @@ public abstract class AbstractGameBoard<T> {
 
     private Player<?> player;
     private Player<?> opponent;
+    private Player<?> starter;
 
     private GameEndStateEnum endState;
 
     private final ArrayList<Integer> board = new ArrayList<Integer>();
+    private int lastMove;
 
     private final ArrayList<Runnable> eventListenersForEnd = new ArrayList<Runnable>();
     private final ArrayList<Runnable> eventListenersForTurn = new ArrayList<Runnable>();
@@ -35,9 +37,10 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
-    public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
+    public void start(@NotNull Player<?> player, @NotNull Player<?> opponent, @NotNull Player<?> toStart) {
         this.player = player;
         this.opponent = opponent;
+        this.starter = toStart;
 
         if (player instanceof AI) {
             this.useAI = true;
@@ -53,6 +56,13 @@ public abstract class AbstractGameBoard<T> {
         return this.opponent;
     }
 
+    public Player<?> getStarter() {
+        return this.starter;
+    }
+
+    public int getLastMove() {
+        return this.lastMove;
+    }
     public Boolean isPlayerTurn() {
         return this.playerTurn;
     }
@@ -66,11 +76,14 @@ public abstract class AbstractGameBoard<T> {
 
         this.runEventListeners(this.eventListenersForTurn);
     }
-
     public void setOpponentTurn() {
         this.playerTurn = false;
 
         this.runEventListeners(this.eventListenersForTurn);
+    }
+
+    public void setLastMove(int move) {
+        this.lastMove = move;
     }
 
     public Integer[] getBoard() {
@@ -109,10 +122,12 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
-    public void setMove(Integer index, Integer value) {
+    public void setMove(Integer index, Integer value, boolean toUpdate) {
         this.board.set(index, value);
 
-        this.runEventListeners(this.eventListenersForBoard);
+        if (toUpdate) {
+            this.runEventListeners(this.eventListenersForBoard);
+        }
     }
 
     protected Boolean checkMove(Integer index) {
