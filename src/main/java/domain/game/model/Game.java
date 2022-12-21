@@ -1,11 +1,13 @@
 package domain.game.model;
 
+import domain.game.exceptions.GameNotImplementedException;
 import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.model.AI;
 import domain.player.model.Player;
 import javafx.application.Platform;
 import support.abstracts.AbstractGameBoard;
 import support.actions.ChallengeServerAction;
+import support.actions.SubscribeServerAction;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -23,8 +25,8 @@ public class Game {
         return this.gameBoard;
     }
 
-    public void start(Player<?> opponent) {
-        this.gameBoard.start(this.player, opponent);
+    public void start(Player<?> opponent, Player<?> toStart) {
+        this.gameBoard.start(this.player, opponent, toStart);
 
         if (Auth.getPlayer().equals(this.player)) {
             Platform.runLater(() -> {
@@ -47,6 +49,14 @@ public class Game {
         try {
             new ChallengeServerAction(new AI(), this.gameBoard.getKey());
         } catch (FailedToCreateAIException | ServerConnectionFailedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void searchGame() {
+        try {
+            new SubscribeServerAction();
+        } catch (GameNotImplementedException e) {
             throw new RuntimeException(e);
         }
     }

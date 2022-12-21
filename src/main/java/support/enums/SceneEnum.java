@@ -7,6 +7,7 @@ public enum SceneEnum {
     LOGIN(new ClientScene("authenticator", "login", "Login")),
     LOBBY(new ClientScene("lobby", "lobby", "Lobby")),
     TIC_TAC_TOE(new ClientScene("game/board", "ticTacToe", "Tic-Tac-Toe")),
+    REVERSI(new ClientScene("game/board", "reversi", "Reversi")),
     SETTING(new ClientScene("settings", "settings", "Settings")),
     PLAYER_LIST(new ClientScene("playerList", "playerList","Players list")),
     GAME_SELECTOR(new ClientScene("game","gameSelector", "Game")),

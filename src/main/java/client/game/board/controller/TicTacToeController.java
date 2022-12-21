@@ -134,7 +134,7 @@ public class TicTacToeController extends AbstractGameBoardController {
 
            SceneEnum.LOBBY.switchTo();
        } else {
-           GameMode.create(false);
+           GameMode.create(false, false);
 
            new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
        }

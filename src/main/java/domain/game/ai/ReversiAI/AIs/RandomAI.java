@@ -10,7 +10,10 @@ public class RandomAI extends AI {
 
     public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
         int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        return moves[generator.nextInt(moves.length)];
+        if (moves.length > 0) {
+            return moves[generator.nextInt(moves.length)];
+        }
+        return 0;
     }
 
     public String getAIName() {
