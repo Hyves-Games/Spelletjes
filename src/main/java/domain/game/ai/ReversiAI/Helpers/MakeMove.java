@@ -61,7 +61,7 @@ public class MakeMove {
         }
     }
 
-    public static void makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
+    public static BoardPosition makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
         boolean[] whiteBoolean = new boolean[boardSquareCount];
         boolean[] blackBoolean = new boolean[boardSquareCount];
         for (int i = 0; i < 64; i++) {
@@ -72,5 +72,6 @@ public class MakeMove {
             }
         }
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
+        return new BoardPosition();
     }
 }

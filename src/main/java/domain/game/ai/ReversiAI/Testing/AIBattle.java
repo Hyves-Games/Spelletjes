@@ -59,7 +59,9 @@ public class AIBattle {
                     AI selectedAI = isWhiteTurn ? WhiteAI : BlackAI;
                     wasPass = false;
                     int bestMove = selectedAI.getBestMove(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
-                    MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
+                    BoardPosition newBoard = MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
+                    playerWhitePieces = newBoard.playerWhitePieces;
+                    playerBlackPieces = newBoard.playerBlackPieces;
                 }
                 isWhiteTurn = !isWhiteTurn;
             }
