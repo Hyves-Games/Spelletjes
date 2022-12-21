@@ -6,6 +6,7 @@ package domain.game.ai.ReversiAI.MoveLogic;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
+import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
@@ -63,15 +64,9 @@ public class MakeMove {
     }
 
     public static BoardPosition makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
-        boolean[] whiteBoolean = new boolean[boardSquareCount];
-        boolean[] blackBoolean = new boolean[boardSquareCount];
-        for (int i = 0; i < 64; i++) {
-            if (((playerWhitePieces >> i) & 1) == 1) {
-                whiteBoolean[i] = true;
-            } else if (((playerBlackPieces >> i) & 1) == 1) {
-                blackBoolean[i] = true;
-            }
-        }
+        boolean[] whiteBoolean = LongToBoolArray.convert(playerWhitePieces);
+        boolean[] blackBoolean = LongToBoolArray.convert(playerBlackPieces);
+
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
         return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
     }
