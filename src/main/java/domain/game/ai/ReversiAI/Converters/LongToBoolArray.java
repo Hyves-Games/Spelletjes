@@ -6,7 +6,7 @@ public class LongToBoolArray {
     public static boolean[] convert(long playerPieces) {
         boolean[] piecesBoolean = new boolean[64];
         for (byte i = 0; i < 64; i++) {
-            if ((bitMask[i] & playerPieces) > 0) {
+            if ((bitMask[i] & playerPieces) != 0) {
                 piecesBoolean[i] = true;
             }
         }

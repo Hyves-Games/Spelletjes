@@ -1,9 +1,12 @@
 package domain.game.ai.ReversiAI.Testing;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
+
+import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.*;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 
+import java.util.Arrays;
 import java.util.BitSet;
 
 public class experimenting {
@@ -26,7 +29,7 @@ public class experimenting {
         b.set(27); b.set(36); b.set(18); b.set(19); b.set(43); b.set(44);
 
         //Hashtable h = new Hashtable(40000000);
-        for (int i = 0; i < 100000000; i++) {
+        //for (int i = 0; i < 100000000; i++) {
             //GreedyEvaluation.evaluate(test1, test2, true); // 100M: 4301 ms (boolean array)
             //GreedyEvaluation.evaluate(test3, test3, true); // 100M: 4200 ms (long type)
 
@@ -49,10 +52,10 @@ public class experimenting {
             //bise = BitSet.valueOf(new long[]{test3});
             //long[] l = b.toLongArray();
 
-            long l = test3 & 0b1000000100000000000000000000000000000000000000000000000010000001L;
-            int c = Long.bitCount(l);
-        }
-
+            //long l = test3 & 0b1000000100000000000000000000000000000000000000000000000010000001L;
+            //int c = Long.bitCount(l);
+        //}
+        System.out.println("cheese: " + Arrays.toString(LongToBoolArray.convert(0b1100000100000000000000000000000000000000000000000000000010000001L)));
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
