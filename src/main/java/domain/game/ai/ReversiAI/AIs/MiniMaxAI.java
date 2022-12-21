@@ -1,6 +1,6 @@
 package domain.game.ai.ReversiAI.AIs;
 
-import domain.game.ai.ReversiAI.Helpers.MoveFinder;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 
 public class MiniMaxAI extends AI {

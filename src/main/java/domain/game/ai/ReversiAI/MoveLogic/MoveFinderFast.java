@@ -5,8 +5,9 @@ Moving masks and shifts out of shifting function almost quadrupled performance.
 Changing the shifts from long to byte increased performance slightly.
  */
 
-package domain.game.ai.ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.MoveLogic;
 
+import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
 
 import java.util.Arrays;
@@ -14,8 +15,6 @@ import java.util.BitSet;
 import java.util.Objects;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
-import static domain.game.ai.ReversiAI.Helpers.BoardPrinter.printBoard; // REMOVE
-import static domain.game.ai.ReversiAI.Helpers.StateHasher.boolArrayToLong;
 import static domain.game.ai.ReversiAI.Masks.BitMasks.bitMask;
 
 public class MoveFinderFast {
@@ -85,7 +84,7 @@ public class MoveFinderFast {
     }
 
     public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        return LongToMoves.convert(generateMoves(boolArrayToLong(isWhiteTurn ? playerWhitePieces : playerBlackPieces), boolArrayToLong(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
+        return LongToMoves.convert(generateMoves(BoolArrayToLong.convert(isWhiteTurn ? playerWhitePieces : playerBlackPieces), BoolArrayToLong.convert(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
     }
 
     public static int[] findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {

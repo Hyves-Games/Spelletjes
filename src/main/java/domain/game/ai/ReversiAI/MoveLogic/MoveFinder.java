@@ -1,4 +1,4 @@
-package domain.game.ai.ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.MoveLogic;
 
 import java.util.Arrays;
 

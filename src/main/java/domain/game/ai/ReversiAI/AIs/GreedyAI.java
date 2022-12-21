@@ -1,10 +1,9 @@
 package domain.game.ai.ReversiAI.AIs;
 
-import domain.game.ai.ReversiAI.Helpers.MoveFinder;
-import domain.game.ai.ReversiAI.Helpers.MakeMove;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
+import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
-import domain.game.ai.ReversiAI.Helpers.MoveFinderFast;
 import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 

@@ -2,15 +2,11 @@ package domain.game.ai.ReversiAI.Testing;
 
 import domain.game.ai.ReversiAI.AIs.*;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
-import domain.game.ai.ReversiAI.Helpers.MoveFinder;
-import domain.game.ai.ReversiAI.Helpers.MakeMove;
-import domain.game.ai.ReversiAI.Helpers.MoveFinderFast;
+import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Helpers.PieceCounter;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 import domain.game.ai.ReversiAI.Board.*;
-
-import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class AIBattle {
     public static void main(String[] args) {
@@ -59,7 +55,9 @@ public class AIBattle {
                     AI selectedAI = isWhiteTurn ? WhiteAI : BlackAI;
                     wasPass = false;
                     int bestMove = selectedAI.getBestMove(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
-                    MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
+                    BoardPosition newBoard = MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
+                    playerWhitePieces = newBoard.playerWhitePieces;
+                    playerBlackPieces = newBoard.playerBlackPieces;
                 }
                 isWhiteTurn = !isWhiteTurn;
             }

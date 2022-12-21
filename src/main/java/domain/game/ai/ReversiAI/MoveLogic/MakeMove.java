@@ -2,19 +2,17 @@
 @TODO: Make function that accepts long
  */
 
-package domain.game.ai.ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.MoveLogic;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 
-import static domain.game.ai.ReversiAI.Constants.Constants.boardSquareCount;
-import static domain.game.ai.ReversiAI.Constants.Constants.boardWidth;
-import static domain.game.ai.ReversiAI.Masks.BitMasks.bitMask;
+import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
-public class MakeMoveFast {
+public class MakeMove {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};
     static byte[] directionsY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    public static void makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
+    public static void makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex){
         boolean[] oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
         boolean[] sameColoredPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
 
@@ -63,17 +61,17 @@ public class MakeMoveFast {
         }
     }
 
-    public static void makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
+    public static BoardPosition makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
         boolean[] whiteBoolean = new boolean[boardSquareCount];
         boolean[] blackBoolean = new boolean[boardSquareCount];
-        for (byte i = 0; i < 64; i++) {
-            if ((bitMask[i] & playerWhitePieces) > 0) {
+        for (int i = 0; i < 64; i++) {
+            if (((playerWhitePieces >> i) & 1) == 1) {
                 whiteBoolean[i] = true;
-            } else if((bitMask[i] & playerBlackPieces) > 0) {
+            } else if (((playerBlackPieces >> i) & 1) == 1) {
                 blackBoolean[i] = true;
             }
         }
-
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
+        return new BoardPosition();
     }
 }
