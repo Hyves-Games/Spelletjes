@@ -5,6 +5,7 @@
 package domain.game.ai.ReversiAI.MoveLogic;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
+import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
@@ -72,6 +73,6 @@ public class MakeMove {
             }
         }
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
-        return new BoardPosition();
+        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
     }
 }
