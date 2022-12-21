@@ -2,12 +2,9 @@ package domain.game.ai.ReversiAI.Testing;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 import domain.game.ai.ReversiAI.Helpers.*;
-import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
-import domain.game.ai.ReversiAI.Board.*;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 
-import java.util.Arrays;
 import java.util.BitSet;
-import java.util.Hashtable;
 
 public class experimenting {
     public static void main(String[] args) {

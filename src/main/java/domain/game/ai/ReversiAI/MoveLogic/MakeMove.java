@@ -2,7 +2,7 @@
 @TODO: Make function that accepts long
  */
 
-package domain.game.ai.ReversiAI.Helpers;
+package domain.game.ai.ReversiAI.MoveLogic;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 
