@@ -54,8 +54,4 @@ public class BoardPrinter {
     public static void printBoard(long playerWhitePieces, long playerBlackPieces) {
         printBoard(playerWhitePieces, playerBlackPieces, new int[boardSquareCount]);
     }
-
-    public static void printBoard(boolean[] playerWhitePieces, boolean[] playerBlackPieces) {
-        printBoard(playerWhitePieces, playerBlackPieces, new boolean[boardSquareCount]);
-    }
 }
