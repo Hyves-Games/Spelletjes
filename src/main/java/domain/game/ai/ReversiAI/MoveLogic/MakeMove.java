@@ -64,6 +64,8 @@ public class MakeMove {
     }
 
     public static BoardPosition makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
+        // CHECK IF BROKEN
+
         boolean[] whiteBoolean = LongToBoolArray.convert(playerWhitePieces);
         boolean[] blackBoolean = LongToBoolArray.convert(playerBlackPieces);
 
