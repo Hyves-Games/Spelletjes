@@ -106,11 +106,11 @@ public class ReversiController extends AbstractGameBoardController {
         boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername());
         boolean[] playerPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), 1);
         boolean[] opponentPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), -1);
-
+        System.out.println("LOGIC CALLED, isStarter: " + playerIsStarter + ", isTurn: " + this.gameBoard.isPlayerTurn() + ", index: " + this.gameBoard.getLastMove());
         int index = this.gameBoard.getLastMove();
         //boolean isWhite = this.gameBoard.isPlayerTurn() ? playerIsStarter ? false : true : playerIsStarter ?
         //boolean isWhite = this.gameBoard.isPlayerTurn() != playerIsStarter;
-        boolean isWhite = !playerIsStarter;
+        boolean isWhite = this.gameBoard.isPlayerTurn();
 //        if (playerIsStarter && this.gameBoard.isPlayerTurn()) {
 //            isWhiteTurn = false;
 //        }
