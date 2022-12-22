@@ -1,6 +1,6 @@
 package domain.game.ai.ReversiAI.AIs;
 
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
@@ -10,7 +10,7 @@ import domain.game.ai.ReversiAI.SuperClasses.AI;
 public class GreedyAI extends AI {
 
     public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         int bestMove = moves[0];
         int bestScore = isWhiteTurn ? -hugeScore : hugeScore;
         for (int m : moves) {

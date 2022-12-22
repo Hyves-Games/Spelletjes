@@ -55,12 +55,11 @@ public class MoveFinderFast {
     }
 
     private static long generateMoves(long my_disks, long opp_disks) {
-        byte dir;
         long x;
         long empty_cells = ~(my_disks | opp_disks);
-        long legal_moves = 0;
+        long legal_moves = 0x0L;
 
-        for (dir = 0; dir < boardWidth; dir++) {
+        for (byte dir = 0; dir < boardWidth; dir++) {
             // Get opponent disks adjacent to my disks in direction dir.
             x = shift(my_disks, dir) & opp_disks;
 

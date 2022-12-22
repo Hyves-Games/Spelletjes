@@ -7,6 +7,7 @@ import domain.game.ai.ReversiAI.Converters.LongToMoves;
 import domain.game.ai.ReversiAI.Helpers.*;
 import domain.game.ai.ReversiAI.Masks.BitMasks;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 
 import java.util.Arrays;
@@ -32,16 +33,16 @@ public class experimenting {
         b.set(27); b.set(36); b.set(18); b.set(19); b.set(43); b.set(44);
 
         //Hashtable h = new Hashtable(40000000);
-        for (int i = 0; i < 100000000; i++) {
+        for (int i = 0; i < 1000000000; i++) {
             //GreedyEvaluation.evaluate(test1, test2, true); // 100M: 4301 ms (boolean array)
             //GreedyEvaluation.evaluate(test3, test3, true); // 100M: 4200 ms (long type)
 
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200 ms (optimised) / 17900 ms
-            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8000 ms (board mostly empty)
+            MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8000 ms (board mostly empty)
 
-            MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
+            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
@@ -74,7 +75,7 @@ public class experimenting {
 
         //System.out.println("bitset: " + b);
 
-        //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, availableMoves);
+        BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, availableMoves);
         //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
     }
 }

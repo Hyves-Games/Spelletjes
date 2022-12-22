@@ -1,7 +1,6 @@
 package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 
@@ -11,7 +10,7 @@ public class MoveMaximizerAI extends AI {
     public static String AIName = "Move Count Maximizer AI - depth 1";
 
     public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        int[] moves = MoveFinder.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         int bestMove = moves[0];
         int bestScore = maxMovesMemoryLimit;
         for (int m : moves) {

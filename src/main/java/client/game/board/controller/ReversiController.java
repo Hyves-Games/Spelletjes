@@ -45,16 +45,16 @@ public class ReversiController extends AbstractGameBoardController {
 
     public void initialize() {
         boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.getPlayer().getUsername());
-        /*
+
         this.gameBoard.setMove(27, playerIsStarter ? -1 : 1, true);
         this.gameBoard.setMove(28, playerIsStarter ? 1 : -1, true);
         this.gameBoard.setMove(35, playerIsStarter ? 1 : -1, true);
         this.gameBoard.setMove(36, playerIsStarter ? -1 : 1, true);
-         */
-        this.gameBoard.setMove(27, -1, true);
-        this.gameBoard.setMove(28, 1, true);
-        this.gameBoard.setMove(35, 1, true);
-        this.gameBoard.setMove(36, -1, true);
+
+        //this.gameBoard.setMove(27, -1, true);
+        //this.gameBoard.setMove(28, 1, true);
+        //this.gameBoard.setMove(35, 1, true);
+        //this.gameBoard.setMove(36, -1, true);
 
         this.player_1.setText(playerIsStarter ? "X " + this.getPlayerUsername() : "O " + this.getPlayerUsername());
         this.player_2.setText(playerIsStarter ? "O " + this.getOpponentUsername() : "X " + this.getOpponentUsername());
@@ -114,7 +114,7 @@ public class ReversiController extends AbstractGameBoardController {
 
     private void runLogic() {
         String moveMakingPlayer = this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername();
-        boolean playerIsWhite = moveMakingPlayer.equals(this.gameBoard.getStarter().getUsername());
+        boolean playerIsWhite = !moveMakingPlayer.equals(this.gameBoard.getStarter().getUsername()); // Starter player color is black
         //boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername());
 
         boolean isWhite = playerIsWhite;
