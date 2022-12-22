@@ -116,7 +116,7 @@ public class ReversiController extends AbstractGameBoardController {
 
         int index = this.gameBoard.getLastMove();
         //boolean isWhite = this.gameBoard.isPlayerTurn() ? playerIsStarter ? false : true : playerIsStarter ?
-        boolean isWhite = this.gameBoard.isPlayerTurn() != playerIsStarter;
+        boolean isWhite = this.gameBoard.isPlayerTurn() == playerIsStarter;
         //boolean isWhite = !playerIsStarter;
 //        if (playerIsStarter && this.gameBoard.isPlayerTurn()) {
 //            isWhiteTurn = false;
