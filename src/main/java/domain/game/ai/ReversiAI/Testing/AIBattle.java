@@ -33,9 +33,8 @@ public class AIBattle {
         AI BlackAI = AITwo;
         for (int i = 1; i <= GameCount; i++) {
             // Set up board, default position
-            BoardPosition board = DefaultBoard.getBoard();
-            long playerWhitePieces = board.playerWhitePieces;
-            long playerBlackPieces = board.playerBlackPieces;
+            long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
+            long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
 
             // Play a round
             boolean isWhiteTurn = false;
