@@ -41,7 +41,7 @@ public class experimenting {
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200 ms (optimised) / 17900 ms
             //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8200 ms (board mostly empty) / 5500 ms without conversion step
 
-            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
+            MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
