@@ -10,12 +10,7 @@ package domain.game.ai.ReversiAI.MoveLogic;
 import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
 
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Objects;
-
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
-import static domain.game.ai.ReversiAI.Masks.BitMasks.bitMask;
 
 public class MoveFinderFast {
     static long[] masks = {
@@ -51,7 +46,7 @@ public class MoveFinderFast {
             0  /* Up-right. */
     };
 
-    private static long shift(long pieces, int dir) {
+    private static long shift(long pieces, byte dir) {
         if (dir < halfBoardWidth) {
             return (pieces >> rightShifts[dir]) & masks[dir];
         } else {
@@ -70,11 +65,14 @@ public class MoveFinderFast {
             x = shift(my_disks, dir) & opp_disks;
 
             // Add opponent disks adjacent to those, and so on.
+            /*x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;*/
+            for (int i = 0; i < 5; i++) {
+                x |= shift(x, dir) & opp_disks;
+            }
 
             // Empty cells adjacent to those are valid moves.
             legal_moves |= shift(x, dir) & empty_cells;
