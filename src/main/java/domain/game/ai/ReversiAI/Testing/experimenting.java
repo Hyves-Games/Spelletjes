@@ -21,11 +21,11 @@ public class experimenting {
         boolean[] test1 = new boolean[boardSquareCount];
         test1[27] = true;
         test1[36] = true;
-        //test1[18] = true; test1[19] = true; test1[43] = true; test1[44] = true;
+        test1[18] = true; test1[19] = true; test1[43] = true; test1[44] = true;
         boolean[] test2 = new boolean[boardSquareCount];
         test2[35] = true;
         test2[28] = true;
-        //test2[26] = true; test2[29] = true; test2[30] = true; test2[34] = true;
+        test2[26] = true; test2[29] = true; test2[30] = true; test2[34] = true;
 
         long test3 = 81644180471808L;
         BitSet b = new BitSet(64);
@@ -38,10 +38,10 @@ public class experimenting {
 
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
-            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 14700 ms (optimised) / 17900 ms
-            MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8200 ms (board mostly empty) / 5500 ms without conversion step
+            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200 ms (optimised) / 17900 ms
+            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8200 ms (board mostly empty) / 5500 ms without conversion step
 
-            //MakeMove.makeMove(test1,test2, true, 42); // 100M: 10200 ms (2900 ms without conversion step)
+            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms

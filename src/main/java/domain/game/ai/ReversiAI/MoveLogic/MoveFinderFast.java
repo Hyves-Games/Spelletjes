@@ -13,7 +13,7 @@ import domain.game.ai.ReversiAI.Converters.LongToMoves;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MoveFinderFast {
-    static long[] masks = {
+    static long[] directionMasks = {
             0x7F7F7F7F7F7F7F7FL, /* Right. */
             0x007F7F7F7F7F7F7FL, /* Down-right. */
             0xFFFFFFFFFFFFFFFFL, /* Down. */
@@ -48,9 +48,9 @@ public class MoveFinderFast {
 
     private static long shift(long pieces, byte dir) {
         if (dir < halfBoardWidth) {
-            return (pieces >> rightShifts[dir]) & masks[dir];
+            return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
-            return (pieces << leftShifts[dir]) & masks[dir];
+            return (pieces << leftShifts[dir]) & directionMasks[dir];
         }
     }
 
@@ -65,11 +65,6 @@ public class MoveFinderFast {
             x = shift(my_disks, dir) & opp_disks;
 
             // Add opponent disks adjacent to those, and so on.
-            /*x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;*/
             for (int i = 0; i < 5; i++) {
                 x |= shift(x, dir) & opp_disks;
             }
