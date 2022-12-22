@@ -19,6 +19,9 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
@@ -110,33 +113,23 @@ public class ReversiController extends AbstractGameBoardController {
     }
 
     private void runLogic() {
-        boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername());
+        String moveMakingPlayer = this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername();
+        boolean playerIsWhite = moveMakingPlayer.equals(this.gameBoard.getStarter().getUsername());
+        //boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername());
+
+        boolean isWhite = playerIsWhite;
+        int index = this.gameBoard.getLastMove();
+
         boolean[] playerPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), 1);
         boolean[] opponentPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), -1);
 
-        int index = this.gameBoard.getLastMove();
-        //boolean isWhite = this.gameBoard.isPlayerTurn() ? playerIsStarter ? false : true : playerIsStarter ?
-        boolean isWhite = this.gameBoard.isPlayerTurn() == playerIsStarter;
-        //boolean isWhite = !playerIsStarter;
-//        if (playerIsStarter && this.gameBoard.isPlayerTurn()) {
-//            isWhiteTurn = false;
-//        }
-//        if (!playerIsStarter && !this.gameBoard.isPlayerTurn()) {
-//            isWhiteTurn = false;
-//        }
-        System.out.println("LOGIC CALLED, isWhite: " + isWhite + " isStarter: " + playerIsStarter + ", isTurn: " + this.gameBoard.isPlayerTurn() + ", index: " + this.gameBoard.getLastMove());
-        System.out.println("Last move was:");
-        System.out.println(index);
-        this.whitePieces = playerIsStarter ? opponentPieces : playerPieces;
-        this.blackPieces = playerIsStarter ? playerPieces : opponentPieces;
-        MakeMove.makeMove(
-                this.whitePieces,
-                this.blackPieces,
-                isWhite,
-                index);
-//        System.out.println(pieces.playerWhitePieces);
-//        this.whitePieces = LongToBoolArray.convert(pieces.playerWhitePieces);
-//        this.blackPieces = LongToBoolArray.convert(pieces.playerBlackPieces);
+        System.out.println("LOGIC CALLED, isWhite: " + isWhite + ", isTurn: " + this.gameBoard.isPlayerTurn() + ", index: " + this.gameBoard.getLastMove());
+        System.out.println("Last move was: " + index);
+
+        this.whitePieces = isWhite ? playerPieces : opponentPieces;
+        this.blackPieces = isWhite ? opponentPieces : playerPieces;
+        MakeMove.makeMove(this.whitePieces, this.blackPieces, isWhite, index);
+
         System.out.println("White pieces");
         for (int i = 0; i < playerPieces.length; i++) {
             if (playerPieces[i]) {
@@ -149,6 +142,7 @@ public class ReversiController extends AbstractGameBoardController {
                 System.out.println(i);
             }
         }
+
         for (int i = 0; i < 64; i++) {
             if (this.whitePieces[i]) {
                 this.gameBoard.setMove(i, isWhite ? 1 : -1, true);
@@ -180,7 +174,14 @@ public class ReversiController extends AbstractGameBoardController {
                 Button btn = this.board[i];
 
                 btn.setDisable(true);
-                btn.setText(value == 1 ? playerIsStarter ? "X" : "O" : playerIsStarter ? "O" : "X");
+                //btn.setText(value == 1 ? playerIsStarter ? "X" : "O" : playerIsStarter ? "O" : "X");
+                btn.setText("⬤");
+                btn.setFont(Font.font ("System", 25));
+                if (value == -1) {
+                    btn.setTextFill(Color.valueOf("#000000"));
+                } else if (value == 1) {
+                    btn.setTextFill(Color.valueOf("#ffffff"));
+                }
             }
         }
     }
