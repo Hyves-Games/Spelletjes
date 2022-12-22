@@ -113,17 +113,18 @@ public class ReversiController extends AbstractGameBoardController {
         boolean playerIsStarter = this.gameBoard.getStarter().getUsername().equals(this.gameBoard.isPlayerTurn() ? this.gameBoard.getPlayer().getUsername() : this.gameBoard.getOpponent().getUsername());
         boolean[] playerPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), 1);
         boolean[] opponentPieces = IntArrayToBoolean.convert(this.gameBoard.getBoard(), -1);
-        System.out.println("LOGIC CALLED, isStarter: " + playerIsStarter + ", isTurn: " + this.gameBoard.isPlayerTurn() + ", index: " + this.gameBoard.getLastMove());
+
         int index = this.gameBoard.getLastMove();
         //boolean isWhite = this.gameBoard.isPlayerTurn() ? playerIsStarter ? false : true : playerIsStarter ?
-        //boolean isWhite = this.gameBoard.isPlayerTurn() != playerIsStarter;
-        boolean isWhite = this.gameBoard.isPlayerTurn();
+        boolean isWhite = this.gameBoard.isPlayerTurn() != playerIsStarter;
+        //boolean isWhite = !playerIsStarter;
 //        if (playerIsStarter && this.gameBoard.isPlayerTurn()) {
 //            isWhiteTurn = false;
 //        }
 //        if (!playerIsStarter && !this.gameBoard.isPlayerTurn()) {
 //            isWhiteTurn = false;
 //        }
+        System.out.println("LOGIC CALLED, isWhite: " + isWhite + " isStarter: " + playerIsStarter + ", isTurn: " + this.gameBoard.isPlayerTurn() + ", index: " + this.gameBoard.getLastMove());
         System.out.println("Last move was:");
         System.out.println(index);
         this.whitePieces = playerIsStarter ? opponentPieces : playerPieces;
