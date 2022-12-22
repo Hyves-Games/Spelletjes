@@ -36,10 +36,10 @@ public class BoardPrinter {
 
         for (byte i = 0; i < boardSquareCount; i++) {
             long mask = 0b0000000000000000000000000000000000000000000000000000000000000001L << i;
-            if ((playerWhitePieces & mask) > 0) {
+            if ((playerWhitePieces & mask) != 0) {
                 white[boardSquareCount - i - 1] = true;
             }
-            if ((playerBlackPieces & mask) > 0) {
+            if ((playerBlackPieces & mask) != 0) {
                 black[boardSquareCount - i - 1] = true;
             }
         }
