@@ -39,7 +39,7 @@ public class experimenting {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200 ms (optimised) / 17900 ms
-            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8200 ms (board mostly empty) / 5500 ms without conversion step
+            //MoveFinderFast.findAvailableMoves(test3, test3, true); // 100M: 8000 ms (board mostly empty)
 
             MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
 
@@ -57,26 +57,6 @@ public class experimenting {
                 //int c = Long.bitCount(l);
             //}
         }
-
-        BitSet bise = new BitSet();
-        bise = BitSet.valueOf(new long[]{test3});
-        long[] l = b.toLongArray();
-        System.out.println(bise.nextSetBit(6));
-
-        BitSet bise2 = BitSet.valueOf(new long[]{test3});
-        int c = bise2.cardinality();
-        int[] moves = new int[c];
-        int prev = -1;
-        int moveIndex = 0;
-        for (int ii = 0; ii < c; ii++) {
-            int found = bise2.nextSetBit(prev + 1);
-            if (found != -1) {
-                moves[moveIndex] = found;
-                prev = found;
-                moveIndex++;
-            }
-        }
-        System.out.println("good cheese: " + Arrays.toString(moves));
 
         //MakeMove.makeMove(test1, test2, true, 43);
         BoardPrinter.printBoard(test1, test2, new boolean[64]);
