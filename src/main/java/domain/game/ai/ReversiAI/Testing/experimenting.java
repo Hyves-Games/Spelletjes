@@ -49,7 +49,7 @@ public class experimenting {
             //MakeMove.makeMove(test3, test4, true, 13); // 100M: 11000 ms
             //MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4600 ms
 
-            //BoolArrayToLong.convert(test1);
+            BoolArrayToLong.convert(test1); // 100M: 1850 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
@@ -67,9 +67,9 @@ public class experimenting {
         }
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
-        BoardPrinter.printBoard(test3, test4);
-        BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
-        BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
+        //BoardPrinter.printBoard(test3, test4);
+        //BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
+        //BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
 
         //System.out.println("cheese: " + Arrays.toString(LongToBoolArray.convert(0b1100000100000000000000000000000000000000000000000000000010000001L)));
 
