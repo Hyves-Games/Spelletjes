@@ -40,19 +40,14 @@ public class experimenting {
         System.out.println("start");
         long start = System.currentTimeMillis();
         for (int i = 0; i < 100000000; i++) {
-            //GreedyEvaluation.evaluate(test1, test2, true); // 100M: 4301 ms (boolean array)
-            //GreedyEvaluation.evaluate(test3, test3, true); // 100M: 4200 ms (long type)
-
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
-            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200 ms (optimised) / 17900 ms
-            //boolean bbb = i % 2 == 0;
-            //tempMoves = MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8000 ms (board mostly empty)
+            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200/14400 ms (optimised) / 17900 ms
+            //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8000 ms
 
             //MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
-            //BoardPosition resolved = MakeMove.makeMove(test3, test4, true, 13); // 100M: 10800 ms
-            //BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4600 ms
-
+            //MakeMove.makeMove(test3, test4, true, 13); // 100M: 11000 ms
+            //MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4600 ms
 
             //BoolArrayToLong.convert(test1);
 
