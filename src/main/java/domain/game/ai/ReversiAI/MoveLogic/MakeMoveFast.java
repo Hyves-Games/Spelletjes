@@ -1,73 +1,92 @@
-/*
-@TODO: Make function that accepts long
- */
-
 package domain.game.ai.ReversiAI.MoveLogic;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
+import domain.game.ai.ReversiAI.Masks.BitMasks;
 
-import static domain.game.ai.ReversiAI.Constants.Constants.*;
+import static domain.game.ai.ReversiAI.Constants.Constants.boardWidth;
+import static domain.game.ai.ReversiAI.Constants.Constants.halfBoardWidth;
 
-public class MakeMove {
+public class MakeMoveFast {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};
     static byte[] directionsY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    public static void makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex){
-        boolean[] oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
-        boolean[] sameColoredPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
+    static long[] directionMasks = {
+            0x7F7F7F7F7F7F7F7FL, /* Right. */
+            0x007F7F7F7F7F7F7FL, /* Down-right. */
+            0xFFFFFFFFFFFFFFFFL, /* Down. */
+            0x00FEFEFEFEFEFEFEL, /* Down-left. */
+            0xFEFEFEFEFEFEFEFEL, /* Left. */
+            0xFEFEFEFEFEFEFE00L, /* Up-left. */
+            0xFFFFFFFFFFFFFFFFL, /* Up. */
+            0x7F7F7F7F7F7F7F00L  /* Up-right. */
+    };
 
-        byte x = (byte) (moveIndex % boardWidth);
-        byte y = (byte) (moveIndex / boardWidth);
-        for (int d = 0; (d < directionsX.length); d++) {
-            // For each directional line
+    static byte[] leftShifts = {
+            0, /* Right. */
+            0, /* Down-right. */
+            0, /* Down. */
+            0, /* Down-left. */
+            1, /* Left. */
+            9, /* Up-left. */
+            8, /* Up. */
+            7  /* Up-right. */
+    };
 
-            byte exploreX = x;
-            byte exploreY = y;
+    static byte[] rightShifts = {
+            1, /* Right. */
+            9, /* Down-right. */
+            8, /* Down. */
+            7, /* Down-left. */
+            0, /* Left. */
+            0, /* Up-left. */
+            0, /* Up. */
+            0  /* Up-right. */
+    };
 
-            boolean oppositeColorNeighbourFound = false;
-            int length = 0;
-            while (true) {
-                // For each position in directional line
-
-                exploreX += directionsX[d];
-                exploreY += directionsY[d];
-                int exploreIndex = exploreY * boardWidth + exploreX;
-                if (exploreX < 0 || exploreY < 0 || exploreX >= boardWidth || exploreY >= boardWidth) {
-                    // Out of bounds for this direction
-                    break;
-                }
-
-                length++; // Used to traverse back while flipping
-                if (!sameColoredPieces[exploreIndex] && !oppositeColoredPieces[exploreIndex]) {
-                    // Empty square
-                    break;
-                } else if (oppositeColoredPieces[exploreIndex]) {
-                    // Valid opposite colored neighbour found
-                    oppositeColorNeighbourFound = true;
-                } else if (!oppositeColorNeighbourFound) { // } else if (!oppositeColorNeighbourFound && sameColoredPieces[exploreIndex]) {
-                    // Not a valid direction
-                    break;
-                } else { // } else if (oppositeColorNeighbourFound && sameColoredPieces[exploreIndex]) {
-                    // Valid direction
-                    for (int i = 0; i <= length; i++) {
-                        // 'Flip' over pieces (and add starting piece)
-                        int i1 = (exploreY - i * directionsY[d]) * boardWidth + (exploreX - i * directionsX[d]);
-                        sameColoredPieces[i1] = true;
-                        oppositeColoredPieces[i1] = false;
-                    }
-                    break;
-                }
-            }
+    private static long shift(long pieces, byte dir) {
+        if (dir < halfBoardWidth) {
+            return (pieces >> rightShifts[dir]) & directionMasks[dir];
+        } else {
+            return (pieces << leftShifts[dir]) & directionMasks[dir];
         }
     }
 
-    public static BoardPosition makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
-        boolean[] whiteBoolean = LongToBoolArray.convert(playerWhitePieces);
-        boolean[] blackBoolean = LongToBoolArray.convert(playerBlackPieces);
+    public static BoardPosition makeMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int moveIndex){
+        long oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
+        long sameColoredPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
 
-        makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
-        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
+        long x;
+        long bounding_disk;
+        long new_disk = BitMasks.bitMaskSingleBit[moveIndex];
+        long captured_disks = 0;
+
+        sameColoredPieces |= new_disk;
+
+        for (byte dir = 0; dir < boardWidth; dir++) {
+            /* Find opponent disk adjacent to the new disk. */
+            x = shift(new_disk, dir) & oppositeColoredPieces;
+
+            /* Add any adjacent opponent disk to that one, and so on. */
+            for (int i = 0; i < 5; i++) {
+                x |= shift(x, dir) & oppositeColoredPieces;
+            }
+
+            /* Determine whether the disks were captured. */
+            bounding_disk = shift(x, dir) & sameColoredPieces;
+
+            //captured_disks |= (bounding_disk ? x : 0);
+            captured_disks |= (bounding_disk != 0 ? x : 0);
+        }
+
+        sameColoredPieces ^= captured_disks;
+        oppositeColoredPieces ^= captured_disks;
+
+        playerWhitePieces = isWhiteTurn ? sameColoredPieces : oppositeColoredPieces;
+        playerBlackPieces = isWhiteTurn ? oppositeColoredPieces : sameColoredPieces;
+        BoardPosition resolvedPosition = new BoardPosition(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+
+        return resolvedPosition;
     }
 }

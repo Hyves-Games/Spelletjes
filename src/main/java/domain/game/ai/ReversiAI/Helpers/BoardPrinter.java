@@ -1,5 +1,10 @@
 package domain.game.ai.ReversiAI.Helpers;
 
+import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
+import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
+import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
+import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
+
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class BoardPrinter {
@@ -30,6 +35,7 @@ public class BoardPrinter {
     }
 
     public static void printBoard(long playerWhitePieces, long playerBlackPieces, int[] highlightPieces) {
+        /*
         boolean[] white = new boolean[boardSquareCount];
         boolean[] black = new boolean[boardSquareCount];
         boolean[] highlight = new boolean[boardSquareCount];
@@ -49,6 +55,8 @@ public class BoardPrinter {
         }
 
         printBoard(white, black, highlight);
+        */
+        printBoard(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), new boolean[boardSquareCount]);
     }
 
     public static void printBoard(long playerWhitePieces, long playerBlackPieces) {

@@ -12,7 +12,7 @@ import domain.game.ai.ReversiAI.Board.*;
 public class AIBattle {
     public static void main(String[] args) {
         //////////////////////////////
-        int GameCount = 10000;
+        int GameCount = 1000;
         AI AIOne = new RandomAI();
         AI AITwo = new RandomAI();
         //////////////////////////////
