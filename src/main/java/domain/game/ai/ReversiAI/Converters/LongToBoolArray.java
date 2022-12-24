@@ -6,9 +6,11 @@ import static domain.game.ai.ReversiAI.Masks.BitMasks.bitMaskSingleBit;
 public class LongToBoolArray {
     public static boolean[] convert(long playerPieces) {
         boolean[] piecesBoolean = new boolean[64];
-        for (int i = 0; i < boardSquareCount; i++) {
+        byte moveCount = 0;
+        for (int i = Long.numberOfLeadingZeros(playerPieces); moveCount < Long.bitCount(playerPieces); i++) {
             if ((bitMaskSingleBit[i] & playerPieces) != 0) {
-                piecesBoolean[i] = true;
+                piecesBoolean[i] = (bitMaskSingleBit[i] & playerPieces) != 0;
+                moveCount++;
             }
         }
         return piecesBoolean;

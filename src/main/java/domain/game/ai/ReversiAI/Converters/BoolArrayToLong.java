@@ -18,11 +18,14 @@ public class BoolArrayToLong {
         //}
 
         for (int i = 0; i < boardSquareCount; i++) {
+            /*
             if (b[i]) {
-                n = n * 2 + 1; // Set the bit
+                n = n * 2 + 1;
             } else {
                 n *= 2;
             }
+             */
+            n = b[i] ? n * 2 + 1 : n * 2;
         }
 
         return n;

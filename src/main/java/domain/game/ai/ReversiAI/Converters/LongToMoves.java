@@ -13,6 +13,7 @@ public class LongToMoves {
                 moveCount++;
             }
         }
+
         return moves;
     }
 }

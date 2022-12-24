@@ -8,14 +8,13 @@ import java.util.Random;
 public class RandomAI extends AI {
     static Random generator = new Random();
 
-    public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
+    @Override
+    public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        if (moves.length > 0) {
-            return moves[generator.nextInt(moves.length)];
-        }
-        return 0;
+        return moves[generator.nextInt(moves.length)];
     }
 
+    @Override
     public String getAIName() {
         return "Random AI";
     }

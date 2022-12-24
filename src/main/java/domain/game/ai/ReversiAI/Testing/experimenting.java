@@ -42,38 +42,26 @@ public class experimenting {
         for (int i = 0; i < 100000000; i++) {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
-            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13200/14400 ms (optimised) / 17900 ms
-            //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8000 ms
+            //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13100 ms
+            //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8550 ms
 
-            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 2800 ms
-            //MakeMove.makeMove(test3, test4, true, 13); // 100M: 11000 ms
-            //MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4600 ms
+            //BoolArrayToLong.convert(test1); // 100M: 1900 ms
+            //LongToBoolArray.convert(test4); // 100M: 4350 ms
+            //LongToMoves.convert(test3); // 3300 ms
 
-            BoolArrayToLong.convert(test1); // 100M: 1850 ms
+            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 3100 ms
+            //MakeMove.makeMove(test3, test4, true, 13); // 100M: 14750 ms
+            //MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4550 ms
 
-            //StateHasher.Hash(test1, test2, true); // 100M: 5940 ms
+            //StateHasher.Hash(test1, test2, true); // 100M: 5950 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
-            //h.put(i, test3); // 100M: 7100ms when combined with fast hasher function and greedy evaluation (net: 100M in ~2800 ms)
-
-            //long hash = StateHasher.Hash(test3, test3, true);
-            //h.put(hash, GreedyEvaluation.evaluate(test1, test2));
-
-            //LongToMoves.convert(test3); // 3100 ms
-
-            //for (int ii = 0; ii < 64; ii++) {
-                //long l = test3 & BitMasks.bitMaskSingleBit[ii];
-                //int c = Long.bitCount(l);
-            //}
+            //h.put(i, test3); // 100M: 2800 ms?
         }
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
-        //BoardPrinter.printBoard(test3, test4);
-        //BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
-        //BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
-
-        //System.out.println("cheese: " + Arrays.toString(LongToBoolArray.convert(0b1100000100000000000000000000000000000000000000000000000010000001L)));
-
-
+        BoardPrinter.printBoard(test3, test4);
+        BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
+        BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
 
         //int[] availableMoves2 = MoveFinder.findAvailableMoves(test1, test2, true);
         //int[] availableMoves = MoveFinderFast.findAvailableMoves(test1, test2, true);

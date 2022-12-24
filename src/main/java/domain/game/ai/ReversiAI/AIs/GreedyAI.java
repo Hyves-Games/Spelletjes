@@ -9,23 +9,8 @@ import domain.game.ai.ReversiAI.SuperClasses.AI;
 
 public class GreedyAI extends AI {
 
-    public int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        int bestMove = moves[0];
-        int bestScore = isWhiteTurn ? -hugeScore : hugeScore;
-        for (int m : moves) {
-            boolean[] playerWhitePiecesClone = playerWhitePieces.clone();
-            boolean[] playerBlackPiecesClone = playerBlackPieces.clone();
-
-            MakeMove.makeMove(playerWhitePiecesClone, playerBlackPiecesClone, isWhiteTurn, m);
-
-            int score = GreedyEvaluation.evaluate(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-            if (isWhiteTurn && score > bestScore) {
-                bestScore = score;
-                bestMove = m;
-            }
-        }
-        return bestMove;
+    public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
+        return 0;
     }
 
     public String getAIName() {

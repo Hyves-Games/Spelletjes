@@ -47,11 +47,14 @@ public class MoveFinderFast {
     };
 
     private static long shift(long pieces, byte dir) {
+
         if (dir < halfBoardWidth) {
             return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
             return (pieces << leftShifts[dir]) & directionMasks[dir];
         }
+
+        //return (dir < halfBoardWidth) ? (pieces >> rightShifts[dir]) & directionMasks[dir] : (pieces << leftShifts[dir]) & directionMasks[dir];
     }
 
     private static long generateMoves(long my_disks, long opp_disks) {
