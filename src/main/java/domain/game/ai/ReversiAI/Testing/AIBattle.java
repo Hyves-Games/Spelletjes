@@ -5,10 +5,13 @@ import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Helpers.PieceCounter;
 import domain.game.ai.ReversiAI.SuperClasses.AI;
 import domain.game.ai.ReversiAI.Board.*;
+
+import java.util.Arrays;
 
 public class AIBattle {
     public static void main(String[] args) throws Exception {
@@ -42,7 +45,7 @@ public class AIBattle {
             boolean isWhiteTurn = false;
             boolean wasPass = false;
             while (true) {
-                int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+                int[] moves = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
                 if (moves.length == 0) {
                     if (wasPass) {
                         // No more moves, game over
@@ -64,7 +67,9 @@ public class AIBattle {
                         BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
                         System.out.println("Board after:");
                         BoardPrinter.printBoard(newBoard.playerWhitePieces, newBoard.playerBlackPieces);
-                        throw new Exception("Board change incorrect! game: " + i + ", move: " + bestMove + ", white's turn: " + isWhiteTurn);
+                        System.out.println(Arrays.toString(LongToBoolArray.convert(playerWhitePieces)));
+                        System.out.println(Arrays.toString(LongToBoolArray.convert(playerBlackPieces)));
+                        throw new Exception("Board change incorrect! game: " + i + ", move: " + bestMove + ", white's turn: " + isWhiteTurn + ", available moves: " + Arrays.toString(moves));
                     }
 
                     playerWhitePieces = newBoard.playerWhitePieces;
