@@ -1,7 +1,7 @@
 package domain.game.ai.ReversiAI.Masks;
 
 public class BitMasks {
-    public static final long[] bitMask = { // No this is not pretty, yes it increases performance.
+    public static final long[] bitMaskSingleBit = {
             0b1000000000000000000000000000000000000000000000000000000000000000L,
             0b0100000000000000000000000000000000000000000000000000000000000000L,
             0b0010000000000000000000000000000000000000000000000000000000000000L,

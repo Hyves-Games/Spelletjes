@@ -10,15 +10,10 @@ package domain.game.ai.ReversiAI.MoveLogic;
 import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
 
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Objects;
-
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
-import static domain.game.ai.ReversiAI.Masks.BitMasks.bitMask;
 
 public class MoveFinderFast {
-    static long[] masks = {
+    static long[] directionMasks = {
             0x7F7F7F7F7F7F7F7FL, /* Right. */
             0x007F7F7F7F7F7F7FL, /* Down-right. */
             0xFFFFFFFFFFFFFFFFL, /* Down. */
@@ -51,30 +46,30 @@ public class MoveFinderFast {
             0  /* Up-right. */
     };
 
-    private static long shift(long pieces, int dir) {
+    private static long shift(long pieces, byte dir) {
+
         if (dir < halfBoardWidth) {
-            return (pieces >> rightShifts[dir]) & masks[dir];
+            return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
-            return (pieces << leftShifts[dir]) & masks[dir];
+            return (pieces << leftShifts[dir]) & directionMasks[dir];
         }
+
+        //return (dir < halfBoardWidth) ? (pieces >> rightShifts[dir]) & directionMasks[dir] : (pieces << leftShifts[dir]) & directionMasks[dir];
     }
 
     private static long generateMoves(long my_disks, long opp_disks) {
-        byte dir;
         long x;
         long empty_cells = ~(my_disks | opp_disks);
-        long legal_moves = 0;
+        long legal_moves = 0x0L;
 
-        for (dir = 0; dir < boardWidth; dir++) {
+        for (byte dir = 0; dir < boardWidth; dir++) {
             // Get opponent disks adjacent to my disks in direction dir.
             x = shift(my_disks, dir) & opp_disks;
 
             // Add opponent disks adjacent to those, and so on.
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
+            for (int i = 0; i < 5; i++) {
+                x |= shift(x, dir) & opp_disks;
+            }
 
             // Empty cells adjacent to those are valid moves.
             legal_moves |= shift(x, dir) & empty_cells;
