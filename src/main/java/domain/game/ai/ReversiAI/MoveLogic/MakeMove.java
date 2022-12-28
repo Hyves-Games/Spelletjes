@@ -1,7 +1,3 @@
-/*
-@TODO: Make function that accepts long
- */
-
 package domain.game.ai.ReversiAI.MoveLogic;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
@@ -14,7 +10,7 @@ public class MakeMove {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};
     static byte[] directionsY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-    public static void makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex){
+    public static void makeMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int moveIndex) {
         boolean[] oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
         boolean[] sameColoredPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
 
@@ -68,6 +64,7 @@ public class MakeMove {
         boolean[] blackBoolean = LongToBoolArray.convert(playerBlackPieces);
 
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
+
         return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
     }
 }

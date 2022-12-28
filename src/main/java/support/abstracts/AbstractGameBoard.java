@@ -9,7 +9,10 @@ import support.enums.GameEndStateEnum;
 import support.enums.SceneEnum;
 import support.services.Server;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractGameBoard<T> {
     private Server connection;
@@ -20,16 +23,14 @@ public abstract class AbstractGameBoard<T> {
 
     private Player<?> player;
     private Player<?> opponent;
-    private Player<?> starter;
 
     private GameEndStateEnum endState;
-
-    private final ArrayList<Integer> board = new ArrayList<Integer>();
-    private int lastMove;
 
     private final ArrayList<Runnable> eventListenersForEnd = new ArrayList<Runnable>();
     private final ArrayList<Runnable> eventListenersForTurn = new ArrayList<Runnable>();
     private final ArrayList<Runnable> eventListenersForBoard = new ArrayList<Runnable>();
+
+    protected final ArrayList<Integer> board = new ArrayList<Integer>();
 
     protected final void generate(Integer size) {
         for (int i = 0; i < size; i++) {
@@ -37,10 +38,9 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
-    public void start(@NotNull Player<?> player, @NotNull Player<?> opponent, @NotNull Player<?> toStart) {
+    public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
         this.player = player;
         this.opponent = opponent;
-        this.starter = toStart;
 
         if (player instanceof AI) {
             this.useAI = true;
@@ -56,13 +56,6 @@ public abstract class AbstractGameBoard<T> {
         return this.opponent;
     }
 
-    public Player<?> getStarter() {
-        return this.starter;
-    }
-
-    public int getLastMove() {
-        return this.lastMove;
-    }
     public Boolean isPlayerTurn() {
         return this.playerTurn;
     }
@@ -80,10 +73,6 @@ public abstract class AbstractGameBoard<T> {
         this.playerTurn = false;
 
         this.runEventListeners(this.eventListenersForTurn);
-    }
-
-    public void setLastMove(int move) {
-        this.lastMove = move;
     }
 
     public Integer[] getBoard() {
@@ -122,16 +111,16 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
-    public void setMove(Integer index, Integer value, boolean toUpdate) {
-        this.board.set(index, value);
-
-        if (toUpdate) {
-            this.runEventListeners(this.eventListenersForBoard);
-        }
-    }
-
     protected Boolean checkMove(Integer index) {
         return this.board.get(index) == 0;
+    }
+
+    public void setMove(Integer index, Integer value) {
+        this.board.set(index, value);
+
+        this.runLogic(index, value);
+
+        this.runEventListeners(this.eventListenersForBoard);
     }
 
     public void addEventListenerForEnd(Runnable callback) {
@@ -149,6 +138,8 @@ public abstract class AbstractGameBoard<T> {
     private void runEventListeners(ArrayList<Runnable> callbacks) {
         callbacks.forEach(Runnable::run);
     }
+
+    protected void runLogic(Integer index, Integer value) {}
 
     public abstract String getKey();
 

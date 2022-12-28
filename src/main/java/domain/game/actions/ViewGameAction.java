@@ -1,8 +1,11 @@
 package domain.game.actions;
 
 import com.google.gson.JsonObject;
+import domain.game.model.Game;
+import domain.game.model.Reversi;
 import domain.player.model.Player;
 import support.abstracts.AbstractGameAction;
+import support.abstracts.AbstractGameBoard;
 
 public class ViewGameAction extends AbstractGameAction {
     private final JsonObject data;
@@ -22,9 +25,16 @@ public class ViewGameAction extends AbstractGameAction {
 
     @Override
     protected void handler() {
-        Player toStart = new Player(data.get("PLAYERTOMOVE").getAsString());
-        Player opponent = new Player(data.get("OPPONENT").getAsString());
+        Player<?> opponent = new Player<>(this.data.get("OPPONENT").getAsString());
 
-        this.player.getGame().start(opponent, toStart);
+        Game game = this.player.getGame();
+        AbstractGameBoard<?> gameBoard = game.getGameBoard();
+
+        if (gameBoard instanceof Reversi) {
+            ((Reversi) gameBoard).setStarter(this.player.getUsername().equals(this.data.get("PLAYERTOMOVE").getAsString()));
+        }
+
+        game.start(opponent);
+
     }
 }
