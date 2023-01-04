@@ -7,10 +7,7 @@ Changing the shifts from long to byte increased performance slightly.
 
 package domain.game.ai.ReversiAI.MoveLogic;
 
-import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
-
-import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MoveFinderFast {
     static long[] directionMasks = {
@@ -24,7 +21,7 @@ public class MoveFinderFast {
             0x7F7F7F7F7F7F7F00L  /* Up-right. */
     };
 
-    static byte[] leftShifts = {
+   static byte[] leftShifts = {
             0, /* Right. */
             0, /* Down-right. */
             0, /* Down. */
@@ -47,42 +44,35 @@ public class MoveFinderFast {
     };
 
     private static long shift(long pieces, byte dir) {
-
-        if (dir < halfBoardWidth) {
+        if (dir < 4) {
             return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
             return (pieces << leftShifts[dir]) & directionMasks[dir];
         }
-
-        //return (dir < halfBoardWidth) ? (pieces >> rightShifts[dir]) & directionMasks[dir] : (pieces << leftShifts[dir]) & directionMasks[dir];
     }
 
     private static long generateMoves(long my_disks, long opp_disks) {
         long x;
         long empty_cells = ~(my_disks | opp_disks);
-        long legal_moves = 0x0L;
+        long legal_moves = 0;
 
-        for (byte dir = 0; dir < boardWidth; dir++) {
+        for (byte dir = 0; dir < 8; dir++) {
             // Get opponent disks adjacent to my disks in direction dir.
             x = shift(my_disks, dir) & opp_disks;
-
             // Add opponent disks adjacent to those, and so on.
             for (int i = 0; i < 5; i++) {
                 x |= shift(x, dir) & opp_disks;
             }
-
             // Empty cells adjacent to those are valid moves.
             legal_moves |= shift(x, dir) & empty_cells;
         }
-
         return legal_moves;
-    }
-
-    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        return LongToMoves.convert(generateMoves(BoolArrayToLong.convert(isWhiteTurn ? playerWhitePieces : playerBlackPieces), BoolArrayToLong.convert(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
     }
 
     public static int[] findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return LongToMoves.convert(generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces));
+    }
+    public static long findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, boolean test) {
+        return generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces);
     }
 }

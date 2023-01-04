@@ -9,7 +9,7 @@ public class MoveFinder {
     static int[] directionsY = {-1, -1, -1, 0, 0, 1, 1, 1};
 
     public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
-        int[] moves = new int[maxMovesMemoryLimit]; // @TODO: Consider using bSQ/2 as upper bound. (~1% performance increase)
+        int[] moves = new int[maxMovesMemoryLimit];
         int movesCount = 0;
 
         boolean[] oppositeColoredPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
@@ -25,11 +25,8 @@ public class MoveFinder {
                     continue;
                 }
                 boolean isValidMove = false;
-                for (int d = 0; (d < directionsX.length); d++) {
+                for (int d = 0; (d < directionsX.length & !isValidMove); d++) {
                     // For each directional line
-                    if (isValidMove) { // @TODO: put this in for-loop condition.
-                        break;
-                    }
 
                     int exploreX = x;
                     int exploreY = y;

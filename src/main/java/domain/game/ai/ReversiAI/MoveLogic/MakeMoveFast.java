@@ -85,8 +85,7 @@ public class MakeMoveFast {
 
         playerWhitePieces = isWhiteTurn ? sameColoredPieces : oppositeColoredPieces;
         playerBlackPieces = isWhiteTurn ? oppositeColoredPieces : sameColoredPieces;
-        BoardPosition resolvedPosition = new BoardPosition(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 
-        return resolvedPosition;
+        return new BoardPosition(playerWhitePieces, playerBlackPieces, isWhiteTurn);
     }
 }

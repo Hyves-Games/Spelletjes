@@ -69,6 +69,7 @@ public class AIBattle {
                         BoardPrinter.printBoard(newBoard.playerWhitePieces, newBoard.playerBlackPieces);
                         System.out.println(Arrays.toString(LongToBoolArray.convert(playerWhitePieces)));
                         System.out.println(Arrays.toString(LongToBoolArray.convert(playerBlackPieces)));
+                        System.out.println("fast move solver: " + MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn, true));
                         throw new Exception("Board change incorrect! game: " + i + ", move: " + bestMove + ", white's turn: " + isWhiteTurn + ", available moves: " + Arrays.toString(moves));
                     }
 
