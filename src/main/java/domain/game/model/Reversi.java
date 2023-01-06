@@ -12,8 +12,6 @@ import support.abstracts.AbstractGameBoard;
 import support.enums.SceneEnum;
 
 public class Reversi extends AbstractGameBoard<Reversi> {
-    private Boolean isStarter = false;
-
     public Reversi() {
         this.generate(64);
     }
@@ -38,16 +36,13 @@ public class Reversi extends AbstractGameBoard<Reversi> {
         return "Reversi";
     }
 
-    public void setStarter(Boolean starter) {
-        isStarter = starter;
-    }
 
     @Override
     public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
-        this.board.set(27, this.isStarter ? -1 : 1);
-        this.board.set(28, this.isStarter ? 1 : -1);
-        this.board.set(35, this.isStarter ? 1 : -1);
-        this.board.set(36, this.isStarter ? -1 : 1);
+        this.board.set(27, this.getStarter() ? -1 : 1);
+        this.board.set(28, this.getStarter() ? 1 : -1);
+        this.board.set(35, this.getStarter() ? 1 : -1);
+        this.board.set(36, this.getStarter() ? -1 : 1);
 
         super.start(player, opponent);
     }

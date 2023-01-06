@@ -21,6 +21,8 @@ public abstract class AbstractGameBoard<T> {
     private Boolean ended = false;
     private Boolean playerTurn = false;
 
+    private Boolean isStarter = false;
+
     private Player<?> player;
     private Player<?> opponent;
 
@@ -73,6 +75,12 @@ public abstract class AbstractGameBoard<T> {
         this.playerTurn = false;
 
         this.runEventListeners(this.eventListenersForTurn);
+    }
+
+    public boolean getStarter() { return isStarter; }
+
+    public void setStarter(Boolean starter) {
+        isStarter = starter;
     }
 
     public Integer[] getBoard() {

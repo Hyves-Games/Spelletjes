@@ -8,6 +8,7 @@ import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
+import domain.game.model.Reversi;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,7 +66,7 @@ public class ReversiController extends AbstractGameBoardController {
         }
 
         this.board = buttons;
-        this.player_1.setText("WITHE " + this.getPlayerUsername());
+        this.player_1.setText("WHITE " + this.getPlayerUsername());
         this.player_2.setText("BLACK " + this.getOpponentUsername());
 
         this.gameBoard.addEventListenerForTurn(() -> {
@@ -106,7 +107,6 @@ public class ReversiController extends AbstractGameBoardController {
     @Override
     protected void changeBoardView() {
         Object[] values = this.gameBoard.getBoard();
-
         for (int i = 0; i < values.length; i++) {
             Integer value = (Integer) values[i];
 
@@ -114,7 +114,7 @@ public class ReversiController extends AbstractGameBoardController {
                 Button btn = this.board[i];
 
                 btn.setDisable(true);
-                btn.setStyle("-fx-background-color: " + (value == 1 ? "white" : "black"));
+                btn.setStyle("-fx-background-color: " + (value == 1 ? this.gameBoard.getStarter() ? "black" : "white" : this.gameBoard.getStarter() ? "white": "black"));
             }
         }
     }
