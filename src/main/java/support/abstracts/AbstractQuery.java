@@ -3,13 +3,18 @@ package support.abstracts;
 import support.database.SQLite;
 import support.database.SQLiteValue;
 import support.database.WhereClause;
+import support.helpers.Utils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 abstract public class AbstractQuery<T extends AbstractQuery<T>> {
 
@@ -56,16 +61,73 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
             idField.set(model, result.getInt("id"));
 
             // set other fields
-            for (Field field : model.getClass().getDeclaredFields()) {
+            for (Field tableField : this.getTable().getDeclaredFields()) {
+                Field field = Utils.getFieldFromModel(model.getClass(), tableField.getName());
                 field.setAccessible(true);
 
-                field.set(model, result.getObject(field.getName()));
+                String databaseName = Utils.camelCaseToUnderscore(field.getName());
+                switch (field.getType().getSimpleName()) {
+                    case "Timestamp":
+                        field.set(model, result.getTimestamp(databaseName));
+                        break;
+                        case "ArrayList":
+                            String array = result.getString(databaseName);
+                            if (array.isEmpty()) {
+                                continue;
+                            }
+
+                            String[] arrayItems = array.substring(1, array.length() - 1).split(",");
+
+                            ParameterizedType listType = (ParameterizedType) field.getGenericType();
+                            Class<?> listClass = (Class<?>) listType.getActualTypeArguments()[0];
+                            System.out.println(listClass);
+
+                            if (listClass == Integer.class) {
+                                ArrayList<Integer> list = new ArrayList<>() {{
+                                    for (String item : arrayItems) {
+                                        add(Integer.parseInt(item.trim()));
+                                    }
+                                }};
+
+                                field.set(model, list);
+                            } else {
+                                ArrayList<String> list = new ArrayList<>() {{
+                                    this.addAll(Arrays.asList(arrayItems));
+                                }};
+
+                                field.set(model, list);
+                            }
+                        break;
+                    default:
+                        Object objectResult = result.getObject(databaseName);
+                        if (objectResult == null) {
+                            continue;
+                        }
+
+                        if (field.getType().isEnum()) {
+                            Enum<?> enumClass = createEnumInstance(objectResult.toString(), field.getType());
+                            field.set(model, enumClass);
+                        } else if (Utils.isModelField(field)) {
+                            AbstractQuery<?> query = Utils.getQueryFromField(field);
+
+                            field.set(model, query.findOneById((int) objectResult));
+                        } else {
+                            field.set(model, objectResult);
+                        }
+
+                        break;
+                }
             }
         } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
         return (M) model;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <A extends Enum<A>> A createEnumInstance(String name, Type type) {
+        return Enum.valueOf((Class<A>) type, name);
     }
 
     public <M extends AbstractModel<M>> ArrayList<M> find() {
