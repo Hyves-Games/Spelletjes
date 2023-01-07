@@ -16,7 +16,7 @@ public class PlayerTable extends AbstractTable {
     private Timestamp lastLogin;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "players";
     }
 

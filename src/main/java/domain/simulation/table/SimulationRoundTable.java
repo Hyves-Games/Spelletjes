@@ -18,7 +18,7 @@ public class SimulationRoundTable extends AbstractTable {
     private Player<?> playerTwo;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "simulation_rounds";
     }
 

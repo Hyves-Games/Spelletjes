@@ -22,7 +22,7 @@ public class GameLogTable extends AbstractTable {
     private ArrayList<Integer> board;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "game_logs";
     }
 

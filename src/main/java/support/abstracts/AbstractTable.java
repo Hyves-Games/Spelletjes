@@ -3,6 +3,7 @@ package support.abstracts;
 import support.database.DatabaseLogger;
 import support.database.SQLite;
 import support.helpers.Utils;
+import support.records.ModelField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +20,7 @@ abstract public class AbstractTable {
     protected Timestamp updatedAt = null;
     protected Timestamp createdAt = null;
 
-    abstract protected String getTableName();
+    public abstract String getTableName();
 
     abstract protected <T extends AbstractModel<T>> T getModel();
 
@@ -28,56 +29,35 @@ abstract public class AbstractTable {
     public final  void createTable() {
         ArrayList<String> foreignKeys = new ArrayList<>();
 
-        String sql = "CREATE TABLE IF NOT EXISTS " + this.getTableName() + " (id integer PRIMARY KEY";
+        StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + this.getTableName() + " (id integer PRIMARY KEY");
 
         DatabaseLogger.log("Creating table " + this.getTableName());
-        for (Field field : this.getDeclaredFields()) {
-            String databaseName = Utils.camelCaseToUnderscore(field.getName());
+        for (Field tableField : this.getDeclaredFields()) {
+            ModelField field = new ModelField(tableField, this.getModel());
 
-            sql += ", ";
+            sql.append(field.getSqlForTableCreation());
 
-            HashMap<String, String> converted = new HashMap<>() {{
-              put("string", "text");
-              put("arraylist", "text");
-              put("timestamp", "TIMESTAMP");
-            }};
-
-            Class<?> typeClass = field.getType();
-
-            String type = typeClass.getSimpleName().toLowerCase();
-            if (field.getType().isEnum()) {
-                type = this.convertEnumToSqlType(field);
-
-                // if field is model reference, add foreign key + put type to integer
-            } else if (Utils.isModelField(field)) {
-                type = "integer";
-
-                AbstractTable table = Utils.getTableFromModelField(field);
-                if (table != null) {
-                    foreignKeys.add("CONSTRAINT fk_" + databaseName + " FOREIGN KEY (" + databaseName + ") REFERENCES " + table.getTableName() + "(id) ON DELETE CASCADE");
-                }
+            String foreignKeySql = field.getForeignKeyConstraint();
+            if (foreignKeySql != null) {
+                foreignKeys.add(foreignKeySql);
             }
 
-            String sqlType = converted.get(type) != null ? converted.get(type) : type;
-
-            sql += databaseName + " " + sqlType;
-
-            DatabaseLogger.log("- Adding field " + field.getName() + " as " + sqlType);
+            DatabaseLogger.log("- Adding field " + field.getName() + " as " + field.getSqlType());
         }
 
         // handle foreign keys
         for (String foreignKey : foreignKeys) {
-            sql += ", " + foreignKey;
+            sql.append(", ").append(foreignKey);
 
             DatabaseLogger.log("- Adding foreign key " + foreignKey);
         }
 
-        sql += ")";
+        sql.append(")");
 
         DatabaseLogger.log("SQL: " + sql);
         DatabaseLogger.log("");
 
-        SQLite.getInstance().execute(sql);
+        SQLite.getInstance().execute(sql.toString());
     }
 
     public final void dropTable() {
@@ -94,22 +74,5 @@ abstract public class AbstractTable {
         fields.addAll(Arrays.asList(this.getClass().getSuperclass().getDeclaredFields()));
 
         return fields;
-    }
-
-    private String convertEnumToSqlType(Field field) {
-        Object[] enums = field.getType().getEnumConstants();
-
-        StringBuilder enumString = new StringBuilder(
-                "text check( " + Utils.camelCaseToUnderscore(field.getName()) + " in ("
-        );
-
-        for (Object e : enums) {
-            enumString.append("'").append(e.toString()).append("',");
-        }
-        enumString.deleteCharAt(enumString.length() - 1);
-
-        enumString.append("))");
-
-        return enumString.toString();
     }
 }

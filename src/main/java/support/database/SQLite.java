@@ -2,6 +2,7 @@ package support.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLite {
@@ -19,7 +20,7 @@ public class SQLite {
 
             this.connection.createStatement().executeQuery("PRAGMA foreign_keys = ON;");
         } catch (SQLException e) {
-            e.printStackTrace();
+
         }
     }
 

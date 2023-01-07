@@ -14,7 +14,7 @@ public class SettingTable extends AbstractTable {
     private Serializable value;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "settings";
     }
 

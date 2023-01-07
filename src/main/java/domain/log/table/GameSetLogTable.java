@@ -18,7 +18,7 @@ public class GameSetLogTable extends AbstractTable {
     private Integer duration;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "game_set_logs";
     }
 

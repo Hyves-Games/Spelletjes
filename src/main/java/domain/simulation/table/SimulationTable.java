@@ -16,7 +16,7 @@ public class SimulationTable extends AbstractTable {
     private Integer duration;
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "simulations";
     }
 

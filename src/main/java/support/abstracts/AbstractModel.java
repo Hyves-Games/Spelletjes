@@ -1,7 +1,9 @@
 package support.abstracts;
 
+import support.database.DatabaseLogger;
 import support.database.SQLite;
 import support.helpers.Utils;
+import support.records.ModelField;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -79,39 +81,21 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
                     .getConnection()
                     .prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            for (Field field: fields) {
-                int index = fields.indexOf(field) + 1;
-                Field modelField = Utils.getFieldFromModel(this.getClass(), field.getName());
-                modelField.setAccessible(true);
+            for (Field tableField: fields) {
+                int index = fields.indexOf(tableField) + 1;
+                ModelField field = new ModelField(tableField, this);
 
-                String type = field.getType().getSimpleName().toLowerCase();
-                if (Utils.isModelField(field)) {
-                    type = "foreign_key";
+                field.prepareStatement(preparedStatement, index);
 
-                    if (Utils.getModelIdFromField(modelField, this) == null) {
-                        type = "null";
-                    }
-                }
-
-                if (modelField.getType().isEnum()) {
-                    type = "string";
-                }
-
-                switch (type) {
-                    case "string" -> preparedStatement.setString(index, (String) modelField.get(this));
-                    case "integer" -> preparedStatement.setInt(index, (Integer) modelField.get(this));
-                    case "boolean" -> preparedStatement.setBoolean(index, (Boolean) modelField.get(this));
-                    case "timestamp" -> preparedStatement.setTimestamp(index, (Timestamp) modelField.get(this));
-                    case "serializable", "arraylist" -> preparedStatement.setString(index, Utils.convertSerializableToString((Serializable) modelField.get(this)));
-                    case "foreign_key" -> preparedStatement.setInt(index, Utils.getModelIdFromField(modelField, this));
-                    case "null" -> preparedStatement.setNull(index, 0);
-                    default -> throw new RuntimeException("Unsupported field type: " + field.getType().getSimpleName());
-                }
-
-                if (!this.isNew() && fields.get(fields.size() - 1) == field) {
+                if (!this.isNew() && fields.get(fields.size() - 1) == tableField) {
                     preparedStatement.setInt(index + 1, this.id);
+
                 }
             }
+
+            DatabaseLogger.log("Insert/update of model: " + this.getClass().getSimpleName());
+            DatabaseLogger.log(preparedStatement.getParameterMetaData() + " " + preparedStatement.getMetaData());
+            DatabaseLogger.log("");
 
             // execute insert SQL statement
             int affectedRows = preparedStatement.executeUpdate();
@@ -120,7 +104,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
             }
 
             this.id = preparedStatement.getGeneratedKeys().getInt(1);
-        } catch (SQLException|IllegalAccessException|NullPointerException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }
 
