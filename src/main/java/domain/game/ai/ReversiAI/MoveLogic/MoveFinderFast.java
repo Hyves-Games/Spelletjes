@@ -83,7 +83,7 @@ public class MoveFinderFast {
         return legal_moves;
     }
 
-    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
+    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, Boolean isWhiteTurn) {
         return LongToMoves.convert(generateMoves(BoolArrayToLong.convert(isWhiteTurn ? playerWhitePieces : playerBlackPieces), BoolArrayToLong.convert(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
     }
 

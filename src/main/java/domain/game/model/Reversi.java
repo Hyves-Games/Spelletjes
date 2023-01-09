@@ -1,6 +1,8 @@
 package domain.game.model;
 
 import client.Application;
+import domain.game.ai.ReversiAI.AIs.MoveMaximizerAI;
+import domain.game.ai.ReversiAI.AIs.RandomAI;
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
@@ -67,11 +69,11 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     public void runAI() {
-        // Implement AI code
-//        if (this.isPlayerTurn()) {
-//            Integer index = new ReversiAI().getBestMoveBestScore(this.getBoard(), true)[0];
-//
-//            this.doMove(index);
-//        }
+        long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
+        long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
+        if (this.isPlayerTurn()) {
+            Integer index = new MoveMaximizerAI().getBestMove(LongToBoolArray.convert(playerPieces), LongToBoolArray.convert(opponentPieces), isPlayerTurn());
+            this.doMove(index);
+        }
     }
 }

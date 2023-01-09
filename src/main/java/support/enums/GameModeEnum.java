@@ -22,7 +22,6 @@ public enum GameModeEnum {
             game.setAIPlayer();
         }
 
-        System.out.println(this);
         if (subscribe && this.equals(PVP)) {
             game.searchGame();
         }
