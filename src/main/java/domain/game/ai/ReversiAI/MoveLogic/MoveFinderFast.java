@@ -44,7 +44,7 @@ public class MoveFinderFast {
     };
 
     private static long shift(long pieces, byte dir) {
-        if (dir < 8 / 2) {
+        if (dir < 4) {
             return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
             return (pieces << leftShifts[dir]) & directionMasks[dir];
