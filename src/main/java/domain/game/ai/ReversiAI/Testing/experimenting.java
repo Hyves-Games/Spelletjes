@@ -8,10 +8,7 @@ import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
 import domain.game.ai.ReversiAI.Helpers.*;
 import domain.game.ai.ReversiAI.Masks.BitMasks;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
+import domain.game.ai.ReversiAI.MoveLogic.*;
 
 import java.util.Arrays;
 import java.util.BitSet;
@@ -75,6 +72,7 @@ public class experimenting {
         //long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
         //int[] availableMoves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, true);
 
+        System.out.println("available moves experimental: " + MoveFinderExperimental.findAvailableMoves(test5, test6, false, true));
         System.out.println("available moves fast: " + Arrays.toString(MoveFinderFast.findAvailableMoves(test5, test6, false)));
         System.out.println("available moves fast: " + MoveFinderFast.findAvailableMoves(test5, test6, false, true));
         System.out.println("available moves slow: " + Arrays.toString(MoveFinder.findAvailableMoves(LongToBoolArray.convert(test5), LongToBoolArray.convert(test6), false)));
