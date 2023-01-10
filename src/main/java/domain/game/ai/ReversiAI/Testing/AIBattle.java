@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 1000;
+        int GameCount = 100;
         AI AIOne = new RandomAI();
         AI AITwo = new RandomAI();
         //////////////////////////////
@@ -70,9 +70,9 @@ public class AIBattle {
                         System.out.println(Arrays.toString(LongToBoolArray.convert(playerWhitePieces)));
                         System.out.println(Arrays.toString(LongToBoolArray.convert(playerBlackPieces)));
                         System.out.println("fast move solver: " + MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn, true));
+                        System.out.println("white board, black board: " + playerWhitePieces + ", " + playerBlackPieces);
                         throw new Exception("Board change incorrect! game: " + i + ", move: " + bestMove + ", white's turn: " + isWhiteTurn + ", available moves: " + Arrays.toString(moves));
                     }
-
                     playerWhitePieces = newBoard.playerWhitePieces;
                     playerBlackPieces = newBoard.playerBlackPieces;
                 }

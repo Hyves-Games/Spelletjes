@@ -11,6 +11,10 @@ public class BoardPrinter {
     public static void printBoard(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean[] highlightPieces) {
         for (int i = 0; i < boardSquareCount; i++) {
             String printPiece = emptyPiece;
+            if (playerWhitePieces[i] & playerBlackPieces[i]) {
+                System.out.println("Warning, invalid board");
+                return;
+            }
             if (playerWhitePieces[i]) {
                 printPiece = playerWhitePiece;
             } else if (playerBlackPieces[i]) {

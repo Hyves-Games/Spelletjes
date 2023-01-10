@@ -34,6 +34,9 @@ public class experimenting {
         long test3 = 0b0000000000000000001011000000000000100010000110000100000000000000L;
         long test4 = 0b0000000000000000000100000001100000011100001001000000000000000000L;
 
+        long test5 = 2314885805157384192L;
+        long test6 = -9205357509026249728L;
+
         //Hashtable h = new Hashtable(40000000);
         //int[] tempMoves = new int[64];
 
@@ -45,7 +48,7 @@ public class experimenting {
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13100 ms
             //BoolArrayToLong.convert(test1); // 100M: 1900 ms
 
-            MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms
+            //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms
             //LongToBoolArray.convert(test4); // 100M: 2700 ms
 
 
@@ -61,16 +64,20 @@ public class experimenting {
         }
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
 
-        BoardPrinter.printBoard(test3, test4);
-        BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
-        BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
+        BoardPrinter.printBoard(test5, test6);
+        //BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
+        //BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
 
         //int[] availableMoves2 = MoveFinder.findAvailableMoves(test1, test2, true);
         //int[] availableMoves = MoveFinderFast.findAvailableMoves(test1, test2, true);
 
-        long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
-        long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
-        int[] availableMoves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, true);
+        //long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
+        //long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
+        //int[] availableMoves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, true);
+
+        System.out.println("available moves fast: " + Arrays.toString(MoveFinderFast.findAvailableMoves(test5, test6, false)));
+        System.out.println("available moves fast: " + MoveFinderFast.findAvailableMoves(test5, test6, false, true));
+        System.out.println("available moves slow: " + Arrays.toString(MoveFinder.findAvailableMoves(LongToBoolArray.convert(test5), LongToBoolArray.convert(test6), false)));
 
         //System.out.println("bitset: " + b);
 

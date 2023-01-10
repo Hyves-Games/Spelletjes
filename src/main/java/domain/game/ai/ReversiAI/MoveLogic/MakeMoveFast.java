@@ -60,6 +60,7 @@ public class MakeMoveFast {
         long x;
         long bounding_disk;
         long new_disk = BitMasks.bitMaskSingleBit[moveIndex];
+        //long new_disk = 1L << moveIndex;
         long captured_disks = 0;
 
         sameColoredPieces |= new_disk;

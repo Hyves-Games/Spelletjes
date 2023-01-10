@@ -44,7 +44,7 @@ public class MoveFinderFast {
     };
 
     private static long shift(long pieces, byte dir) {
-        if (dir < 4) {
+        if (dir < 8 / 2) {
             return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
             return (pieces << leftShifts[dir]) & directionMasks[dir];
@@ -55,15 +55,21 @@ public class MoveFinderFast {
         long x;
         long empty_cells = ~(my_disks | opp_disks);
         long legal_moves = 0;
+        byte dir;
 
-        for (byte dir = 0; dir < 8; dir++) {
-            // Get opponent disks adjacent to my disks in direction dir.
+        for (dir = 0; dir < 8; dir++) {
+        //for (byte dir = 0; dir < 8; dir++) {
             x = shift(my_disks, dir) & opp_disks;
-            // Add opponent disks adjacent to those, and so on.
+            /*
             for (int i = 0; i < 5; i++) {
                 x |= shift(x, dir) & opp_disks;
             }
-            // Empty cells adjacent to those are valid moves.
+             */
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
             legal_moves |= shift(x, dir) & empty_cells;
         }
         return legal_moves;
