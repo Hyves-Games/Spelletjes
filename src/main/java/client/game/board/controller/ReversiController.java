@@ -30,7 +30,7 @@ public class ReversiController extends AbstractGameBoardController {
     @FXML HBox board_row_1;
 
     public void initialize() {
-        HBox row = board_row_1;
+        HBox row = new HBox();
 
         Button[] buttons = new Button[64];
 
@@ -47,13 +47,13 @@ public class ReversiController extends AbstractGameBoardController {
 
             row.getChildren().add(btn);
 
-            // IT WORKS SHUT UP
-            if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63 ) {
-                row = new HBox();
+            if (i % 8 == 7) {
                 row.setPrefHeight(60.0);
                 row.setPrefWidth(480.0);
                 row.setSpacing(5.0);
+
                 boardContainer.getChildren().add(row);
+                row = new HBox();
             }
 
             buttons[i] = btn;
