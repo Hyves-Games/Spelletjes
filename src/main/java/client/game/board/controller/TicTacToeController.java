@@ -131,10 +131,8 @@ public class TicTacToeController extends AbstractGameBoardController {
            if (GameMode.equals(GameModeEnum.PVA)) {
                Application.removeAI(this.gameBoard.getOpponent());
            }
-
-           SceneEnum.LOBBY.switchTo();
        } else {
-           GameMode.create(false);
+           GameMode.create(false, false);
 
            new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
        }

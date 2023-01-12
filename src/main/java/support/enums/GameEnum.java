@@ -1,5 +1,6 @@
 package support.enums;
 
+import domain.game.model.Reversi;
 import domain.game.model.TicTacToe;
 import domain.game.model.Game;
 import support.abstracts.AbstractGameBoard;
@@ -7,7 +8,8 @@ import support.abstracts.AbstractGameBoard;
 import java.lang.reflect.InvocationTargetException;
 
 public enum GameEnum {
-    TIC_TAC_TOE(TicTacToe.class);
+    TIC_TAC_TOE(TicTacToe.class),
+    REVERSI(Reversi.class);
 
     private final Class<? extends AbstractGameBoard<?>> gameBoard;
 

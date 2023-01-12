@@ -18,16 +18,18 @@ public abstract class AbstractGameBoard<T> {
     private Boolean ended = false;
     private Boolean playerTurn = false;
 
+    private Boolean starter = false;
+
     private Player<?> player;
     private Player<?> opponent;
 
     private GameEndStateEnum endState;
 
-    private final ArrayList<Integer> board = new ArrayList<Integer>();
-
     private final ArrayList<Runnable> eventListenersForEnd = new ArrayList<Runnable>();
     private final ArrayList<Runnable> eventListenersForTurn = new ArrayList<Runnable>();
     private final ArrayList<Runnable> eventListenersForBoard = new ArrayList<Runnable>();
+
+    protected final ArrayList<Integer> board = new ArrayList<Integer>();
 
     protected final void generate(Integer size) {
         for (int i = 0; i < size; i++) {
@@ -66,11 +68,16 @@ public abstract class AbstractGameBoard<T> {
 
         this.runEventListeners(this.eventListenersForTurn);
     }
-
     public void setOpponentTurn() {
         this.playerTurn = false;
 
         this.runEventListeners(this.eventListenersForTurn);
+    }
+
+    public boolean isStarter() { return starter; }
+
+    public void setStarter(Boolean starter) {
+        this.starter = starter;
     }
 
     public Integer[] getBoard() {
@@ -109,14 +116,16 @@ public abstract class AbstractGameBoard<T> {
         }
     }
 
+    protected Boolean checkMove(Integer index) {
+        return this.board.get(index) == 0;
+    }
+
     public void setMove(Integer index, Integer value) {
         this.board.set(index, value);
 
-        this.runEventListeners(this.eventListenersForBoard);
-    }
+        this.runLogic(index, value);
 
-    protected Boolean checkMove(Integer index) {
-        return this.board.get(index) == 0;
+        this.runEventListeners(this.eventListenersForBoard);
     }
 
     public void addEventListenerForEnd(Runnable callback) {
@@ -134,6 +143,8 @@ public abstract class AbstractGameBoard<T> {
     private void runEventListeners(ArrayList<Runnable> callbacks) {
         callbacks.forEach(Runnable::run);
     }
+
+    protected void runLogic(Integer index, Integer value) {}
 
     public abstract String getKey();
 

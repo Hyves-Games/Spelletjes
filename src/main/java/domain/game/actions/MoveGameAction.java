@@ -23,7 +23,7 @@ public class MoveGameAction extends AbstractGameAction {
     @Override
     protected void handler() {
         String username = this.data.get("PLAYER").getAsString();
-        Integer value = username.equals(player.getUsername()) ? 1 : -1;
+        Integer value = username.equals(player.getUsername())  ? 1 : -1;
 
         player.getGameBoard().setMove(this.data.get("MOVE").getAsInt(), value);
     }

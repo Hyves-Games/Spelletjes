@@ -13,7 +13,7 @@ public enum GameModeEnum {
         this.scene = scene;
     }
 
-    public void create(Boolean createAI) {
+    public void create(Boolean createAI, boolean subscribe) {
         Game game = Auth.getLastGame().create();
 
         game.setAuthPlayer();
@@ -22,10 +22,14 @@ public enum GameModeEnum {
             game.setAIPlayer();
         }
 
+        if (subscribe && this.equals(PVP)) {
+            game.searchGame();
+        }
+
         this.scene.switchTo();
     }
 
-    public void create() {
-        this.create(true);
-    }
+//    public void create() {
+//        this.create(false, true);
+//    }
 }

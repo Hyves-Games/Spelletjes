@@ -18,7 +18,7 @@ public class GameModeSelectorController {
         GameModeEnum mode = GameModeEnum.valueOf(((Node) event.getSource()).getId());
 
         Auth.setLastGameMode(mode);
-
-        mode.create();
+//        System.out.println(mode);
+        mode.create(mode.equals(GameModeEnum.PVA) ? true : false, mode.equals(GameModeEnum.PVA) ? false: true);
     }
 }
