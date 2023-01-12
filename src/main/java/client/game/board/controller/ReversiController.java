@@ -38,11 +38,11 @@ public class ReversiController extends AbstractGameBoardController {
             Button btn = new Button();
 
             btn.setId("btn_" + (i));
-            btn.setPadding(new Insets(10));
+            btn.setPadding(new Insets(5));
             btn.setOnAction(this::onMoveClick);
             btn.setPrefHeight(55.0);
             btn.setPrefWidth(55.0);
-            btn.setStyle("-fx-background-color: green; -fx-border-color: black");
+            btn.setStyle("-fx-background-color: green;");
 
             row.getChildren().add(btn);
 
