@@ -9,10 +9,7 @@ import support.enums.GameEndStateEnum;
 import support.enums.SceneEnum;
 import support.services.Server;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class AbstractGameBoard<T> {
     private Server connection;
@@ -21,7 +18,7 @@ public abstract class AbstractGameBoard<T> {
     private Boolean ended = false;
     private Boolean playerTurn = false;
 
-    private Boolean isStarter = false;
+    private Boolean starter = false;
 
     private Player<?> player;
     private Player<?> opponent;
@@ -77,10 +74,10 @@ public abstract class AbstractGameBoard<T> {
         this.runEventListeners(this.eventListenersForTurn);
     }
 
-    public boolean getStarter() { return isStarter; }
+    public boolean isStarter() { return starter; }
 
     public void setStarter(Boolean starter) {
-        isStarter = starter;
+        this.starter = starter;
     }
 
     public Integer[] getBoard() {

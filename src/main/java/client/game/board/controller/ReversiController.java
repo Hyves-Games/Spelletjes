@@ -1,14 +1,6 @@
 package client.game.board.controller;
 
 import client.Application;
-import domain.game.ai.ReversiAI.Board.BoardPosition;
-import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
-import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
-import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
-import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.model.Reversi;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -28,12 +18,9 @@ import support.actions.ChallengeServerAction;
 import support.actions.StopGameAction;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
-import support.enums.ServerResponseEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class ReversiController extends AbstractGameBoardController {
@@ -114,7 +101,7 @@ public class ReversiController extends AbstractGameBoardController {
                 Button btn = this.board[i];
 
                 btn.setDisable(true);
-                btn.setStyle("-fx-background-color: " + (value == 1 ? this.gameBoard.getStarter() ? "black" : "white" : this.gameBoard.getStarter() ? "white": "black"));
+                btn.setStyle("-fx-background-color: " + (value == 1 ? this.gameBoard.isStarter() ? "black" : "white" : this.gameBoard.isStarter() ? "white": "black"));
             }
         }
     }

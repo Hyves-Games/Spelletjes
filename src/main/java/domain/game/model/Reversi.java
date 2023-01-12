@@ -2,11 +2,9 @@ package domain.game.model;
 
 import client.Application;
 import domain.game.ai.ReversiAI.AIs.MoveMaximizerAI;
-import domain.game.ai.ReversiAI.AIs.RandomAI;
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
@@ -41,10 +39,10 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
-        this.board.set(27, this.getStarter() ? -1 : 1);
-        this.board.set(28, this.getStarter() ? 1 : -1);
-        this.board.set(35, this.getStarter() ? 1 : -1);
-        this.board.set(36, this.getStarter() ? -1 : 1);
+        this.board.set(27, this.isStarter() ? -1 : 1);
+        this.board.set(28, this.isStarter() ? 1 : -1);
+        this.board.set(35, this.isStarter() ? 1 : -1);
+        this.board.set(36, this.isStarter() ? -1 : 1);
 
         super.start(player, opponent);
     }
