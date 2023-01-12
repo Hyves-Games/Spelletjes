@@ -10,7 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
@@ -24,31 +25,56 @@ import support.helpers.SceneSwitcher;
 import java.util.Optional;
 
 public class ReversiController extends AbstractGameBoardController {
-    @FXML GridPane board_grid;
+    @FXML VBox boardContainer;
+    @FXML HBox board_row_1;
 
     public void initialize() {
-        int col = 0;
-        int row = 0;
+        HBox row = board_row_1;
+
         Button[] buttons = new Button[64];
 
+//        for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
+//            Button btn = new Button();
+//
+//            btn.setId("btn_" + (i));
+//            btn.setPrefHeight(60.0);
+//            btn.setPrefWidth(60.0);
+//            btn.setPadding(new Insets(10));
+//            btn.setOnAction(this::onMoveClick);
+//            btn.setStyle("-fx-background-color: green; -fx-border-color: black");
+//
+//            if (i != 0 && i % 8 == 0) {
+//                row++;
+//                col = 0;
+//            }
+//
+//            this.board_grid.add(btn, col, row);
+//
+//            col++;
+//            buttons[i] = btn;
+//        }
+
         for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
+
             Button btn = new Button();
 
             btn.setId("btn_" + (i));
-            btn.setPrefHeight(60.0);
-            btn.setPrefWidth(60.0);
             btn.setPadding(new Insets(10));
             btn.setOnAction(this::onMoveClick);
+            btn.setPrefHeight(55.0);
+            btn.setPrefWidth(55.0);
             btn.setStyle("-fx-background-color: green; -fx-border-color: black");
 
-            if (i != 0 && i % 8 == 0) {
-                row++;
-                col = 0;
+            row.getChildren().add(btn);
+
+            // IT WORKS SHUT UP
+            if (i == 7 || i == 15 || i == 23 || i == 31 || i == 39 || i == 47 || i == 55 || i == 63 ) {
+                row = new HBox();
+                row.setPrefHeight(60.0);
+                row.setPrefWidth(480.0);
+                boardContainer.getChildren().add(row);
             }
 
-            this.board_grid.add(btn, col, row);
-
-            col++;
             buttons[i] = btn;
         }
 

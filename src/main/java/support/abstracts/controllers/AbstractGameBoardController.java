@@ -15,7 +15,6 @@ public abstract class AbstractGameBoardController {
     @FXML public Label player_1_turn;
     @FXML public Label player_2_turn;
 
-    @FXML public ProgressBar timeLeft;
     @FXML public VBox boardContainer;
 
     protected Button[] board;
