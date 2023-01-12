@@ -4,6 +4,7 @@ import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
+import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
 import domain.game.ai.ReversiAI.Helpers.*;
@@ -32,7 +33,8 @@ public class experimenting {
         long test4 = 0b0000000000000000000100000001100000011100001001000000000000000000L;
 
         long test5 = 2314885805157384192L;
-        long test6 = -9205357509026249728L;
+        //long test6 = -9205357509026249728L;
+        long test6 = 0b1000000001000000000000000001111000011100000001000000010000000000L;
 
         //Hashtable h = new Hashtable(40000000);
         //int[] tempMoves = new int[64];
@@ -83,5 +85,6 @@ public class experimenting {
 
         //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, availableMoves);
         //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
+        BoardPrinter.printBoard(test3, test4, MoveFinderFast.findAvailableMoves(test3, test4, true));
     }
 }

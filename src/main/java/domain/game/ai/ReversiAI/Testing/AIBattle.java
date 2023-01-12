@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 100;
+        int GameCount = 1000;
         AI AIOne = new RandomAI();
         AI AITwo = new RandomAI();
         //////////////////////////////
