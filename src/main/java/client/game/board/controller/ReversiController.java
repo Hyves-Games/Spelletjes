@@ -108,21 +108,21 @@ public class ReversiController extends AbstractGameBoardController {
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
 
-            URL black = Application.class.getResource("assets/icons/reversi_black.png");
-            URL white = Application.class.getResource("assets/icons/reversi_white.png");
-
-            ImageView black_stone = new ImageView(String.valueOf(white));
-            ImageView white_stone = new ImageView(String.valueOf(black));
-
-            black_stone.setFitWidth(35.0);
-            white_stone.setFitWidth(35.0);
-
-            black_stone.setFitHeight(35.0);
-            white_stone.setFitHeight(35.0);
-
             btn.setDisable(!availableMoves[i]);
 
             if (values[i] != 0) {
+                URL black = Application.class.getResource("assets/icons/reversi_black.png");
+                URL white = Application.class.getResource("assets/icons/reversi_white.png");
+
+                ImageView black_stone = new ImageView(String.valueOf(white));
+                ImageView white_stone = new ImageView(String.valueOf(black));
+
+                black_stone.setFitWidth(35.0);
+                white_stone.setFitWidth(35.0);
+
+                black_stone.setFitHeight(35.0);
+                white_stone.setFitHeight(35.0);
+
                 if (values[i] == 1) {
                     if(this.gameBoard.isStarter()) {
                         btn.setGraphic(black_stone);
