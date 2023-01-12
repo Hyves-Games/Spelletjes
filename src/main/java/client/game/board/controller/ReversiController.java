@@ -1,6 +1,7 @@
 package client.game.board.controller;
 
 import client.Application;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,11 +24,11 @@ import support.enums.SceneEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public class ReversiController extends AbstractGameBoardController {
     @FXML VBox boardContainer;
-    @FXML HBox board_row_1;
 
     public void initialize() {
         HBox row = new HBox();
@@ -35,10 +36,10 @@ public class ReversiController extends AbstractGameBoardController {
         Button[] buttons = new Button[64];
 
         for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
-
             Button btn = new Button();
 
             btn.setId("btn_" + (i));
+            btn.setCursor(Cursor.HAND);
             btn.setOnAction(this::onMoveClick);
             btn.setPrefHeight(55.0);
             btn.setPrefWidth(55.0);
@@ -60,8 +61,8 @@ public class ReversiController extends AbstractGameBoardController {
         }
 
         this.board = buttons;
-        this.player_1.setText("WHITE " + this.getPlayerUsername());
-        this.player_2.setText("BLACK " + this.getOpponentUsername());
+        this.player_1.setText(this.gameBoard.isStarter() ? "Black " : "White " + this.getPlayerUsername());
+        this.player_2.setText(this.gameBoard.isStarter() ? "White " : "Black " + this.getOpponentUsername());
 
         this.gameBoard.addEventListenerForTurn(() -> {
             Platform.runLater(this::changeTurn);
@@ -100,15 +101,16 @@ public class ReversiController extends AbstractGameBoardController {
 
     @Override
     protected void changeBoardView() {
-        Object[] values = this.gameBoard.getBoard();
+        Integer[] values = this.gameBoard.getBoard();
+        boolean[] availableMoves = MoveFinderFast.findAvailableMoves(values, this.gameBoard.isStarter());
+
         for (int i = 0; i < values.length; i++) {
-            Integer value = (Integer) values[i];
+            Button btn = this.board[i];
 
-            if (value != 0) {
-                Button btn = this.board[i];
+            btn.setDisable(!availableMoves[i]);
 
-                btn.setDisable(true);
-                btn.setStyle("-fx-background-color: " + (value == 1 ? this.gameBoard.isStarter() ? "black" : "white" : this.gameBoard.isStarter() ? "white": "black"));
+            if (values[i] != 0) {
+                btn.setStyle("-fx-background-color: " + (values[i] == 1 ? this.gameBoard.isStarter() ? "black" : "white" : this.gameBoard.isStarter() ? "white": "black"));
             }
         }
     }

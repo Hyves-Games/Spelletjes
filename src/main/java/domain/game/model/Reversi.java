@@ -49,10 +49,7 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     protected void runLogic(Integer index, Integer value) {
-        long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
-        long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
-
-        BoardPosition board = MakeMove.makeMove(playerPieces, opponentPieces, value == 1, index);
+        BoardPosition board = MakeMove.makeMove(this.getBoard(), value == 1, index);
 
         for (int i = 0; i < 64; i++) {
             if (LongToBoolArray.convert(board.playerWhitePieces)[i]) {
@@ -61,8 +58,6 @@ public class Reversi extends AbstractGameBoard<Reversi> {
                 this.board.set(i, -1);
             }
         }
-
-//        BoardPrinter.printBoard(board.playerWhitePieces, board.playerBlackPieces);
     }
 
     @Override
