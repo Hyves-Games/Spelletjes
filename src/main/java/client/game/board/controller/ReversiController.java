@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,6 +43,7 @@ public class ReversiController extends AbstractGameBoardController {
             btn.setPrefHeight(55.0);
             btn.setPrefWidth(55.0);
             btn.setStyle("-fx-background-color: green;");
+            btn.setCursor(Cursor.HAND);
 
             row.getChildren().add(btn);
 
