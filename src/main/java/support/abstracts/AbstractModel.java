@@ -1,16 +1,23 @@
 package support.abstracts;
 
+import support.database.DatabaseLogger;
 import support.database.SQLite;
 import support.helpers.Utils;
+import support.records.ModelField;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 abstract public class AbstractModel<T extends AbstractModel<T>> {
     protected int id = 0;
+
+    protected Timestamp createdAt = null;
+    protected Timestamp updatedAt = null;
 
     abstract public AbstractTable getTable();
 
@@ -20,6 +27,14 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
 
     public int getId() {
         return id;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
     public void preDelete() {}
@@ -53,29 +68,34 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
         ArrayList<Field> fields = this.getTable().getDeclaredFields();
         String sql = this.isNew() ? this.getInsertQuery(fields) : this.getUpdateQuery(fields);
 
+        Timestamp now = new Timestamp(new Date().getTime());
+        if (this.isNew()) {
+            this.createdAt = now;
+        }
+
+        this.updatedAt = now;
+
         try {
             // prepare statement and bind values
             PreparedStatement preparedStatement = SQLite.getInstance()
                     .getConnection()
                     .prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            for (Field field: fields) {
-                int index = fields.indexOf(field) + 1;
-                Field modelField = this.getClass().getDeclaredField(field.getName());
-                modelField.setAccessible(true);
+            for (Field tableField: fields) {
+                int index = fields.indexOf(tableField) + 1;
+                ModelField field = new ModelField(tableField, this);
 
-                switch (field.getType().getSimpleName().toLowerCase()) {
-                    case "string" -> preparedStatement.setString(index, (String) modelField.get(this));
-                    case "integer" -> preparedStatement.setInt(index, (Integer) modelField.get(this));
-                    case "boolean" -> preparedStatement.setBoolean(index, (Boolean) modelField.get(this));
-                    case "serializable" -> preparedStatement.setString(index, Utils.convertSerializableToString((Serializable) modelField.get(this)));
-                    default -> throw new RuntimeException("Unsupported field type: " + field.getType().getSimpleName());
-                }
+                field.prepareStatement(preparedStatement, index);
 
-                if (!this.isNew() && fields.get(fields.size() - 1) == field) {
+                if (!this.isNew() && fields.get(fields.size() - 1) == tableField) {
                     preparedStatement.setInt(index + 1, this.id);
+
                 }
             }
+
+            DatabaseLogger.log("Insert/update of model: " + this.getClass().getSimpleName());
+            DatabaseLogger.log(preparedStatement.getParameterMetaData() + " " + preparedStatement.getMetaData());
+            DatabaseLogger.log("");
 
             // execute insert SQL statement
             int affectedRows = preparedStatement.executeUpdate();
@@ -84,7 +104,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
             }
 
             this.id = preparedStatement.getGeneratedKeys().getInt(1);
-        } catch (SQLException|IllegalAccessException|NoSuchFieldException e) {
+        } catch (SQLException|NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -100,7 +120,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
                 sql.append(", ");
             }
 
-            sql.append(field.getName());
+            sql.append(Utils.camelCaseToUnderscore(field.getName()));
         }
 
         // generate binding values for insert
@@ -120,7 +140,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
                 sql.append(", ");
             }
 
-            sql.append(field.getName()).append(" = ?");
+            sql.append(Utils.camelCaseToUnderscore(field.getName())).append(" = ?");
         }
 
         // add where clause

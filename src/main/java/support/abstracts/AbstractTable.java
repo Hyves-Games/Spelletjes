@@ -1,41 +1,78 @@
 package support.abstracts;
 
+import support.database.DatabaseLogger;
 import support.database.SQLite;
+import support.helpers.Utils;
+import support.records.ModelField;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 abstract public class AbstractTable {
 
-    abstract protected String getTableName();
+    protected Timestamp updatedAt = null;
+    protected Timestamp createdAt = null;
+
+    public abstract String getTableName();
 
     abstract protected <T extends AbstractModel<T>> T getModel();
 
-    public final void createTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS " + this.getTableName() + " (id integer PRIMARY KEY";
+    abstract public <T extends AbstractQuery<T>> T getQuery();
 
-        for (Field field : this.getDeclaredFields()) {
-            sql += ", ";
+    public final  void createTable() {
+        ArrayList<String> foreignKeys = new ArrayList<>();
 
-            HashMap<String, String> converted = new HashMap<>() {{
-              put("string", "text");
-            }};
+        StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + this.getTableName() + " (id integer PRIMARY KEY");
 
-            String type = field.getType().getSimpleName().toLowerCase();
-            String sqlType = converted.get(type) != null ? converted.get(type) : type;
+        DatabaseLogger.log("Creating table " + this.getTableName());
+        for (Field tableField : this.getDeclaredFields()) {
+            ModelField field = new ModelField(tableField, this.getModel());
 
-            sql += field.getName() + " " + sqlType;
+            sql.append(field.getSqlForTableCreation());
+
+            String foreignKeySql = field.getForeignKeyConstraint();
+            if (foreignKeySql != null) {
+                foreignKeys.add(foreignKeySql);
+            }
+
+            DatabaseLogger.log("- Adding field " + field.getName() + " as " + field.getSqlType());
         }
 
-        sql += ");";
+        // handle foreign keys
+        for (String foreignKey : foreignKeys) {
+            sql.append(", ").append(foreignKey);
+
+            DatabaseLogger.log("- Adding foreign key " + foreignKey);
+        }
+
+        sql.append(")");
+
+        DatabaseLogger.log("SQL: " + sql);
+        DatabaseLogger.log("");
+
+        SQLite.getInstance().execute(sql.toString());
+    }
+
+    public final void dropTable() {
+        String sql = "DROP TABLE IF EXISTS " + this.getTableName();
+
+        DatabaseLogger.log("Dropping table " + this.getTableName() + "\n");
 
         SQLite.getInstance().execute(sql);
     }
 
     public final ArrayList<Field> getDeclaredFields() {
-        return new ArrayList<>(Arrays.asList(this.getModel().getClass().getDeclaredFields()));
+        ArrayList<Field> fields = new ArrayList<>(Arrays.asList(this.getClass().getDeclaredFields()));
+
+        fields.addAll(Arrays.asList(this.getClass().getSuperclass().getDeclaredFields()));
+
+        return fields;
     }
 }

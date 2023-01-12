@@ -3,13 +3,19 @@ package support.abstracts;
 import support.database.SQLite;
 import support.database.SQLiteValue;
 import support.database.WhereClause;
+import support.helpers.Utils;
+import support.records.ModelField;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 abstract public class AbstractQuery<T extends AbstractQuery<T>> {
 
@@ -56,12 +62,12 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
             idField.set(model, result.getInt("id"));
 
             // set other fields
-            for (Field field : model.getClass().getDeclaredFields()) {
-                field.setAccessible(true);
+            for (Field tableField : this.getTable().getDeclaredFields()) {
+                ModelField field = new ModelField(tableField, model);
 
-                field.set(model, result.getObject(field.getName()));
+                field.setValue(result);
             }
-        } catch (SQLException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException | SQLException e) {
             e.printStackTrace();
         }
 
