@@ -38,7 +38,6 @@ public class ReversiController extends AbstractGameBoardController {
             Button btn = new Button();
 
             btn.setId("btn_" + (i));
-            btn.setPadding(new Insets(5));
             btn.setOnAction(this::onMoveClick);
             btn.setPrefHeight(55.0);
             btn.setPrefWidth(55.0);
@@ -51,6 +50,7 @@ public class ReversiController extends AbstractGameBoardController {
                 row = new HBox();
                 row.setPrefHeight(60.0);
                 row.setPrefWidth(480.0);
+                row.setSpacing(5.0);
                 boardContainer.getChildren().add(row);
             }
 

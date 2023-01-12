@@ -76,9 +76,9 @@
         </VBox>
     </left>
    <center>
-      <VBox fx:id="boardContainer" maxHeight="480.0" maxWidth="480.0" prefHeight="480.0" prefWidth="480.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="boardContainer" spacing="5.0" maxHeight="480.0" maxWidth="480.0" prefHeight="480.0" prefWidth="480.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="board_row_1" maxHeight="60.0" maxWidth="480.0" prefHeight="60.0" prefWidth="480.0" />
+            <HBox spacing="5.0" fx:id="board_row_1" maxHeight="60.0" maxWidth="480.0" prefHeight="60.0" prefWidth="480.0" />
          </children>
          <BorderPane.margin>
             <Insets />
