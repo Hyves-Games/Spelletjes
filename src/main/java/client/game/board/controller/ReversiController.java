@@ -128,8 +128,6 @@ public class ReversiController extends AbstractGameBoardController {
             if (Auth.getLastGameMode().equals(GameModeEnum.PVA)) {
                 Application.removeAI(this.gameBoard.getOpponent());
             }
-
-            SceneEnum.LOBBY.switchTo();
         }
     }
     protected void showEndScreen() {
@@ -161,9 +159,11 @@ public class ReversiController extends AbstractGameBoardController {
 
             SceneEnum.LOBBY.switchTo();
         } else {
-            GameMode.create(false, false);
+            GameModeEnum mode = Auth.getLastGameMode();
 
-            new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
+            Auth.setLastGameMode(mode);
+
+            mode.create(mode.equals(GameModeEnum.PVA), !mode.equals(GameModeEnum.PVA));
         }
     }
 }
