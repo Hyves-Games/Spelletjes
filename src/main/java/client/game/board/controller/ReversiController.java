@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -24,7 +25,7 @@ import support.enums.SceneEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
-import java.util.Arrays;
+import java.net.URL;
 import java.util.Optional;
 
 public class ReversiController extends AbstractGameBoardController {
@@ -107,10 +108,34 @@ public class ReversiController extends AbstractGameBoardController {
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
 
+            URL black = Application.class.getResource("assets/icons/reversi_black.png");
+            URL white = Application.class.getResource("assets/icons/reversi_white.png");
+
+            ImageView black_stone = new ImageView(String.valueOf(white));
+            ImageView white_stone = new ImageView(String.valueOf(black));
+
+            black_stone.setFitWidth(35.0);
+            white_stone.setFitWidth(35.0);
+
+            black_stone.setFitHeight(35.0);
+            white_stone.setFitHeight(35.0);
+
             btn.setDisable(!availableMoves[i]);
 
             if (values[i] != 0) {
-                btn.setStyle("-fx-background-color: " + (values[i] == 1 ? this.gameBoard.isStarter() ? "black" : "white" : this.gameBoard.isStarter() ? "white": "black"));
+                if (values[i] == 1) {
+                    if(this.gameBoard.isStarter()) {
+                        btn.setGraphic(black_stone);
+                    } else {
+                        btn.setGraphic(white_stone);
+                    }
+                } else {
+                    if(this.gameBoard.isStarter()) {
+                        btn.setGraphic(white_stone);
+                    } else {
+                        btn.setGraphic(black_stone);
+                    }
+                }
             }
         }
     }
