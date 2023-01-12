@@ -12,7 +12,7 @@ import domain.game.ai.ReversiAI.Converters.*;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MoveFinderFast {
-    static long[] masks = {
+    static long[] directionMasks = {
             0x7F7F7F7F7F7F7F7FL, /* Right. */
             0x007F7F7F7F7F7F7FL, /* Down-right. */
             0xFFFFFFFFFFFFFFFFL, /* Down. */
@@ -23,7 +23,7 @@ public class MoveFinderFast {
             0x7F7F7F7F7F7F7F00L  /* Up-right. */
     };
 
-    static byte[] leftShifts = {
+   static byte[] leftShifts = {
             0, /* Right. */
             0, /* Down-right. */
             0, /* Down. */
@@ -45,35 +45,35 @@ public class MoveFinderFast {
             0  /* Up-right. */
     };
 
-    private static long shift(long pieces, int dir) {
-        if (dir < halfBoardWidth) {
-            return (pieces >> rightShifts[dir]) & masks[dir];
+    private static long shift(long pieces, byte dir) {
+        if (dir < 4) {
+            return (pieces >> rightShifts[dir]) & directionMasks[dir];
         } else {
-            return (pieces << leftShifts[dir]) & masks[dir];
+            return (pieces << leftShifts[dir]) & directionMasks[dir];
         }
     }
 
     private static long generateMoves(long my_disks, long opp_disks) {
-        byte dir;
         long x;
         long empty_cells = ~(my_disks | opp_disks);
         long legal_moves = 0;
+        byte dir;
 
-        for (dir = 0; dir < boardWidth; dir++) {
-            // Get opponent disks adjacent to my disks in direction dir.
+        for (dir = 0; dir < 8; dir++) {
+        //for (byte dir = 0; dir < 8; dir++) {
             x = shift(my_disks, dir) & opp_disks;
-
-            // Add opponent disks adjacent to those, and so on.
+            /*
+            for (int i = 0; i < 5; i++) {
+                x |= shift(x, dir) & opp_disks;
+            }
+             */
             x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
             x |= shift(x, dir) & opp_disks;
-
-            // Empty cells adjacent to those are valid moves.
             legal_moves |= shift(x, dir) & empty_cells;
         }
-
         return legal_moves;
     }
 
@@ -90,5 +90,8 @@ public class MoveFinderFast {
         long blackLong = IntArrayToLong.convert(board, isWhiteTurn ? -1 : 1);
 
         return LongToBoolArray.convert(generateMoves(isWhiteTurn ? whiteLong : blackLong, isWhiteTurn ? blackLong : whiteLong));
+    }
+    public static long findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, boolean test) {
+        return generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces);
     }
 }
