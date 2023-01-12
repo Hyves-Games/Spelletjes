@@ -33,27 +33,6 @@ public class ReversiController extends AbstractGameBoardController {
 
         Button[] buttons = new Button[64];
 
-//        for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
-//            Button btn = new Button();
-//
-//            btn.setId("btn_" + (i));
-//            btn.setPrefHeight(60.0);
-//            btn.setPrefWidth(60.0);
-//            btn.setPadding(new Insets(10));
-//            btn.setOnAction(this::onMoveClick);
-//            btn.setStyle("-fx-background-color: green; -fx-border-color: black");
-//
-//            if (i != 0 && i % 8 == 0) {
-//                row++;
-//                col = 0;
-//            }
-//
-//            this.board_grid.add(btn, col, row);
-//
-//            col++;
-//            buttons[i] = btn;
-//        }
-
         for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
 
             Button btn = new Button();
