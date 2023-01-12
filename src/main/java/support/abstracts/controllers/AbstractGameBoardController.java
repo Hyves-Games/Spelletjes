@@ -4,7 +4,6 @@ import domain.player.model.AI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
 import support.abstracts.AbstractGameBoard;
 import support.helpers.Auth;
@@ -15,7 +14,6 @@ public abstract class AbstractGameBoardController {
     @FXML public Label player_1_turn;
     @FXML public Label player_2_turn;
 
-    @FXML public ProgressBar timeLeft;
     @FXML public VBox boardContainer;
 
     protected Button[] board;

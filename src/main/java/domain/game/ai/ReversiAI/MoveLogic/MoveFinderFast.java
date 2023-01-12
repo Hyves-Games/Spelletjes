@@ -7,15 +7,9 @@ Changing the shifts from long to byte increased performance slightly.
 
 package domain.game.ai.ReversiAI.MoveLogic;
 
-import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
-import domain.game.ai.ReversiAI.Converters.LongToMoves;
-
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Objects;
+import domain.game.ai.ReversiAI.Converters.*;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
-import static domain.game.ai.ReversiAI.Masks.BitMasks.bitMask;
 
 public class MoveFinderFast {
     static long[] masks = {
@@ -83,11 +77,18 @@ public class MoveFinderFast {
         return legal_moves;
     }
 
-    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {
+    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, Boolean isWhiteTurn) {
         return LongToMoves.convert(generateMoves(BoolArrayToLong.convert(isWhiteTurn ? playerWhitePieces : playerBlackPieces), BoolArrayToLong.convert(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
     }
 
     public static int[] findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return LongToMoves.convert(generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces));
+    }
+
+    public static boolean[] findAvailableMoves(Integer[] board, boolean isWhiteTurn) {
+        long whiteLong = IntArrayToLong.convert(board, isWhiteTurn ? 1 : -1);
+        long blackLong = IntArrayToLong.convert(board, isWhiteTurn ? -1 : 1);
+
+        return LongToBoolArray.convert(generateMoves(isWhiteTurn ? whiteLong : blackLong, isWhiteTurn ? blackLong : whiteLong));
     }
 }

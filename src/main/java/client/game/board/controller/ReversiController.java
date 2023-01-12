@@ -1,26 +1,20 @@
 package client.game.board.controller;
 
 import client.Application;
-import domain.game.ai.ReversiAI.Board.BoardPosition;
-import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
-import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
-import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
-import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.model.Reversi;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import support.abstracts.controllers.AbstractGameBoardController;
@@ -28,46 +22,48 @@ import support.actions.ChallengeServerAction;
 import support.actions.StopGameAction;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
-import support.enums.ServerResponseEnum;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.URL;
 import java.util.Optional;
 
 public class ReversiController extends AbstractGameBoardController {
-    @FXML GridPane board_grid;
+    @FXML VBox boardContainer;
 
     public void initialize() {
-        int col = 0;
-        int row = 0;
+        HBox row = new HBox();
+
         Button[] buttons = new Button[64];
 
         for (int i = 0; i < this.gameBoard.getBoard().length; i++) {
             Button btn = new Button();
 
             btn.setId("btn_" + (i));
-            btn.setPrefHeight(60.0);
-            btn.setPrefWidth(60.0);
-            btn.setPadding(new Insets(10));
+            btn.setCursor(Cursor.HAND);
             btn.setOnAction(this::onMoveClick);
-            btn.setStyle("-fx-background-color: green; -fx-border-color: black");
+            btn.setPrefHeight(55.0);
+            btn.setPrefWidth(55.0);
+            btn.setStyle("-fx-background-color: green;");
+            btn.setCursor(Cursor.HAND);
 
-            if (i != 0 && i % 8 == 0) {
-                row++;
-                col = 0;
+            row.getChildren().add(btn);
+
+            if (i % 8 == 7) {
+                row.setPrefHeight(60.0);
+                row.setPrefWidth(480.0);
+                row.setSpacing(5.0);
+
+                boardContainer.getChildren().add(row);
+                row = new HBox();
             }
 
-            this.board_grid.add(btn, col, row);
-
-            col++;
             buttons[i] = btn;
         }
 
         this.board = buttons;
-        this.player_1.setText("WHITE " + this.getPlayerUsername());
-        this.player_2.setText("BLACK " + this.getOpponentUsername());
+        this.player_1.setText(this.gameBoard.isStarter() ? "Black " : "White " + this.getPlayerUsername());
+        this.player_2.setText(this.gameBoard.isStarter() ? "White " : "Black " + this.getOpponentUsername());
 
         this.gameBoard.addEventListenerForTurn(() -> {
             Platform.runLater(this::changeTurn);
@@ -106,15 +102,40 @@ public class ReversiController extends AbstractGameBoardController {
 
     @Override
     protected void changeBoardView() {
-        Object[] values = this.gameBoard.getBoard();
+        Integer[] values = this.gameBoard.getBoard();
+        boolean[] availableMoves = MoveFinderFast.findAvailableMoves(values, this.gameBoard.isStarter());
+
         for (int i = 0; i < values.length; i++) {
-            Integer value = (Integer) values[i];
+            Button btn = this.board[i];
 
-            if (value != 0) {
-                Button btn = this.board[i];
+            btn.setDisable(!availableMoves[i]);
 
-                btn.setDisable(true);
-                btn.setStyle("-fx-background-color: " + (value == 1 ? this.gameBoard.getStarter() ? "black" : "white" : this.gameBoard.getStarter() ? "white": "black"));
+            if (values[i] != 0) {
+                URL black = Application.class.getResource("assets/icons/reversi_black.png");
+                URL white = Application.class.getResource("assets/icons/reversi_white.png");
+
+                ImageView black_stone = new ImageView(String.valueOf(white));
+                ImageView white_stone = new ImageView(String.valueOf(black));
+
+                black_stone.setFitWidth(35.0);
+                white_stone.setFitWidth(35.0);
+
+                black_stone.setFitHeight(35.0);
+                white_stone.setFitHeight(35.0);
+
+                if (values[i] == 1) {
+                    if(this.gameBoard.isStarter()) {
+                        btn.setGraphic(black_stone);
+                    } else {
+                        btn.setGraphic(white_stone);
+                    }
+                } else {
+                    if(this.gameBoard.isStarter()) {
+                        btn.setGraphic(white_stone);
+                    } else {
+                        btn.setGraphic(black_stone);
+                    }
+                }
             }
         }
     }
@@ -136,8 +157,6 @@ public class ReversiController extends AbstractGameBoardController {
             if (Auth.getLastGameMode().equals(GameModeEnum.PVA)) {
                 Application.removeAI(this.gameBoard.getOpponent());
             }
-
-            SceneEnum.LOBBY.switchTo();
         }
     }
     protected void showEndScreen() {
@@ -169,9 +188,11 @@ public class ReversiController extends AbstractGameBoardController {
 
             SceneEnum.LOBBY.switchTo();
         } else {
-            GameMode.create(false, false);
+            GameModeEnum mode = Auth.getLastGameMode();
 
-            new ChallengeServerAction(this.gameBoard.getOpponent(), Auth.getLastGame().getKey());
+            Auth.setLastGameMode(mode);
+
+            mode.create(mode.equals(GameModeEnum.PVA), !mode.equals(GameModeEnum.PVA));
         }
     }
 }

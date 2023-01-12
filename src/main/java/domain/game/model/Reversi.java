@@ -1,10 +1,10 @@
 package domain.game.model;
 
 import client.Application;
+import domain.game.ai.ReversiAI.AIs.MoveMaximizerAI;
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
@@ -39,20 +39,17 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
-        this.board.set(27, this.getStarter() ? -1 : 1);
-        this.board.set(28, this.getStarter() ? 1 : -1);
-        this.board.set(35, this.getStarter() ? 1 : -1);
-        this.board.set(36, this.getStarter() ? -1 : 1);
+        this.board.set(27, this.isStarter() ? -1 : 1);
+        this.board.set(28, this.isStarter() ? 1 : -1);
+        this.board.set(35, this.isStarter() ? 1 : -1);
+        this.board.set(36, this.isStarter() ? -1 : 1);
 
         super.start(player, opponent);
     }
 
     @Override
     protected void runLogic(Integer index, Integer value) {
-        long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
-        long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
-
-        BoardPosition board = MakeMove.makeMove(playerPieces, opponentPieces, value == 1, index);
+        BoardPosition board = MakeMove.makeMove(this.getBoard(), value == 1, index);
 
         for (int i = 0; i < 64; i++) {
             if (LongToBoolArray.convert(board.playerWhitePieces)[i]) {
@@ -61,17 +58,15 @@ public class Reversi extends AbstractGameBoard<Reversi> {
                 this.board.set(i, -1);
             }
         }
-
-//        BoardPrinter.printBoard(board.playerWhitePieces, board.playerBlackPieces);
     }
 
     @Override
     public void runAI() {
-        // Implement AI code
-//        if (this.isPlayerTurn()) {
-//            Integer index = new ReversiAI().getBestMoveBestScore(this.getBoard(), true)[0];
-//
-//            this.doMove(index);
-//        }
+        long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
+        long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
+        if (this.isPlayerTurn()) {
+            Integer index = new MoveMaximizerAI().getBestMove(LongToBoolArray.convert(playerPieces), LongToBoolArray.convert(opponentPieces), isPlayerTurn());
+            this.doMove(index);
+        }
     }
 }
