@@ -30,7 +30,6 @@ public class Game {
 
     public void start(Player<?> opponent) {
         this.gameBoard.start(this.player, opponent);
-        System.out.println("Game started");
 
         if (Auth.getPlayer().equals(this.player)) {
             Platform.runLater(() -> {

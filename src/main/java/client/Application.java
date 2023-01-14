@@ -33,31 +33,6 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) {
-        GameLog log = new GameLog();
-        log.setGame(GameEnum.TIC_TAC_TOE);
-
-
-        AI p = new AI(new PlayerQuery().findOneOrCreate(AI.createUsername()));
-
-        Auth.setPlayer(p);
-        try {
-            new LoginAction(p.getUsername());
-        } catch (LoginFailedException | NoServerConnectionException e) {
-
-        }
-
-        log.setPlayer(p);
-
-        Game game = new Game(new TicTacToe());
-        AI a = game.setAIPlayer();
-        game.setPlayer(p);
-
-        log.setOpponent(a);
-        LogHandler.setLog(log);
-
-        game.start(a);
-        game.getGameBoard().runAI();
-
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
         Setting setting = new SettingQuery().filterByName("auto_login").findOne();

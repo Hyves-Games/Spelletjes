@@ -11,9 +11,11 @@ import support.enums.GameEndStateEnum;
 import support.enums.GameEnum;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
+import support.helpers.Auth;
 import support.services.Server;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public abstract class AbstractGameBoard<T> {
     private Server connection;
@@ -96,6 +98,8 @@ public abstract class AbstractGameBoard<T> {
 
     public void setGameEnd() {
         this.ended = true;
+
+        LogHandler.updateBoard(this.board);
 
         this.runEventListeners(this.eventListenersForEnd);
     }

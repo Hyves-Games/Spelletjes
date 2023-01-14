@@ -33,13 +33,5 @@ public class EndGameAction extends AbstractGameAction {
 
         gameBoard.setEndState(endStateEnum);
         gameBoard.setGameEnd();
-
-//        if (LogHandler.getLog().getGameMode() == GameModeEnum.PVA) {
-//            if (player.getId() == Auth.getPlayer().getId()) {
-//                LogHandler.updateGameState(endStateEnum);
-//            }
-//        } else {
-//            LogHandler.updateGameState(endStateEnum);
-//        }
     }
 }
