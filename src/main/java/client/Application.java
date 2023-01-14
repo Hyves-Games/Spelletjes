@@ -1,5 +1,8 @@
 package client;
 
+import domain.game.model.Game;
+import domain.game.model.TicTacToe;
+import domain.log.helpers.LogHandler;
 import domain.log.model.GameLog;
 import domain.log.query.GameLogQuery;
 import domain.player.actions.LoginAction;
@@ -13,10 +16,12 @@ import domain.setting.query.SettingQuery;
 import javafx.stage.Stage;
 import support.actions.ConnectServerAction;
 import support.enums.DatabaseTableEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.AudioPlayer;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 import java.sql.SQLException;
@@ -28,6 +33,31 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) {
+        GameLog log = new GameLog();
+        log.setGame(GameEnum.TIC_TAC_TOE);
+
+
+        AI p = new AI(new PlayerQuery().findOneOrCreate(AI.createUsername()));
+
+        Auth.setPlayer(p);
+        try {
+            new LoginAction(p.getUsername());
+        } catch (LoginFailedException | NoServerConnectionException e) {
+
+        }
+
+        log.setPlayer(p);
+
+        Game game = new Game(new TicTacToe());
+        AI a = game.setAIPlayer();
+        game.setPlayer(p);
+
+        log.setOpponent(a);
+        LogHandler.setLog(log);
+
+        game.start(a);
+        game.getGameBoard().runAI();
+
         new SceneSwitcher(stage).change(SceneEnum.LOGIN);
 
         Setting setting = new SettingQuery().filterByName("auto_login").findOne();

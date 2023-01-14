@@ -1,11 +1,15 @@
 package support.abstracts;
 
 import domain.game.exceptions.MoveNotAllowedException;
+import domain.log.helpers.LogHandler;
+import domain.log.model.GameLog;
 import domain.player.model.AI;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
 import support.actions.MoveServerAction;
 import support.enums.GameEndStateEnum;
+import support.enums.GameEnum;
+import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.services.Server;
 
@@ -45,6 +49,8 @@ public abstract class AbstractGameBoard<T> {
             this.useAI = true;
             this.connection = ((AI) player).getConnection();
         }
+
+        LogHandler.updateBoard(this.board);
     }
 
     public Player<?> getPlayer() {
@@ -123,6 +129,8 @@ public abstract class AbstractGameBoard<T> {
     public void setMove(Integer index, Integer value) {
         this.board.set(index, value);
 
+        LogHandler.makeMove(player, this.board);
+
         this.runLogic(index, value);
 
         this.runEventListeners(this.eventListenersForBoard);
@@ -147,6 +155,8 @@ public abstract class AbstractGameBoard<T> {
     protected void runLogic(Integer index, Integer value) {}
 
     public abstract String getKey();
+
+    public abstract GameEnum getGameEnum();
 
     public abstract SceneEnum getScene();
 

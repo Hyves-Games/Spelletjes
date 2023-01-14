@@ -9,11 +9,17 @@ import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
 import support.abstracts.AbstractGameBoard;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 
 public class Reversi extends AbstractGameBoard<Reversi> {
     public Reversi() {
         this.generate(64);
+    }
+
+    @Override
+    public GameEnum getGameEnum() {
+        return GameEnum.REVERSI;
     }
 
     @Override

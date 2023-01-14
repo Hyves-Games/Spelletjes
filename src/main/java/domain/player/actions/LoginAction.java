@@ -4,6 +4,7 @@ import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.exceptions.LoginFailedException;
 import domain.player.model.AI;
 import domain.player.model.Player;
+import domain.player.query.PlayerQuery;
 import support.abstracts.AbstractAction;
 import support.actions.LoginServerAction;
 import support.exceptions.NoServerConnectionException;
@@ -25,6 +26,8 @@ public class LoginAction extends AbstractAction {
     protected void handler() throws LoginFailedException, NoServerConnectionException {
         new LoginServerAction(this.username);
 
-        Auth.setPlayer(new Player(this.username));
+        Player<?> player = new PlayerQuery().findOneOrCreate(this.username);
+
+        Auth.setPlayer(player);
     }
 }

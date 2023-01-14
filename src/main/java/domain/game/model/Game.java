@@ -4,10 +4,13 @@ import domain.game.exceptions.GameNotImplementedException;
 import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.model.AI;
 import domain.player.model.Player;
+import domain.player.query.PlayerQuery;
 import javafx.application.Platform;
 import support.abstracts.AbstractGameBoard;
 import support.actions.ChallengeServerAction;
 import support.actions.SubscribeServerAction;
+import support.enums.GameEnum;
+import support.enums.GameStrategyEnum;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
@@ -27,6 +30,7 @@ public class Game {
 
     public void start(Player<?> opponent) {
         this.gameBoard.start(this.player, opponent);
+        System.out.println("Game started");
 
         if (Auth.getPlayer().equals(this.player)) {
             Platform.runLater(() -> {
@@ -45,12 +49,18 @@ public class Game {
         this.setPlayer(Auth.getPlayer());
     }
 
-    public void setAIPlayer() {
-        try {
-            new ChallengeServerAction(new AI(), this.gameBoard.getKey());
-        } catch (FailedToCreateAIException | ServerConnectionFailedException e) {
-            throw new RuntimeException(e);
+    public AI setAIPlayer() {
+        Player<?> ai = new PlayerQuery().findOneOrCreate(AI.createUsername());
+        if (ai.isNew()) {
+            ai.setGameStrategy(GameStrategyEnum.RANDOM);
+            ai.save();
         }
+
+        AI aiPlayer = new AI(ai);
+
+        new ChallengeServerAction(aiPlayer, this.gameBoard.getKey());
+
+        return aiPlayer;
     }
 
     public void searchGame() {
