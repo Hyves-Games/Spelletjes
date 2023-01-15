@@ -104,7 +104,6 @@ public class ReversiController extends AbstractGameBoardController {
     protected void changeBoardView() {
         Integer[] values = this.gameBoard.getBoard();
         boolean[] availableMoves = MoveFinderFast.findAvailableMoves(values, this.gameBoard.isStarter());
-
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
 
@@ -125,15 +124,15 @@ public class ReversiController extends AbstractGameBoardController {
 
                 if (values[i] == 1) {
                     if(this.gameBoard.isStarter()) {
-                        btn.setGraphic(black_stone);
-                    } else {
                         btn.setGraphic(white_stone);
+                    } else {
+                        btn.setGraphic(black_stone);
                     }
                 } else {
                     if(this.gameBoard.isStarter()) {
-                        btn.setGraphic(white_stone);
-                    } else {
                         btn.setGraphic(black_stone);
+                    } else {
+                        btn.setGraphic(white_stone);
                     }
                 }
             }
