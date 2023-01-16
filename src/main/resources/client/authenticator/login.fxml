@@ -38,6 +38,14 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </Button>
+                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" onAction="#onTournamentClick" text="Tournament" textAlignment="CENTER">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                </Button>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#onSettingsClick" prefHeight="25.0" prefWidth="100.0" text="Settings" textAlignment="CENTER">
                     <cursor>
                         <Cursor fx:constant="HAND" />

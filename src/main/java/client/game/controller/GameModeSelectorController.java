@@ -2,21 +2,23 @@ package client.game.controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import support.enums.GameEnum;
+import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 public class GameModeSelectorController {
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_SELECTOR);
+        SceneEnum.GAME_SELECTOR.switchTo();
     }
 
     public void onChooseGameMode(ActionEvent event) {
-        switch (((Node) event.getSource()).getId()) {
-            case "pvp" -> SceneSwitcher.getInstance().change(SceneEnum.WAIT_ROOM);
-            case "pva", "ava" -> SceneSwitcher.getInstance().change(SceneEnum.TIC_TAC_TOE);
-            default -> {
-            }
-        }
+        GameModeEnum mode = GameModeEnum.valueOf(((Node) event.getSource()).getId());
+
+        Auth.setLastGameMode(mode);
+//        System.out.println(mode);
+        mode.create(mode.equals(GameModeEnum.PVA) ? true : false, mode.equals(GameModeEnum.PVA) ? false: true);
     }
 }

@@ -1,10 +1,22 @@
 package client.waitingRoom.controller;
 
+import domain.game.exceptions.GameNotImplementedException;
+import support.actions.StopGameAction;
+import support.actions.SubscribeServerAction;
 import support.enums.SceneEnum;
-import support.helpers.SceneSwitcher;
 
 public class WaitingRoomController {
+    public void initialize() {
+//        try {
+//            new SubscribeServerAction();
+//        } catch (GameNotImplementedException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
     public void onCancel() {
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
+        new StopGameAction();
+
+        SceneEnum.GAME_MODE_SELECTOR.switchTo();
     }
 }

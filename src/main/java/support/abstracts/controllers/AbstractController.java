@@ -1,4 +1,4 @@
-package support.abstracts;
+package support.abstracts.controllers;
 
 import javafx.scene.control.Label;
 

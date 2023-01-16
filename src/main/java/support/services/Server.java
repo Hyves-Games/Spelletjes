@@ -10,11 +10,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
-import support.helpers.ServerResponse;
+import support.records.ServerResponse;
 import support.enums.ServerResponseEnum;
 
 public class Server {
+    private String host;
+    private Integer port;
+
     private Boolean handled = false;
     private Boolean lastResponseSuccessful = false;
 
@@ -34,23 +38,28 @@ public class Server {
 
     public Boolean isConnected() { return this.socket != null && !this.socket.isClosed(); }
 
-    public Boolean connect(String IP, int Port) {
+    public Server connect(String host, int port) throws ServerConnectionFailedException {
         try {
-            this.socket = new Socket(IP, Port);
+            this.host = host;
+            this.port = port;
+
+            this.socket = new Socket(host, port);
             this.data = new PrintStream(this.socket.getOutputStream());
             this.input = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-        } catch (IOException e) {
-            return false;
-        }
 
-        return true;
+            return this;
+        } catch (IOException e) {
+            throw new ServerConnectionFailedException();
+        }
+    }
+
+    public Server connect() throws ServerConnectionFailedException {
+        return this.connect(Server.connection.host, Server.connection.port);
     }
 
     public void disconnect() {
         try {
             this.socket.close();
-
-            Auth.setPlayer(null);
         } catch (IOException ignored) {}
     }
 
@@ -63,11 +72,15 @@ public class Server {
     }
 
     public void write(String data) {
-        int waited = 0;
-        int sleep = 100;
+        this.write(data, false);
+    }
 
-        this.handled = false;
-        this.lastResponseSuccessful = false;
+    public void write(String data, Boolean skip) {
+        int waited = 0;
+        int sleep = 1;
+
+        this.handled = skip;
+        this.lastResponseSuccessful = skip;
 
         this.data.println(data);
 
@@ -87,6 +100,8 @@ public class Server {
     private ServerResponse getServerResponse(String response) {
         try {
             String[] split = response.split(" ");
+
+//            System.out.println(this.socket.getLocalPort() + " -> " + response);
 
             switch (split[0]) {
                 case "OK":

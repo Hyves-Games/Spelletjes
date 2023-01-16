@@ -1,10 +1,12 @@
 package support.actions;
 
+import domain.player.exceptions.LoginFailedException;
 import support.abstracts.AbstractServerAction;
 import support.exceptions.NoServerConnectionException;
 
-public class PlayerlistServerAction extends AbstractServerAction {
-    public PlayerlistServerAction() throws NoServerConnectionException {
+public class GetServerPlayerListAction extends AbstractServerAction {
+
+    public GetServerPlayerListAction() throws NoServerConnectionException {
         this.handler();
     }
 

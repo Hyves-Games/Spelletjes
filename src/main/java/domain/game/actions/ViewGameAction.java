@@ -1,23 +1,40 @@
 package domain.game.actions;
 
 import com.google.gson.JsonObject;
-import support.abstracts.AbstractAction;
-import support.enums.SceneEnum;
-import support.helpers.SceneSwitcher;
+import domain.game.model.Game;
+import domain.game.model.Reversi;
+import domain.player.model.Player;
+import support.abstracts.AbstractGameAction;
+import support.abstracts.AbstractGameBoard;
 
-public class ViewGameAction extends AbstractAction {
+public class ViewGameAction extends AbstractGameAction {
     private final JsonObject data;
 
-    public ViewGameAction(JsonObject data) throws Exception {
+    public ViewGameAction(JsonObject data) {
         this.data = data;
 
         this.handler();
     }
 
-    @Override
-    protected void handler() throws Exception {
-        System.out.println(this.data.toString());
+    public ViewGameAction(JsonObject data, Player<?> player) {
+        this.data = data;
+        this.player = player;
 
-        SceneSwitcher.getInstance().change(SceneEnum.TIC_TAC_TOE);
+        this.handler();
+    }
+
+    @Override
+    protected void handler() {
+        Player<?> opponent = new Player<>(this.data.get("OPPONENT").getAsString());
+
+        Game game = this.player.getGame();
+        AbstractGameBoard<?> gameBoard = game.getGameBoard();
+
+        if (gameBoard instanceof Reversi) {
+            ((Reversi) gameBoard).setStarter(this.player.getUsername().equals(this.data.get("PLAYERTOMOVE").getAsString()));
+        }
+
+        game.start(opponent);
+
     }
 }

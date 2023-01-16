@@ -1,5 +1,8 @@
 package client.playerList.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import domain.player.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -8,19 +11,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import support.actions.ChallengeServerAction;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
-import support.helpers.SceneSwitcher;
+import support.helpers.Auth;
 
 public class PlayerListController {
     @FXML VBox playerContainer;
 
-    public void initialize() {
-        //Client & server deze array moet een lijst worden met de geconnecte players.
-        String[] players = {"player 1", "player 2", "player 3", "player 4", "player 5", "player 6", "player 7", "player 8", "player 9", "player 10", "player 11"};
+    private static JsonArray PLAYER_LIST_ITEM;
 
+    public void initialize() {
         playerContainer.setSpacing(10);
 
-        for (String player : players) {
+        for (JsonElement jsonElement : PLAYER_LIST_ITEM) {
+            String player = jsonElement.getAsString();
+
+            if (player.equals(Auth.getPlayer().getUsername())) {
+                continue;
+            }
+
             HBox playerRow = new HBox();
             Label playerName = new Label(player);
             Button playerInviteButton = new Button("Invite");
@@ -35,14 +45,28 @@ public class PlayerListController {
             playerRow.getChildren().add(playerName);
             playerRow.getChildren().add(playerInviteButton);
         }
+
+        if (playerContainer.getChildren().size() == 0) {
+            Label noPlayers = new Label("No players found");
+            noPlayers.setStyle("-fx-padding: 10px;");
+            playerContainer.getChildren().add(noPlayers);
+        }
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        SceneEnum.LOBBY.switchTo();
     }
 
     public void onInviteClick(ActionEvent event) {
         // Hier kan de client & server verder gaan met het inviten van een player in de player variabele hieronder zit de naam van de player.
-        String player = ((Node)event.getSource()).getId();
+        Player<?> opponent = new Player<>(((Node)event.getSource()).getId());
+
+        new ChallengeServerAction(opponent, GameEnum.TIC_TAC_TOE.getKey());
+
+        SceneEnum.WAIT_ROOM_CHALLENGE.switchTo();
+    }
+
+    public static void setPlayerList(JsonArray players) {
+        PlayerListController.PLAYER_LIST_ITEM = players;
     }
 }

@@ -2,7 +2,9 @@ package client.lobby.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import support.actions.GetServerPlayerListAction;
 import support.enums.SceneEnum;
+import support.exceptions.NoServerConnectionException;
 import support.helpers.SceneSwitcher;
 import support.services.Server;
 
@@ -17,14 +19,14 @@ public class LobbyController
     }
 
     public void onPlayGameClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_SELECTOR);
+        SceneEnum.GAME_SELECTOR.switchTo();
     }
 
     public void onSettingsClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.SETTING);
+        SceneEnum.SETTING.switchTo();
     }
 
-    public void onPlayerListClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.PLAYER_LIST);
+    public void onPlayerListClick() throws NoServerConnectionException {
+        new GetServerPlayerListAction();
     }
 }

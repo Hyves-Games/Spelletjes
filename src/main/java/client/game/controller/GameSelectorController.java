@@ -1,5 +1,6 @@
 package client.game.controller;
 
+import domain.game.model.Reversi;
 import domain.game.model.TicTacToe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,17 +12,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import support.abstracts.AbstractGameBoard;
-import support.enums.GameModeEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
-import support.helpers.SceneSwitcher;
-import java.util.HashMap;
+import support.helpers.Auth;
 
 public class GameSelectorController {
-
     @FXML HBox container;
 
     public void initialize() {
-        for (GameModeEnum type : GameModeEnum.values()) {
+        for (GameEnum type : GameEnum.values()) {
             AbstractGameBoard gameProperties = this.getGameBoard(type);
 
             VBox gameContainer = new VBox();
@@ -31,9 +30,9 @@ public class GameSelectorController {
             ImageView icon = this.createImage(gameProperties.getIconPath(), 60, 60);
 
             gameButton.setGraphic(icon);
-            gameButton.setOnAction(this::onGameChoose);
-            gameButton.setId(gameProperties.getName());
             gameContainer.setSpacing(10);
+            gameButton.setId(type.toString());
+            gameButton.setOnAction(this::onGameChoose);
 
             gameContainer.getChildren().add(gameButton);
             gameContainer.getChildren().add(gameName);
@@ -42,19 +41,21 @@ public class GameSelectorController {
     }
 
     public void onGameChoose(ActionEvent event) {
-        //Gamemode print
-        System.out.println(((Node)event.getSource()).getId());
+        Auth.setLastGame(GameEnum.valueOf(
+                ((Node)event.getSource()).getId()
+        ));
 
-        SceneSwitcher.getInstance().change(SceneEnum.GAME_MODE_SELECTOR);
+        SceneEnum.GAME_MODE_SELECTOR.switchTo();
     }
 
     public void onBackClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+        SceneEnum.LOBBY.switchTo();
     }
 
-    private AbstractGameBoard getGameBoard(GameModeEnum type) {
+    private AbstractGameBoard getGameBoard(GameEnum type) {
         return switch (type) {
             case TIC_TAC_TOE -> new TicTacToe();
+            case REVERSI -> new Reversi();
         };
     }
 
