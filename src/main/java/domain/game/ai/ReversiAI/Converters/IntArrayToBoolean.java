@@ -17,4 +17,13 @@ public class IntArrayToBoolean {
         }
         return booleanArray;
     }
+
+    public static boolean[] convert(int[] moves) {
+        //@TODO: merge with other method
+        boolean[] booleanArray = new boolean[moves.length];
+        for (int i = 0; i < moves.length; i++) {
+            booleanArray[moves[i]] = true;
+        }
+        return booleanArray;
+    }
 }

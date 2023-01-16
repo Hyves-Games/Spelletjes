@@ -1,6 +1,10 @@
 package client.game.board.controller;
 
 import client.Application;
+import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
+import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
+import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -103,11 +107,16 @@ public class ReversiController extends AbstractGameBoardController {
     @Override
     protected void changeBoardView() {
         Integer[] values = this.gameBoard.getBoard();
-        boolean[] availableMoves = MoveFinderFast.findAvailableMoves(values, this.gameBoard.isStarter());
+
+        long whiteLong = IntArrayToLong.convert(values, 1);
+        long blackLong = IntArrayToLong.convert(values, -1);
+
+        int[] availableMoves = MoveFinder.findAvailableMoves(LongToBoolArray.convert(whiteLong), LongToBoolArray.convert(blackLong), this.gameBoard.isStarter());
+        boolean[] availableMovesBool = IntArrayToBoolean.convert(availableMoves);
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
 
-            btn.setDisable(!availableMoves[i]);
+            btn.setDisable(!availableMovesBool[i]);
 
             if (values[i] != 0) {
                 URL black = Application.class.getResource("assets/icons/reversi_black.png");
