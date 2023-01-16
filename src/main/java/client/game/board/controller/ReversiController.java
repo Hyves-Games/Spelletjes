@@ -107,16 +107,12 @@ public class ReversiController extends AbstractGameBoardController {
     @Override
     protected void changeBoardView() {
         Integer[] values = this.gameBoard.getBoard();
+        boolean[] availableMoves = MoveFinder.findAvailableMoves(values, this.gameBoard.isStarter());
 
-        long whiteLong = IntArrayToLong.convert(values, 1);
-        long blackLong = IntArrayToLong.convert(values, -1);
-
-        int[] availableMoves = MoveFinder.findAvailableMoves(LongToBoolArray.convert(whiteLong), LongToBoolArray.convert(blackLong), this.gameBoard.isStarter());
-        boolean[] availableMovesBool = IntArrayToBoolean.convert(availableMoves);
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
 
-            btn.setDisable(!availableMovesBool[i]);
+            btn.setDisable(!availableMoves[i]);
 
             if (values[i] != 0) {
                 URL black = Application.class.getResource("assets/icons/reversi_black.png");

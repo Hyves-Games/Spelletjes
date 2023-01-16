@@ -1,5 +1,7 @@
 package domain.game.ai.ReversiAI.MoveLogic;
 
+import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
+
 import java.util.Arrays;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
@@ -61,6 +63,14 @@ public class MoveFinder {
                 }
             }
         }
+
         return Arrays.copyOfRange(moves, 0, movesCount); // @TODO: Check if this is faster or not than a manual copy
+    }
+
+    public static boolean[] findAvailableMoves(Integer[] board, boolean isWhiteTurn) {
+        boolean[] whiteBoolean = IntArrayToBoolean.convert(board, isWhiteTurn ? 1 : -1);
+        boolean[] blackBoolean = IntArrayToBoolean.convert(board, isWhiteTurn ? -1 : 1);
+
+        return IntArrayToBoolean.convert(findAvailableMoves(whiteBoolean, blackBoolean, isWhiteTurn));
     }
 }
