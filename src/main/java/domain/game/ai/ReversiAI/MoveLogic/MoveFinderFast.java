@@ -32,7 +32,7 @@ public class MoveFinderFast {
             9, /* Up-left. */
             8, /* Up. */
             7  /* Up-right. */
-    };
+   };
 
     static byte[] rightShifts = {
             1, /* Right. */
@@ -77,19 +77,8 @@ public class MoveFinderFast {
         return legal_moves;
     }
 
-    public static int[] findAvailableMoves(boolean[] playerWhitePieces, boolean[] playerBlackPieces, Boolean isWhiteTurn) {
-        return LongToMoves.convert(generateMoves(BoolArrayToLong.convert(isWhiteTurn ? playerWhitePieces : playerBlackPieces), BoolArrayToLong.convert(isWhiteTurn ? playerBlackPieces : playerWhitePieces)));
-    }
-
     public static int[] findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return LongToMoves.convert(generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces));
-    }
-
-    public static boolean[] findAvailableMoves(Integer[] board, boolean isWhiteTurn) {
-        long whiteLong = IntArrayToLong.convert(board, isWhiteTurn ? 1 : -1);
-        long blackLong = IntArrayToLong.convert(board, isWhiteTurn ? -1 : 1);
-
-        return LongToBoolArray.convert(generateMoves(isWhiteTurn ? whiteLong : blackLong, isWhiteTurn ? blackLong : whiteLong));
     }
 
     // REMOVE
