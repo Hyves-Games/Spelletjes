@@ -42,15 +42,15 @@ public class experimenting {
 
         System.out.println("start");
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 100000000; i++) {
+        for (int i = 0; i < 1000000000; i++) {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13100 ms
             //BoolArrayToLong.convert(test1); // 100M: 1900 ms
 
-            //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms
+            MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms
             //LongToBoolArray.convert(test4); // 100M: 2500 ms
-            LongToMoves.convert(test4); // 100M : 2750 ms
+            //LongToMoves.convert(test4); // 100M : 2750 ms
 
             //MoveFinderExperimental.findAvailableMoves(test5, test6, false); // 100M: 7100 ms
             //MoveFinderExperimental.findAvailableMoves(test5, test6, false, true); // 100M: 5000 ms
