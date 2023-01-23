@@ -32,7 +32,8 @@ public class experimenting {
         long test3 = 0b0000000000000000001011000000000000100010000110000100000000000000L;
         long test4 = 0b0000000000000000000100000001100000011100001001000000000000000000L;
 
-        long test5 = 2314885805157384192L;
+        //long test5 = 2314885805157384192L;
+        long test5 = 0b0010000000100000001000000110000000000000000000000000000000000000L;
         //long test6 = -9205357509026249728L;
         long test6 = 0b1000000001000000000000000001111000011100000001000000010000000000L;
 
@@ -48,8 +49,10 @@ public class experimenting {
             //BoolArrayToLong.convert(test1); // 100M: 1900 ms
 
             //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms
-            //LongToBoolArray.convert(test4); // 100M: 2700 ms
+            //LongToBoolArray.convert(test4); // 100M: 2500 ms
+            LongToMoves.convert(test4); // 100M : 2750 ms
 
+            //MoveFinderExperimental.findAvailableMoves(test5, test6, false); // 100M: 7100 ms
             //MoveFinderExperimental.findAvailableMoves(test5, test6, false, true); // 100M: 5000 ms
             //MoveFinderFast.findAvailableMoves(test3, test4, false, true); // 100M: 4800 ms
 
@@ -85,6 +88,6 @@ public class experimenting {
 
         //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces, availableMoves);
         //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
-        BoardPrinter.printBoard(test3, test4, MoveFinderFast.findAvailableMoves(test3, test4, true));
+        //BoardPrinter.printBoard(test3, test4, MoveFinderFast.findAvailableMoves(test3, test4, true));
     }
 }
