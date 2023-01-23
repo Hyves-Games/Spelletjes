@@ -80,8 +80,8 @@ class Worker extends Thread {
     }
 }
 
-public class MCTS_MT extends AI {
-    public static int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int maxTimeSeconds, int headroomMilliSeconds) {
+public class MCTS_MT implements AI {
+    public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return 0;
     }
 
