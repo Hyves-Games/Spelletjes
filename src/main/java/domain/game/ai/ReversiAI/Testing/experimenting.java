@@ -48,7 +48,7 @@ public class experimenting {
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13100 ms
             //BoolArrayToLong.convert(test1); // 100M: 1900 ms
 
-            MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms
+            MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms // R.: 55700 ms per 100 MIL P.: 52s
             //LongToBoolArray.convert(test4); // 100M: 2500 ms
             //LongToMoves.convert(test4); // 100M : 2750 ms
 
