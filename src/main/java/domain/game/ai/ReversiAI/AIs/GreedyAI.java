@@ -1,11 +1,6 @@
 package domain.game.ai.ReversiAI.AIs;
 
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import static domain.game.ai.ReversiAI.Constants.Constants.*;
-
-import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
-import domain.game.ai.ReversiAI.SuperClasses.AI;
+import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
 
 public class GreedyAI extends AI {
 

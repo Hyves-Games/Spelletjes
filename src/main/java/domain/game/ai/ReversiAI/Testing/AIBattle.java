@@ -4,11 +4,9 @@ import domain.game.ai.ReversiAI.AIs.*;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Helpers.PieceCounter;
-import domain.game.ai.ReversiAI.SuperClasses.AI;
+import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
 import domain.game.ai.ReversiAI.Board.*;
 
 import java.util.Arrays;
@@ -24,6 +22,7 @@ public class AIBattle {
         int AIOneWinCount = 0;
         int AITwoWinCount = 0;
 
+        // Progress bar
         int barLength = 40;
         int lastFilledCount = 0;
         System.out.println("Running " + GameCount + " games...");
@@ -45,7 +44,17 @@ public class AIBattle {
             boolean isWhiteTurn = false;
             boolean wasPass = false;
             while (true) {
-                int[] moves = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
+                int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+
+                // (SLOW, REMOVE) test accuracy of fast move-finder compared to slower and accurate iterative move-finder
+                /*
+                int[] accurateResult = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
+                if (!Arrays.equals(accurateResult, moves)) {
+                    System.out.println("fast: " + Arrays.toString(moves) + "accurate: " + Arrays.toString(accurateResult));
+                    throw new Exception("MOVE FINDER ERROR");
+                };
+                */
+
                 if (moves.length == 0) {
                     if (wasPass) {
                         // No more moves, game over

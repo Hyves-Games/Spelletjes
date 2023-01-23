@@ -15,12 +15,12 @@ public class MoveFinderFast {
     static long[] directionMasks = {
             0x7F7F7F7F7F7F7F7FL, /* Right. */
             0x007F7F7F7F7F7F7FL, /* Down-right. */
-            //0xFFFFFFFFFFFFFFFFL, /* Down. */
+            //0xFFFFFFFFFFFFFFFFL, /* Down. */ // broken
             0b0000000011111111111111111111111111111111111111111111111111111111L, /* Down. */
             0x00FEFEFEFEFEFEFEL, /* Down-left. */
             0xFEFEFEFEFEFEFEFEL, /* Left. */
             0xFEFEFEFEFEFEFE00L, /* Up-left. */
-            //0xFFFFFFFFFFFFFFFFL, /* Up. */
+            //0xFFFFFFFFFFFFFFFFL, /* Up. */ // broken
             0b1111111111111111111111111111111111111111111111111111111100000000L, /* Up. */
             0x7F7F7F7F7F7F7F00L  /* Up-right. */
     };
@@ -62,18 +62,10 @@ public class MoveFinderFast {
         byte dir;
 
         for (dir = 0; dir < 8; dir++) {
-        //for (byte dir = 0; dir < 8; dir++) {
             x = shift(my_disks, dir) & opp_disks;
-            /*
             for (int i = 0; i < 5; i++) {
                 x |= shift(x, dir) & opp_disks;
             }
-             */
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
-            x |= shift(x, dir) & opp_disks;
             legal_moves |= shift(x, dir) & empty_cells;
         }
         return legal_moves;

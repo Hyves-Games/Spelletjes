@@ -1,4 +1,4 @@
-package domain.game.ai.ReversiAI.Heuristics;
+package domain.game.ai.ReversiAI.Evaluation;
 
 public class DynamicEvaluation {
     public static final long cornerMask = 0b000L;

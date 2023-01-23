@@ -1,6 +1,4 @@
-package domain.game.ai.ReversiAI.SuperClasses;
-
-import java.math.BigInteger;
+package domain.game.ai.ReversiAI.SuperClassesInterfaces;
 
 public class AI {
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
