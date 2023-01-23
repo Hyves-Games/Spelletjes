@@ -13,7 +13,7 @@ public class RandomAI extends AI {
     @Override
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         //int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        int[] moves = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
+        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         return moves[generator.nextInt(moves.length)];
     }
 

@@ -15,11 +15,13 @@ public class MoveFinderFast {
     static long[] directionMasks = {
             0x7F7F7F7F7F7F7F7FL, /* Right. */
             0x007F7F7F7F7F7F7FL, /* Down-right. */
-            0xFFFFFFFFFFFFFFFFL, /* Down. */
+            //0xFFFFFFFFFFFFFFFFL, /* Down. */
+            0b0000000011111111111111111111111111111111111111111111111111111111L, /* Down. */
             0x00FEFEFEFEFEFEFEL, /* Down-left. */
             0xFEFEFEFEFEFEFEFEL, /* Left. */
             0xFEFEFEFEFEFEFE00L, /* Up-left. */
-            0xFFFFFFFFFFFFFFFFL, /* Up. */
+            //0xFFFFFFFFFFFFFFFFL, /* Up. */
+            0b1111111111111111111111111111111111111111111111111111111100000000L, /* Up. */
             0x7F7F7F7F7F7F7F00L  /* Up-right. */
     };
 
