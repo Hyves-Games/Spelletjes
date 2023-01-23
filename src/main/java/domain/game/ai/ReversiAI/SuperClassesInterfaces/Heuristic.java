@@ -1,5 +1,7 @@
 package domain.game.ai.ReversiAI.SuperClassesInterfaces;
 
 public interface Heuristic {
-    int GetHeuristic();
+    static int GetHeuristic(long maxPlayerPieces, long minPlayerPieces) {
+        return 0;
+    }
 }
