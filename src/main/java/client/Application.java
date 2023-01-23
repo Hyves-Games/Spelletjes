@@ -1,5 +1,8 @@
 package client;
 
+import domain.game.model.Game;
+import domain.game.model.TicTacToe;
+import domain.log.helpers.LogHandler;
 import domain.log.model.GameLog;
 import domain.log.query.GameLogQuery;
 import domain.player.actions.LoginAction;
@@ -13,10 +16,12 @@ import domain.setting.query.SettingQuery;
 import javafx.stage.Stage;
 import support.actions.ConnectServerAction;
 import support.enums.DatabaseTableEnum;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.AudioPlayer;
+import support.helpers.Auth;
 import support.helpers.SceneSwitcher;
 
 import java.sql.SQLException;

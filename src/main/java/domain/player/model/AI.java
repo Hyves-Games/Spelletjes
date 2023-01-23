@@ -5,24 +5,51 @@ import com.github.javafaker.Faker;
 import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.exceptions.LoginFailedException;
 import support.actions.LoginServerAction;
+import support.enums.GameStrategyEnum;
 import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.AIResponseHandler;
 import support.services.Server;
 
+import java.sql.Timestamp;
+
 public class AI extends Player<AI> {
     private Server connection;
 
-    public AI() throws ServerConnectionFailedException, FailedToCreateAIException {
-        super(createUsername());
+    protected Timestamp updatedAt;
+    protected Timestamp createdAt;
 
-        this.connect();
-        this.login(0);
+    public AI() {
+        if (this.getUsername() == null) {
+            this.setUsername(AI.createUsername());
+        }
 
-        Application.addAI(this);
+        this.setActive();
     }
 
-    private static String createUsername() {
+    public AI(Player player) {
+        this.id = player.getId();
+        this.username = player.getUsername();
+        this.createdAt = player.getCreatedAt();
+        this.updatedAt = player.getUpdatedAt();
+        this.setGameStrategy(player.getGameStrategy());
+
+        this.setActive();
+    }
+
+    public void setActive() {
+        try {
+            this.connect();
+            this.login(0);
+
+            Application.addAI(this);
+        } catch (ServerConnectionFailedException | FailedToCreateAIException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static String createUsername() {
         Faker faker = new Faker();
 
         return String.format("%sAI", faker.name().firstName().toLowerCase());

@@ -105,6 +105,7 @@ abstract public class AbstractModel<T extends AbstractModel<T>> {
 
             this.id = preparedStatement.getGeneratedKeys().getInt(1);
         } catch (SQLException|NullPointerException e) {
+            System.err.println("MODEL: "  + this.getClass().getSimpleName());
             e.printStackTrace();
         }
 
