@@ -112,7 +112,7 @@ public class ReversiController extends AbstractGameBoardController {
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
 
-            btn.setDisable(!availableMoves[i]);
+//            btn.setDisable(!availableMoves[i]);
 
             if (values[i] != 0) {
                 URL black = Application.class.getResource("assets/icons/reversi_black.png");

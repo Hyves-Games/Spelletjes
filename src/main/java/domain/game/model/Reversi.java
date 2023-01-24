@@ -67,8 +67,7 @@ public class Reversi extends AbstractGameBoard<Reversi> {
         long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
         if (this.isPlayerTurn()) {
 //            Integer index = new RandomAI().getBestMove(playerPieces, opponentPieces, isPlayerTurn());
-            Integer index = new MiniMaxAI().getBestMove(playerPieces, opponentPieces, isPlayerTurn());
-            System.out.println(index);
+            Integer index = new MiniMaxAI(3).getBestMove(playerPieces, opponentPieces, isPlayerTurn());
             this.doMove(index);
         }
     }
