@@ -20,7 +20,7 @@ public class MiniMaxAI implements AI {
     private int miniMaxCalculation(BoardPosition board, int depth, boolean isMax) {
         int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
         if (depth == 0 || (board.gameState != null) || moves.length == 0) {
-            int evaluation = GreedyEvaluation.evaluate(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
+            int evaluation = GreedyEvaluation.evaluate(board.playerWhitePieces, board.playerBlackPieces);
             return evaluation;
         }
 
