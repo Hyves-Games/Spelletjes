@@ -1,9 +1,10 @@
 package domain.game.ai.ReversiAI.Evaluation;
 
 import domain.game.ai.ReversiAI.Heuristics.ParityHeuristic;
+import domain.game.ai.ReversiAI.SuperClassesInterfaces.Evaluation;
 
-public class GreedyEvaluation {
-    public static int evaluate(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
-        return ParityHeuristic.GetHeuristic(playerWhitePieces, playerBlackPieces);
+public class GreedyEvaluation implements Evaluation {
+    public static int evaluate(long minPieces, long maxPieces) {
+        return ParityHeuristic.GetHeuristic(minPieces, maxPieces);
     }
 }

@@ -64,7 +64,7 @@ class Worker extends Thread {
         int[] threadWins = new int[boardSquareCount];
         for (int ii = 1; ii < 30000000; ii++) {
             // 'simulate' move
-            GreedyEvaluation.evaluate(test3, test3, true);
+            GreedyEvaluation.evaluate(test3, test3);
             MakeMove.makeMove(test1, test2, true, 42);
             MoveFinderFast.findAvailableMoves(test3, test3, true);
             if (ii % 60 == 0) { // Assume every game takes 60 moves
