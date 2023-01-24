@@ -6,6 +6,6 @@ import java.util.Arrays;
 
 public abstract class ParityHeuristic implements Heuristic {
     public static int GetHeuristic(long minPlayerPieces, long maxPlayerPieces) {
-        return ((Long.bitCount(maxPlayerPieces) - Long.bitCount(minPlayerPieces)) / (Long.bitCount(maxPlayerPieces) + Long.bitCount(minPlayerPieces)));
+        return 100 * ((Long.bitCount(maxPlayerPieces) - Long.bitCount(minPlayerPieces)) / (Long.bitCount(maxPlayerPieces) + Long.bitCount(minPlayerPieces)));
     }
 }
