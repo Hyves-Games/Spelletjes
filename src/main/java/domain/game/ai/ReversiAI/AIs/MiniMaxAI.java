@@ -14,7 +14,7 @@ public class MiniMaxAI implements AI {
 
     private int[] calculateBestScoreBestMoveMiniMax(BoardPosition position, boolean isMax, int depth) {
         // Get state of position here for usage in base case
-        int evaluation = GreedyEvaluation.evaluate(position.playerWhitePieces, position.playerBlackPieces, position.isWhiteTurn);
+        int evaluation = GreedyEvaluation.evaluate(position.playerWhitePieces, position.playerBlackPieces);
         int moves[] = MoveFinderFast.findAvailableMoves(position.playerWhitePieces, position.playerBlackPieces, position.isWhiteTurn);
         if (moves.length == 0 || depth == MAX_DEPTH) {
             return new int[]{evaluation, 0};
