@@ -14,12 +14,12 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 100;
-//        AI AIOne = new RandomAI();
-        AI AIOne = new MiniMaxAI(2);
+        int GameCount = 20;
+        AI AIOne = new RandomAI();
+//        AI AIOne = new MiniMaxABAI(2);
         AI AITwo = new MiniMaxAI(5);
-        AIOne.setAIName("Minimax Depth 2");
-        AITwo.setAIName("Minimax Depth 5");
+//        AIOne.setAIName("Minimax Depth 2");
+        AITwo.setAIName("Minimax Depth 5 (NON-ALPHA BETA)");
         //////////////////////////////
 
         int AIOneWinCount = 0;
@@ -38,6 +38,8 @@ public class AIBattle {
         // Run the games
         AI WhiteAI = AIOne;
         AI BlackAI = AITwo;
+
+        long start = System.currentTimeMillis();
         for (int i = 1; i <= GameCount; i++) {
             // Set up board, default position
             long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
@@ -136,5 +138,6 @@ public class AIBattle {
 
         // Print results
         System.out.println("\n" + AIOne.getAIName() + " won " + AIOneWinCount + " games.\n" + AITwo.getAIName() + " won " + AITwoWinCount + " games.");
+        System.out.println((System.currentTimeMillis() - start) + " ms duration");
     }
 }
