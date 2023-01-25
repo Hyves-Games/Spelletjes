@@ -1,6 +1,7 @@
 package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
+import domain.game.ai.ReversiAI.Evaluation.CornersEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MobiltyEvaluation;
@@ -15,19 +16,21 @@ import java.util.Arrays;
 // Note: niet vergeten om zet over te slaan te implementeren
 public class MiniMaxAI implements AI {
 
-    private int MAX_DEPTH;
+    private final int MAX_DEPTH;
     private String name = "Minimax AI";
     public MiniMaxAI(int depth) {
         this.MAX_DEPTH = depth;
+        System.out.println(this.MAX_DEPTH);
     }
 
     private int miniMaxCalculation(BoardPosition board, int depth, boolean isMax) {
         int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
         if (depth == 0 || (board.gameState != null)) {
 //            int evaluation = GreedyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces , board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
-//            int evaluation = MobiltyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn);
-            int evaluation = MaterialEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
-            return evaluation;
+            int mobility = MobiltyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn);
+            int material = MaterialEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
+            int corners = CornersEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
+            return mobility * 10 + material * 20 + corners * 15;
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {
