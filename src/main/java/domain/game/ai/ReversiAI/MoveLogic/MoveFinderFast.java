@@ -12,20 +12,18 @@ import domain.game.ai.ReversiAI.Converters.*;
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
 public class MoveFinderFast {
-    static long[] directionMasks = {
-            0x7F7F7F7F7F7F7F7FL, /* Right. */
-            0x007F7F7F7F7F7F7FL, /* Down-right. */
-            //0xFFFFFFFFFFFFFFFFL, /* Down. */ // broken
-            0b0000000011111111111111111111111111111111111111111111111111111111L, /* Down. */
-            0x00FEFEFEFEFEFEFEL, /* Down-left. */
-            0xFEFEFEFEFEFEFEFEL, /* Left. */
-            0xFEFEFEFEFEFEFE00L, /* Up-left. */
-            //0xFFFFFFFFFFFFFFFFL, /* Up. */ // broken
-            0b1111111111111111111111111111111111111111111111111111111100000000L, /* Up. */
-            0x7F7F7F7F7F7F7F00L  /* Up-right. */
+    private static final long[] directionMasks = {
+            0b0111111101111111011111110111111101111111011111110111111101111111L, // Right
+            0b0000000001111111011111110111111101111111011111110111111101111111L, // Down-right
+            0b0000000011111111111111111111111111111111111111111111111111111111L, // Down
+            0b0000000011111110111111101111111011111110111111101111111011111110L, // Down-left
+            0b1111111011111110111111101111111011111110111111101111111011111110L, // Left
+            0b1111111011111110111111101111111011111110111111101111111000000000L, // Up-left
+            0b1111111111111111111111111111111111111111111111111111111100000000L, // Up
+            0b0111111101111111011111110111111101111111011111110111111100000000L  // Up-right
     };
 
-   static byte[] leftShifts = {
+    private static final byte[] leftShifts = {
             0, /* Right. */
             0, /* Down-right. */
             0, /* Down. */
@@ -34,9 +32,9 @@ public class MoveFinderFast {
             9, /* Up-left. */
             8, /* Up. */
             7  /* Up-right. */
-   };
+    };
 
-    static byte[] rightShifts = {
+    private static final byte[] rightShifts = {
             1, /* Right. */
             9, /* Down-right. */
             8, /* Down. */
@@ -56,16 +54,17 @@ public class MoveFinderFast {
     }
 
     private static long generateMoves(long my_disks, long opp_disks) {
-        long x;
         long empty_cells = ~(my_disks | opp_disks);
         long legal_moves = 0;
-        byte dir;
 
-        for (dir = 0; dir < 8; dir++) {
-            x = shift(my_disks, dir) & opp_disks;
-            for (int i = 0; i < 5; i++) {
-                x |= shift(x, dir) & opp_disks;
-            }
+        for (byte dir = 0; dir < 8; dir++) {
+            long x = shift(my_disks, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+            x |= shift(x, dir) & opp_disks;
+
             legal_moves |= shift(x, dir) & empty_cells;
         }
         return legal_moves;

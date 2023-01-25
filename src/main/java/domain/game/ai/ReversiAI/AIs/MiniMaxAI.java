@@ -2,10 +2,9 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
+import domain.game.ai.ReversiAI.Interfaces.AI;
 
 // Note: niet vergeten om zet over te slaan te implementeren
 public class MiniMaxAI implements AI {

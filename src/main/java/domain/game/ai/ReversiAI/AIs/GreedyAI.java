@@ -1,6 +1,6 @@
 package domain.game.ai.ReversiAI.AIs;
 
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
+import domain.game.ai.ReversiAI.Interfaces.AI;
 
 public class GreedyAI implements AI {
 

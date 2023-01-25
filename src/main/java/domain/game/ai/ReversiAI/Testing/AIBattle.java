@@ -4,9 +4,10 @@ import domain.game.ai.ReversiAI.AIs.*;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
+import domain.game.ai.ReversiAI.MoveLogic.MoveFinder;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Helpers.PieceCounter;
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
+import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.ai.ReversiAI.Board.*;
 
 import java.util.Arrays;
@@ -47,13 +48,12 @@ public class AIBattle {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 
                 // (SLOW, REMOVE) test accuracy of fast move-finder compared to slower and accurate iterative move-finder
-                /*
                 int[] accurateResult = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
                 if (!Arrays.equals(accurateResult, moves)) {
                     System.out.println("fast: " + Arrays.toString(moves) + "accurate: " + Arrays.toString(accurateResult));
-                    throw new Exception("MOVE FINDER ERROR");
+                    throw new Exception("FAST MOVE FINDER WRONG RESULT");
                 };
-                */
+
 
                 if (moves.length == 0) {
                     if (wasPass) {

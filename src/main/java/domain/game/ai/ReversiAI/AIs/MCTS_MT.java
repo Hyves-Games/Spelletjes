@@ -3,7 +3,7 @@ package domain.game.ai.ReversiAI.AIs;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
+import domain.game.ai.ReversiAI.Interfaces.AI;
 
 import java.util.concurrent.CountDownLatch;
 

@@ -42,7 +42,7 @@ public class experimenting {
 
         System.out.println("start");
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000000; i++) {
+        for (int i = 0; i < 100000000; i++) {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13100 ms
@@ -79,7 +79,6 @@ public class experimenting {
         //long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
         //int[] availableMoves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, true);
 
-        System.out.println("available moves experimental: " + MoveFinderExperimental.findAvailableMoves(test5, test6, false, true));
         System.out.println("available moves fast: " + Arrays.toString(MoveFinderFast.findAvailableMoves(test5, test6, false)));
         System.out.println("available moves fast: " + MoveFinderFast.findAvailableMoves(test5, test6, false, true));
         System.out.println("available moves slow: " + Arrays.toString(MoveFinder.findAvailableMoves(LongToBoolArray.convert(test5), LongToBoolArray.convert(test6), false)));

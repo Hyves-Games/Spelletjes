@@ -1,6 +1,6 @@
 package domain.game.ai.ReversiAI.Heuristics;
 
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.Heuristic;
+import domain.game.ai.ReversiAI.Interfaces.Heuristic;
 
 public abstract class ParityHeuristic implements Heuristic {
     public static int GetHeuristic(long minPlayerPieces, long maxPlayerPieces) {
