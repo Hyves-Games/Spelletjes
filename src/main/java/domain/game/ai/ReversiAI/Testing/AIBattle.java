@@ -14,12 +14,12 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 20;
+        int GameCount = 5;
         AI AIOne = new RandomAI();
 //        AI AIOne = new MiniMaxABAI(2);
-        AI AITwo = new MiniMaxAI(5);
+        AI AITwo = new MiniMaxABAI(7);
 //        AIOne.setAIName("Minimax Depth 2");
-        AITwo.setAIName("Minimax Depth 5 (NON-ALPHA BETA)");
+        AITwo.setAIName("Minimax Depth 7 (ALPHA BETA)");
         //////////////////////////////
 
         int AIOneWinCount = 0;

@@ -67,7 +67,7 @@ public class MakeMove {
 
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
 
-        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
+        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), !isWhiteTurn);
     }
 
     public static BoardPosition makeMove(Integer[] board, boolean isWhiteTurn, int moveIndex, GameEndStateEnum gameState) {

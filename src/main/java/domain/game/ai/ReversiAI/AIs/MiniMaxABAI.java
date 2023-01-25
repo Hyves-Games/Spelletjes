@@ -21,7 +21,10 @@ public class MiniMaxABAI implements AI {
 
     private int miniMaxCalculation(BoardPosition board, int depth, int alpha, int beta, boolean isMax) {
         int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
+//        System.out.println(board.isWhiteTurn);
+//        System.out.println(depth);
         if (depth == 0 || (board.gameState != null)) {
+//            System.out.println("got to 0");
             int mobility = MobiltyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn);
             int material = MaterialEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
             int corners = CornersEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
@@ -29,17 +32,23 @@ public class MiniMaxABAI implements AI {
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {
+//            System.out.println("no moves");
             int score = miniMaxCalculation(board, depth-1, alpha, beta, !isMax);
             if (isMax) {
-                if (score > bestValue) {
-                    bestValue = score;
+                if (score > alpha) {
+//                    bestValue = score;
+                    alpha = score;
                 }
             } else {
-                if (score < bestValue) {
-                    bestValue = score;
+                if (score < beta) {
+//                    bestValue = score;
+                    beta = score;
                 }
             }
-            return bestValue;
+            if (alpha >= beta) {
+                return isMax ? alpha : beta;
+            }
+//            return bestValue;
         }
         if (isMax) {
             for (int move : moves) {
@@ -77,6 +86,7 @@ public class MiniMaxABAI implements AI {
                 bestmove = moves[i];
                 bestValue = value;
             }
+//            System.out.println("Move done: " + moves[i]);
         }
         return bestmove;
     }
