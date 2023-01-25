@@ -5,7 +5,6 @@ public class BoardPosition {
     public long playerBlackPieces;
     public boolean isWhiteTurn;
 
-    public BoardPosition() {}
     public BoardPosition(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         this.playerWhitePieces = playerWhitePieces;
         this.playerBlackPieces = playerBlackPieces;

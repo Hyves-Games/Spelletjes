@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 10000;
+        int GameCount = 1000;
         AI AIOne = new RandomAI();
         AI AITwo = new RandomAI();
         //////////////////////////////
@@ -47,12 +47,14 @@ public class AIBattle {
             while (true) {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 
-                // (SLOW, REMOVE) test accuracy of fast move-finder compared to slower and accurate iterative move-finder
-                int[] accurateResult = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
-                if (!Arrays.equals(accurateResult, moves)) {
-                    System.out.println("fast: " + Arrays.toString(moves) + "accurate: " + Arrays.toString(accurateResult));
-                    throw new Exception("FAST MOVE FINDER WRONG RESULT");
-                };
+                //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
+
+                // (SLOW) test accuracy of fast bitwise move-finder compared to slower and accurate iterative move-finder
+//                int[] accurateResult = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);
+//                if (!Arrays.equals(accurateResult, moves)) {
+//                    System.out.println("fast: " + Arrays.toString(moves) + "accurate: " + Arrays.toString(accurateResult));
+//                    throw new Exception("FAST MOVE FINDER WRONG RESULT");
+//                };
 
 
                 if (moves.length == 0) {
@@ -74,11 +76,6 @@ public class AIBattle {
                     if ((newBoard.playerWhitePieces == playerWhitePieces) || (newBoard.playerBlackPieces == playerBlackPieces)) {
                         System.out.println("\nBoard before:");
                         BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
-                        System.out.println("Board after:");
-                        BoardPrinter.printBoard(newBoard.playerWhitePieces, newBoard.playerBlackPieces);
-                        System.out.println(Arrays.toString(LongToBoolArray.convert(playerWhitePieces)));
-                        System.out.println(Arrays.toString(LongToBoolArray.convert(playerBlackPieces)));
-                        System.out.println("fast move solver: " + MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn, true));
                         System.out.println("white board, black board: " + playerWhitePieces + ", " + playerBlackPieces);
                         throw new Exception("Board change incorrect! game: " + i + ", move: " + bestMove + ", white's turn: " + isWhiteTurn + ", available moves: " + Arrays.toString(moves));
                     }
