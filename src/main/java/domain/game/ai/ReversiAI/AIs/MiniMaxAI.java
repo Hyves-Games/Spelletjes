@@ -26,14 +26,14 @@ public class MiniMaxAI implements AI {
         if (isMax) {
             int bestValue = Integer.MIN_VALUE;
             for (int move : moves) {
-                BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
+                BoardPosition movePlaced = MakeMoveFast.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
                 bestValue = Math.max(bestValue,miniMaxCalculation(movePlaced, depth - 1, false));
             }
             return bestValue;
         } else {
             int bestValue = Integer.MAX_VALUE;
             for (int move : moves) {
-                BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
+                BoardPosition movePlaced = MakeMoveFast.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
                 bestValue = Math.min(bestValue, miniMaxCalculation(movePlaced, depth - 1, true));
             }
             return bestValue;
