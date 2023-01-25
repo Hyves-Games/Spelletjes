@@ -31,7 +31,7 @@ public class ViewGameAction extends AbstractGameAction {
         AbstractGameBoard<?> gameBoard = game.getGameBoard();
 
         if (gameBoard instanceof Reversi) {
-            ((Reversi) gameBoard).setStarter(this.player.getUsername().equals(this.data.get("PLAYERTOMOVE").getAsString()));
+            gameBoard.setStarter(this.player.getUsername().equals(this.data.get("PLAYERTOMOVE").getAsString()));
         }
 
         game.start(opponent);
