@@ -105,13 +105,13 @@ public abstract class AbstractGameBoard<T> {
     public void doMove(Integer index) {
         if (this.checkMove(index) && this.isPlayerTurn()) {
             try {
+                this.setOpponentTurn();
+
                 if (this.useAI) {
                     new MoveServerAction(index, this.connection);
                 } else {
                     new MoveServerAction(index);
                 }
-
-                this.setOpponentTurn();
             } catch (MoveNotAllowedException ignored) {}
         }
     }

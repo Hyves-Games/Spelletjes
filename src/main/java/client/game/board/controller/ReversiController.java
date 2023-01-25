@@ -106,7 +106,7 @@ public class ReversiController extends AbstractGameBoardController {
     @Override
     protected void changeBoardView() {
         Integer[] values = this.gameBoard.getBoard();
-        boolean[] availableMoves = MoveFinderFast.findAvailableMoves(values, this.gameBoard.isStarter());
+        boolean[] availableMoves = MoveFinderFast.findAvailableMoves(values);
 
         for (int i = 0; i < values.length; i++) {
             Button btn = this.board[i];
