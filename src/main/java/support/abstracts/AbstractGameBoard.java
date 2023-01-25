@@ -111,7 +111,7 @@ public abstract class AbstractGameBoard<T> {
                     new MoveServerAction(index);
                 }
 
-                this.setOpponentTurn();
+//                this.setOpponentTurn();
             } catch (MoveNotAllowedException ignored) {}
         }
     }

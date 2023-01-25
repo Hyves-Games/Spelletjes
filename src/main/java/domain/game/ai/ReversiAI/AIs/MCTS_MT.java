@@ -81,12 +81,18 @@ class Worker extends Thread {
 }
 
 public class MCTS_MT implements AI {
+    private String name = "MonteCarloTreeSearch (multithreaded)";
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return 0;
     }
 
     public String getAIName() {
-        return "MonteCarloTreeSearch (multithreaded)";
+        return this.name;
+    }
+
+    @Override
+    public void setAIName(String name) {
+        this.name = name;
     }
 
     public static void main(String[] args) throws InterruptedException {
