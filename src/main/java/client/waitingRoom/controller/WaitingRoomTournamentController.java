@@ -7,7 +7,7 @@ import support.services.Server;
 
 public class WaitingRoomTournamentController {
     public void initialize() {
-        GameEnum.TIC_TAC_TOE.create().setAuthPlayer();
+        GameEnum.REVERSI.create().setAuthPlayer();
     }
 
     public void onCancel() {
