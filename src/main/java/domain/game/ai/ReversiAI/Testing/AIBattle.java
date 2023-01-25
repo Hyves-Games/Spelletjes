@@ -17,7 +17,8 @@ public class AIBattle {
         //////////////////////////////
         int GameCount = 1000;
         AI AIOne = new RandomAI();
-        AI AITwo = new RandomAI();
+//        AI AIOne = new MiniMaxAI(1);
+        AI AITwo = new MiniMaxAI(3);
         //////////////////////////////
 
         int AIOneWinCount = 0;

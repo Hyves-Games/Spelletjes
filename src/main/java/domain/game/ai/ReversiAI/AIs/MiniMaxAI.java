@@ -6,57 +6,63 @@ import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 
+import java.util.Arrays;
+
 // Note: niet vergeten om zet over te slaan te implementeren
 public class MiniMaxAI implements AI {
-    private final int MAX_DEPTH = 3;
-    // isMax = zwarte speler
 
-    private int[] calculateBestScoreBestMoveMiniMax(BoardPosition position, boolean isMax, int depth) {
-        // Get state of position here for usage in base case
-        int evaluation = GreedyEvaluation.evaluate(position.playerWhitePieces, position.playerBlackPieces);
-        int moves[] = MoveFinderFast.findAvailableMoves(position.playerWhitePieces, position.playerBlackPieces, position.isWhiteTurn);
-        if (moves.length == 0 || depth == MAX_DEPTH) {
-            return new int[]{evaluation, 0};
-        }
-
-        int best_move = 0;
-        int best_score = 0;
-        if (isMax) {
-            int max_score = Integer.MAX_VALUE;
-            for (int move : moves) {
-                BoardPosition new_position = MakeMoveFast.makeMove(position.playerWhitePieces, position.playerBlackPieces, position.isWhiteTurn, move);
-                int[] bestMoveScore = calculateBestScoreBestMoveMiniMax(new_position, false, depth+1);
-//                int bestMove = bestMoveScore[0];
-                int bestScore = bestMoveScore[1];
-                if (bestScore > max_score) {
-                    max_score = bestScore;
-                    // best move zetten
-                    best_move = move;
-                }
-            }
-        } else {
-            int min_score = Integer.MIN_VALUE;
-            for (int move : moves) {
-                BoardPosition new_position = MakeMoveFast.makeMove(position.playerWhitePieces, position.playerBlackPieces, position.isWhiteTurn, move);
-                int[] bestMoveScore = calculateBestScoreBestMoveMiniMax(new_position, true, depth+1);
-//                int bestMove = bestMoveScore[0];
-                int bestScore = bestMoveScore[1];
-                if (bestScore < min_score) {
-                    min_score = bestScore;
-                    // best move zetten
-                    best_move = move;
-                }
-            }
-        }
-        return new int[] {best_move, best_score};
+    private final int MAX_DEPTH;
+    public MiniMaxAI(int depth) {
+        this.MAX_DEPTH = depth;
     }
+
+    private int miniMaxCalculation(BoardPosition board, int depth, boolean isMax) {
+        int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
+        if (depth == 0 || (board.gameState != null) || moves.length == 0) {
+            int evaluation = GreedyEvaluation.evaluate(board.playerWhitePieces, board.playerBlackPieces);
+            return evaluation;
+        }
+
+        if (isMax) {
+            int bestValue = Integer.MIN_VALUE;
+            for (int move : moves) {
+                BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
+                bestValue = Math.max(bestValue,miniMaxCalculation(movePlaced, depth - 1, false));
+            }
+            return bestValue;
+        } else {
+            int bestValue = Integer.MAX_VALUE;
+            for (int move : moves) {
+                BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
+                bestValue = Math.min(bestValue, miniMaxCalculation(movePlaced, depth - 1, true));
+            }
+            return bestValue;
+
+        }
+    }
+
     @Override
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
-        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        int max_depth = 3;
-        return 0;
+        BoardPosition board = new BoardPosition(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+        int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
+        int bestValue = board.isWhiteTurn ? -999999 : 999999;
+        int bestmove = -1;
+        for (int move : moves) {
+            int value = miniMaxCalculation(board, MAX_DEPTH, board.isWhiteTurn);
+            if (board.isWhiteTurn) {
+                if (value >= bestValue) {
+                    bestmove = move;
+                    bestValue = value;
+                }
+            } else {
+                if (value <= bestValue) {
+                    bestmove = move;
+                    bestValue = value;
+                }
+            }
+        }
+        return bestmove;
     }
-
 
     @Override
     public String getAIName() {
