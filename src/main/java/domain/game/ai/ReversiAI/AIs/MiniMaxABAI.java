@@ -6,7 +6,7 @@ import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MobiltyEvaluation;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
+import domain.game.ai.ReversiAI.Interfaces.AI;
 
 public class MiniMaxABAI implements AI {
     private String name = "Minimax AI (Alpha Beta Pruning)";
