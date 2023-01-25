@@ -16,10 +16,11 @@ import java.util.Arrays;
 // Note: niet vergeten om zet over te slaan te implementeren
 public class MiniMaxAI implements AI {
 
-    private int MAX_DEPTH;
+    private final int MAX_DEPTH;
     private String name = "Minimax AI";
     public MiniMaxAI(int depth) {
         this.MAX_DEPTH = depth;
+        System.out.println(this.MAX_DEPTH);
     }
 
     private int miniMaxCalculation(BoardPosition board, int depth, boolean isMax) {
