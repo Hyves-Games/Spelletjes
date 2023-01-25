@@ -2,28 +2,24 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Evaluation.CornersEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MobiltyEvaluation;
-import domain.game.ai.ReversiAI.Heuristics.MobilityHeuristic;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
-import domain.game.ai.ReversiAI.Interfaces.AI;
+import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
 
-import java.util.Arrays;
-
-// Note: niet vergeten om zet over te slaan te implementeren
-public class MiniMaxAI implements AI {
-
+public class MiniMaxABAI implements AI {
+    private String name = "Minimax AI (Alpha Beta Pruning)";
     private final int MAX_DEPTH;
-    private String name = "Minimax AI";
-    public MiniMaxAI(int depth) {
+    public MiniMaxABAI(int depth) {
         this.MAX_DEPTH = depth;
-        System.out.println(this.MAX_DEPTH);
+    }
+    @Override
+    public String getAIName() {
+        return this.name;
     }
 
-    private int miniMaxCalculation(BoardPosition board, int depth, boolean isMax) {
+    private int miniMaxCalculation(BoardPosition board, int depth, int alpha, int beta, boolean isMax) {
         int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
         if (depth == 0 || (board.gameState != null)) {
             int mobility = MobiltyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn);
@@ -33,7 +29,7 @@ public class MiniMaxAI implements AI {
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {
-            int score = miniMaxCalculation(board, depth-1, !isMax);
+            int score = miniMaxCalculation(board, depth-1, alpha, beta, !isMax);
             if (isMax) {
                 if (score > bestValue) {
                     bestValue = score;
@@ -48,25 +44,23 @@ public class MiniMaxAI implements AI {
         if (isMax) {
             for (int move : moves) {
                 BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
-                int score = miniMaxCalculation(movePlaced, depth-1, false);
-//                System.out.println(this.getAIName() + ":");
-//                System.out.println("Depth: " + depth + " Score: " + score);
-                if (score > bestValue)
+                alpha = Math.max(alpha, miniMaxCalculation(movePlaced, depth-1, alpha, beta, false));
+                if (alpha >= beta)
                 {
-                    bestValue = score;
-//                    System.out.println("Best value: " + bestValue);
+                    break;
                 }
             }
+            return alpha;
         } else {
             for (int move : moves) {
                 BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
-                int score = miniMaxCalculation(movePlaced, depth-1, true);
-                if (score < bestValue) {
-                    bestValue = score;
+                beta = Math.min(beta, miniMaxCalculation(movePlaced, depth-1, alpha, beta, true));
+                if (beta <= alpha) {
+                    break;
                 }
             }
+            return beta;
         }
-        return bestValue;
     }
 
     @Override
@@ -78,32 +72,13 @@ public class MiniMaxAI implements AI {
         int bestmove = -1;
         for (int i = 0; i < moves.length; i++) {
             BoardPosition tempBoard = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, moves[i]);
-            int value = miniMaxCalculation(tempBoard, MAX_DEPTH, true);
-//            System.out.println("i = " + i + ": " + value);
+            int value = miniMaxCalculation(tempBoard, MAX_DEPTH, -Integer.MAX_VALUE, Integer.MAX_VALUE, true);
             if (value > bestValue) {
                 bestmove = moves[i];
-//                System.out.println("currently best move: " + bestmove);
                 bestValue = value;
             }
-//            if (tempBoard.isWhiteTurn) {
-//                if (value >= bestValue) {
-//                    bestmove = move;
-//                    bestValue = value;
-//                }
-//            } else {
-//                if (value <= bestValue) {
-//                    bestmove = move;
-//                    bestValue = value;
-//                }
-//            }
         }
-//        System.out.println("Best move: " + bestmove);
         return bestmove;
-    }
-
-    @Override
-    public String getAIName() {
-        return this.name;
     }
     @Override
     public void setAIName(String name) {
