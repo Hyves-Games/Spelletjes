@@ -50,6 +50,7 @@ public class AIBattle {
             while (true) {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 
+                // Print board for debugging
                 //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
 
                 // (SLOW) test accuracy of fast bitwise move-finder compared to slower and accurate iterative move-finder
@@ -58,7 +59,6 @@ public class AIBattle {
 //                    System.out.println("fast: " + Arrays.toString(moves) + "accurate: " + Arrays.toString(accurateResult));
 //                    throw new Exception("FAST MOVE FINDER WRONG RESULT");
 //                };
-
 
                 if (moves.length == 0) {
                     if (wasPass) {
