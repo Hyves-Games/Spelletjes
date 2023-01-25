@@ -83,6 +83,13 @@ public class MoveFinderFast {
         return LongToMoves.convert(generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces));
     }
 
+    public static boolean[] findAvailableMoves(Integer[] board) {
+        long whiteLong = IntArrayToLong.convert(board, 1);
+        long blackLong = IntArrayToLong.convert(board, -1);
+
+        return LongToBoolArray.convert(generateMoves(whiteLong, blackLong));
+    }
+
     // REMOVE
     public static long findAvailableMoves(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, boolean test) {
         return generateMoves(isWhiteTurn ? playerWhitePieces : playerBlackPieces, isWhiteTurn ? playerBlackPieces : playerWhitePieces);
