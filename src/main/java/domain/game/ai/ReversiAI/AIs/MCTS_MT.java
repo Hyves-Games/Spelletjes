@@ -2,8 +2,9 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
-import domain.game.ai.ReversiAI.Heuristics.GreedyEvaluation;
-import domain.game.ai.ReversiAI.SuperClasses.AI;
+import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
+import domain.game.ai.ReversiAI.Interfaces.AI;
+import support.enums.GameStrategyEnum;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -64,7 +65,7 @@ class Worker extends Thread {
         int[] threadWins = new int[boardSquareCount];
         for (int ii = 1; ii < 30000000; ii++) {
             // 'simulate' move
-            GreedyEvaluation.evaluate(test3, test3, true);
+            GreedyEvaluation.evaluate(test3, test3);
             MakeMove.makeMove(test1, test2, true, 42);
             MoveFinderFast.findAvailableMoves(test3, test3, true);
             if (ii % 60 == 0) { // Assume every game takes 60 moves
@@ -80,13 +81,27 @@ class Worker extends Thread {
     }
 }
 
-public class MCTS_MT extends AI {
-    public static int getBestMove(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn, int maxTimeSeconds, int headroomMilliSeconds) {
+public class MCTS_MT implements AI {
+    private String name = "MonteCarloTreeSearch (multithreaded)";
+    public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return 0;
     }
 
     public String getAIName() {
-        return "MonteCarloTreeSearch (multithreaded)";
+        return this.name;
+    }
+
+    public void setAIDepth(int depth) {
+    }
+
+    @Override
+    public int getAIDepth() {
+        return 0;
+    }
+
+    @Override
+    public void setAIName(String name) {
+        this.name = name;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -110,5 +125,10 @@ public class MCTS_MT extends AI {
         System.out.println("search counter wins: " + sc.getWins(1));
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration total");
+    }
+
+    @Override
+    public GameStrategyEnum getGameStrategy() {
+        return GameStrategyEnum.MC_TREE_SEARCH_MT;
     }
 }

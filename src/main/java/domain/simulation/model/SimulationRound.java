@@ -18,6 +18,12 @@ public class SimulationRound extends AbstractModel<SimulationRound> {
 
     public SimulationRound() {}
 
+    public SimulationRound(Integer totalRounds, Player<?> playerOne, Player<?> playerTwo) {
+        this.totalRounds = totalRounds;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+    }
+
     public Integer getTotalRounds() {
         return totalRounds;
     }

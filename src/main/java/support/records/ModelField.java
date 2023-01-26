@@ -176,7 +176,12 @@ public record ModelField(Field field, AbstractModel<?> model) {
 
     public Object getValue() {
         try {
-            return this.field.get(this.model);
+            Object value = this.field.get(this.model);
+            if (this.isEnum() && value != null) {
+                return value.toString();
+            }
+
+            return value;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
+import support.enums.GameEndStateEnum;
 
 import static domain.game.ai.ReversiAI.Constants.Constants.*;
 
@@ -66,15 +67,15 @@ public class MakeMove {
 
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
 
-        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
+        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), !isWhiteTurn);
     }
 
-    public static BoardPosition makeMove(Integer[] board, boolean isWhiteTurn, int moveIndex) {
+    public static BoardPosition makeMove(Integer[] board, boolean isWhiteTurn, int moveIndex, GameEndStateEnum gameState) {
         boolean[] whiteBoolean = IntArrayToBoolean.convert(board, 1);
         boolean[] blackBoolean = IntArrayToBoolean.convert(board, -1);
 
         makeMove(whiteBoolean, blackBoolean, isWhiteTurn, moveIndex);
 
-        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn);
+        return new BoardPosition(BoolArrayToLong.convert(whiteBoolean), BoolArrayToLong.convert(blackBoolean), isWhiteTurn, gameState);
     }
 }
