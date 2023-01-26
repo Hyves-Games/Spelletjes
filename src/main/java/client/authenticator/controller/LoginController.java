@@ -52,7 +52,7 @@ public class LoginController extends AbstractController {
         SceneEnum.SETTING.switchTo();
     }
 
-    public void onTournamentClick() {
+    public void onTournamentClick() throws ServerConnectionFailedException, FailedToCreateAIException {
         Auth.setPlayer(new AI());
 
         SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();

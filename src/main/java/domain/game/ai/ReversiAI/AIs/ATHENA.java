@@ -27,7 +27,7 @@ public class ATHENA implements AI {
     }
 
     private int EVAL(long myPieces, long opponentPieces) {
-        return StaticEvaluation.evaluate(myPieces, opponentPieces);
+        return MobilityEvaluation.evaluate(myPieces, opponentPieces);
     }
 
     private int sortMoves() {
