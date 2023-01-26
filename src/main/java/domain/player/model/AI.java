@@ -10,16 +10,20 @@ import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
 import support.helpers.AIResponseHandler;
 import support.services.Server;
-
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.RandomAccess;
 
 public class AI extends Player<AI> {
     private Server connection;
 
     protected Timestamp updatedAt;
     protected Timestamp createdAt;
+    private final ArrayList<String> winLoss = new ArrayList<String>();
 
-    public AI() {
+    public AI() throws ServerConnectionFailedException, FailedToCreateAIException {
+        super(createUsername());
+
         if (this.getUsername() == null) {
             this.setUsername(AI.createUsername());
         }
@@ -90,5 +94,13 @@ public class AI extends Player<AI> {
 
     public Server getConnection() {
         return connection;
+    }
+
+    public void setWinLoss(String status) {
+        this.winLoss.add(status);
+    }
+
+    public ArrayList<String> getWinLoss() {
+        return this.winLoss;
     }
 }

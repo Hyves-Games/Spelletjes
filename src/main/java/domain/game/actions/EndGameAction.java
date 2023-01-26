@@ -1,5 +1,6 @@
 package domain.game.actions;
 
+import domain.player.model.AI;
 import domain.log.helpers.LogHandler;
 import domain.player.model.Player;
 import support.abstracts.AbstractGameAction;
@@ -27,11 +28,20 @@ public class EndGameAction extends AbstractGameAction {
 
     @Override
     protected void handler() {
-        AbstractGameBoard gameBoard = this.player.getGameBoard();
+        AbstractGameBoard<?> gameBoard = this.player.getGameBoard();
 
         GameEndStateEnum endStateEnum = GameEndStateEnum.valueOf(this.type.name());
 
         gameBoard.setEndState(endStateEnum);
         gameBoard.setGameEnd();
+
+        if (this.player instanceof AI) {
+            String player = gameBoard.getPlayer().getUsername();
+            String opponent = gameBoard.getOpponent().getUsername();
+
+            ((AI) this.player).setWinLoss(
+                    player + " VS " + opponent + " => " + this.type.toString().toLowerCase()
+            );
+        }
     }
 }

@@ -61,6 +61,8 @@ public class TicTacToeController extends AbstractGameBoardController {
     }
 
     public void onLeaveClick(ActionEvent event) {
+
+
         Stage stage = SceneSwitcher.getInstance().getStage();
 
         Alert.AlertType type = Alert.AlertType.CONFIRMATION;
@@ -72,13 +74,14 @@ public class TicTacToeController extends AbstractGameBoardController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.get() == ButtonType.OK) {
+            SceneEnum.LOBBY.switchTo();
+
             new StopGameAction();
 
             if (Auth.getLastGameMode().equals(GameModeEnum.PVA)) {
                 Application.removeAI(this.gameBoard.getOpponent());
             }
 
-            SceneEnum.LOBBY.switchTo();
         }
     }
 
@@ -106,6 +109,11 @@ public class TicTacToeController extends AbstractGameBoardController {
     }
 
     protected void showEndScreen() {
+        
+        if(SceneSwitcher.getInstance().getScene() == SceneEnum.LOBBY) {
+            return;
+        }
+
         GameModeEnum GameMode = Auth.getLastGameMode();
         Stage stage = SceneSwitcher.getInstance().getStage();
 
