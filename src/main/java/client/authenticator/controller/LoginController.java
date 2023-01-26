@@ -53,8 +53,12 @@ public class LoginController extends AbstractController {
     }
 
     public void onTournamentClick() {
-        Auth.setPlayer(new AI());
+        try {
+            Auth.setPlayer(new AI());
 
-        SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();
+            SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();
+        } catch (ServerConnectionFailedException | FailedToCreateAIException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
