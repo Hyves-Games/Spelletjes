@@ -15,12 +15,12 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 5;
-        AI AIOne = new RandomAI();
-//        AI AIOne = new MiniMaxABAI(2);
-        AI AITwo = new MiniMaxABAI(7);
-//        AIOne.setAIName("Minimax Depth 2");
-        AITwo.setAIName("Minimax Depth 7 (ALPHA BETA)");
+        int GameCount = 1000; // Amount of games to be played
+        int RandomInitialMoveCount = 6; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
+        AI AIOne = new ATHENA(3);
+        AI AITwo = new ATHENA(5);
+        AIOne.setAIName("ATHENA, depth 3");
+        AITwo.setAIName("ATHENA, depth 5");
         //////////////////////////////
 
         int AIOneWinCount = 0;
@@ -39,6 +39,7 @@ public class AIBattle {
         // Run the games
         AI WhiteAI = AIOne;
         AI BlackAI = AITwo;
+        AI RandomAI = new RandomAI();
 
         long start = System.currentTimeMillis();
         for (int i = 1; i <= GameCount; i++) {
@@ -49,6 +50,7 @@ public class AIBattle {
             // Play a round
             boolean isWhiteTurn = false;
             boolean wasPass = false;
+            int randomMovesLeft = RandomInitialMoveCount;
             while (true) {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 
@@ -73,6 +75,11 @@ public class AIBattle {
                 } else {
                     // A move can be played
                     AI selectedAI = isWhiteTurn ? WhiteAI : BlackAI;
+                    if (randomMovesLeft > 0) {
+                        randomMovesLeft += -1;
+                        selectedAI = RandomAI;
+                    }
+
                     wasPass = false;
                     int bestMove = selectedAI.getBestMove(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 

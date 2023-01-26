@@ -2,16 +2,11 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Evaluation.CornersEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.MobiltyEvaluation;
-import domain.game.ai.ReversiAI.Heuristics.MobilityHeuristic;
+import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Interfaces.AI;
-
-import java.util.Arrays;
 
 // Note: niet vergeten om zet over te slaan te implementeren
 public class MiniMaxAI implements AI {
@@ -24,12 +19,9 @@ public class MiniMaxAI implements AI {
     }
 
     private int miniMaxCalculation(BoardPosition board, int depth, boolean isMax) {
-        int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
+        int[] moves = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
         if (depth == 0 || (board.gameState != null)) {
-            int mobility = MobiltyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn);
-            int material = MaterialEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
-            int corners = CornersEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
-            return mobility * 10 + material * 20 + corners * 15;
+            return MobilityEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {

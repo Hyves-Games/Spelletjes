@@ -1,9 +1,8 @@
 package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
-import domain.game.ai.ReversiAI.Evaluation.CornersEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.MobiltyEvaluation;
+import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
+import domain.game.ai.ReversiAI.Evaluation.StaticEvaluation;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Interfaces.AI;
@@ -21,18 +20,11 @@ public class MiniMaxABAI implements AI {
 
     private int miniMaxCalculation(BoardPosition board, int depth, int alpha, int beta, boolean isMax) {
         int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
-//        System.out.println(board.isWhiteTurn);
-//        System.out.println(depth);
         if (depth == 0 || (board.gameState != null)) {
-//            System.out.println("got to 0");
-            int mobility = MobiltyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn);
-            int material = MaterialEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
-            int corners = CornersEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
-            return mobility * 10 + material * 20 + corners * 15;
+            return StaticEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {
-//            System.out.println("no moves");
             int score = miniMaxCalculation(board, depth-1, alpha, beta, !isMax);
             if (isMax) {
                 if (score > alpha) {
@@ -75,20 +67,18 @@ public class MiniMaxABAI implements AI {
     @Override
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         BoardPosition board = new BoardPosition(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
-//        int bestValue = board.isWhiteTurn ? -Integer.MAX_VALUE : Integer.MAX_VALUE;
+        int[] moves = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
         int bestValue = -Integer.MAX_VALUE;
-        int bestmove = -1;
+        int bestMove = -1;
         for (int i = 0; i < moves.length; i++) {
             BoardPosition tempBoard = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, moves[i]);
             int value = miniMaxCalculation(tempBoard, MAX_DEPTH, -Integer.MAX_VALUE, Integer.MAX_VALUE, true);
             if (value > bestValue) {
-                bestmove = moves[i];
+                bestMove = moves[i];
                 bestValue = value;
             }
-//            System.out.println("Move done: " + moves[i]);
         }
-        return bestmove;
+        return bestMove;
     }
     @Override
     public void setAIName(String name) {
