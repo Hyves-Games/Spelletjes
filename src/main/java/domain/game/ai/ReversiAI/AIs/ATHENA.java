@@ -16,6 +16,15 @@ public class ATHENA implements AI {
         this.maxDepth = maxDepth;
     }
 
+    public void setAIDepth(int depth) {
+        this.maxDepth = depth;
+    }
+
+    @Override
+    public int getAIDepth() {
+        return this.maxDepth;
+    }
+
     private int EVAL(long myPieces, long opponentPieces) {
         return StaticEvaluation.evaluate(myPieces, opponentPieces);
     }
@@ -111,7 +120,7 @@ public class ATHENA implements AI {
     }
 
     public String getAIName() {
-        return this.name;
+        return "ATHENA, depth: " + maxDepth;
     }
 
     public void setAIName(String name) {

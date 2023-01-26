@@ -1,5 +1,6 @@
 package domain.game.ai.ReversiAI.AIs;
 
+import domain.game.ai.ReversiAI.AIs.enums.MiniMaxStragegyEnum;
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.StaticEvaluation;
@@ -9,13 +10,26 @@ import domain.game.ai.ReversiAI.Interfaces.AI;
 
 public class MiniMaxABAI implements AI {
     private String name = "Minimax AI (Alpha Beta Pruning)";
-    private final int MAX_DEPTH;
-    public MiniMaxABAI(int depth) {
-        this.MAX_DEPTH = depth;
+    private int MAX_DEPTH;
+    private final MiniMaxStragegyEnum strategy;
+
+    public MiniMaxABAI(MiniMaxStragegyEnum strategy) {
+        this.MAX_DEPTH = strategy.getDepth();
+        this.strategy = strategy;
     }
+
     @Override
     public String getAIName() {
-        return this.name;
+        return "Minimax AI, depth: " + this.MAX_DEPTH + ", strategy: " + this.strategy;
+    }
+
+    public void setAIDepth(int depth) {
+        this.MAX_DEPTH = depth;
+    }
+
+    @Override
+    public int getAIDepth() {
+        return this.MAX_DEPTH;
     }
 
     private int miniMaxCalculation(BoardPosition board, int depth, int alpha, int beta, boolean isMax) {

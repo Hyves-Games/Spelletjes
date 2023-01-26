@@ -17,6 +17,15 @@ public class RandomAI implements AI {
         return this.name;
     }
 
+    public void setAIDepth(int depth) {
+        // Do nothing
+    }
+
+    @Override
+    public int getAIDepth() {
+        return 0;
+    }
+
     @Override
     public void setAIName(String name) {
         this.name = name;

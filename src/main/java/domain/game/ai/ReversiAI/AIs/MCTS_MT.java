@@ -90,6 +90,14 @@ public class MCTS_MT implements AI {
         return this.name;
     }
 
+    public void setAIDepth(int depth) {
+    }
+
+    @Override
+    public int getAIDepth() {
+        return 0;
+    }
+
     @Override
     public void setAIName(String name) {
         this.name = name;

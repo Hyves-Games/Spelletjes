@@ -17,4 +17,13 @@ public class GreedyAI implements AI {
     public void setAIName(String name) {
         this.name = name;
     }
+
+    public void setAIDepth(int depth) {
+        // Do nothing
+    }
+
+    @Override
+    public int getAIDepth() {
+        return 0;
+    }
 }

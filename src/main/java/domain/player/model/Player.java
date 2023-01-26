@@ -1,5 +1,6 @@
 package domain.player.model;
 
+import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.model.Game;
 import domain.player.query.PlayerQuery;
 import domain.player.table.PlayerTable;
@@ -14,12 +15,15 @@ public class Player<T> extends AbstractModel<Player<T>> {
 
     protected Game game;
 
+    protected AI ai;
+
     // db fields
     protected String username;
     private GameStrategyEnum gameStrategy;
     private Timestamp lastLogin;
 
-    public Player() {}
+    public Player() {
+    }
 
     public Player(String username) {
         this.username = username;
@@ -31,6 +35,31 @@ public class Player<T> extends AbstractModel<Player<T>> {
 
     public Player<T> setUsername(String username) {
         this.username = username;
+
+        return this;
+    }
+
+    public AI getAI() {
+        if (this.gameStrategy == null) {
+            return null;
+        }
+
+        return this.ai;
+    }
+
+    public static Player<?> createFromStrategy(GameStrategyEnum strategy) {
+        Player<?> player = new Player<>();
+        player.setGameStrategy(strategy);
+        player.setUsername(strategy.getAI().getAIName());
+
+        return player;
+    }
+
+    public Player<?> setAIDepth(int depth) {
+        if (this.ai != null) {
+            this.ai.setAIDepth(depth);
+            this.setUsername(this.ai.getAIName());
+        }
 
         return this;
     }
@@ -53,6 +82,7 @@ public class Player<T> extends AbstractModel<Player<T>> {
 
     public Player<T> setGameStrategy(GameStrategyEnum gameStrategy) {
         this.gameStrategy = gameStrategy;
+        this.ai = gameStrategy.getAI();
 
         return this;
     }
