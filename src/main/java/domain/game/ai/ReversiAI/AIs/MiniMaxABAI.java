@@ -33,14 +33,25 @@ public class MiniMaxABAI implements AI {
         return this.MAX_DEPTH;
     }
 
-    private int miniMaxCalculation(BoardPosition board, int depth, int alpha, int beta, boolean isMax) {
+    private int miniMaxCalculation(BoardPosition board, int depth, int alpha, int beta, boolean isMax, boolean hasSkipped) {
         int moves[] = MoveFinderFast.findAvailableMoves(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn);
+//        System.out.println(board.isWhiteTurn);
+//        System.out.println(depth);
         if (depth == 0 || (board.gameState != null)) {
             return StaticEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {
-            int score = miniMaxCalculation(board, depth-1, alpha, beta, !isMax);
+            if (hasSkipped) {
+                int playerLength = board.isWhiteTurn ? Long.bitCount(board.playerBlackPieces) : Long.bitCount(board.playerWhitePieces);
+                int opponentLength = board.isWhiteTurn ? Long.bitCount(board.playerWhitePieces) : Long.bitCount(board.playerBlackPieces);
+
+                if (playerLength > opponentLength) return 100000;
+                else if (playerLength < opponentLength) return -100000;
+
+                return 0;
+            }
+            int score = miniMaxCalculation(board, depth-1, alpha, beta, !isMax, true);
             if (isMax) {
                 if (score > alpha) {
 //                    bestValue = score;
@@ -60,7 +71,7 @@ public class MiniMaxABAI implements AI {
         if (isMax) {
             for (int move : moves) {
                 BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
-                alpha = Math.max(alpha, miniMaxCalculation(movePlaced, depth-1, alpha, beta, false));
+                alpha = Math.max(alpha, miniMaxCalculation(movePlaced, depth-1, alpha, beta, false, false));
                 if (alpha >= beta)
                 {
                     break;
@@ -70,7 +81,7 @@ public class MiniMaxABAI implements AI {
         } else {
             for (int move : moves) {
                 BoardPosition movePlaced = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, move);
-                beta = Math.min(beta, miniMaxCalculation(movePlaced, depth-1, alpha, beta, true));
+                beta = Math.min(beta, miniMaxCalculation(movePlaced, depth-1, alpha, beta, true, false));
                 if (beta <= alpha) {
                     break;
                 }
@@ -87,7 +98,7 @@ public class MiniMaxABAI implements AI {
         int bestMove = -1;
         for (int i = 0; i < moves.length; i++) {
             BoardPosition tempBoard = MakeMove.makeMove(board.playerWhitePieces, board.playerBlackPieces, board.isWhiteTurn, moves[i]);
-            int value = miniMaxCalculation(tempBoard, MAX_DEPTH, -Integer.MAX_VALUE, Integer.MAX_VALUE, true);
+            int value = miniMaxCalculation(tempBoard, MAX_DEPTH, -Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
             if (value > bestValue) {
                 bestMove = moves[i];
                 bestValue = value;
