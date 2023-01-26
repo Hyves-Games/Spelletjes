@@ -35,6 +35,6 @@ public abstract class StaticWeightsHeuristic implements Heuristic {
     }
 
     public static int getHeuristic(long minPlayerPieces, long maxPlayerPieces) {
-        return score(maxPlayerPieces);// - score(minPlayerPieces);
+        return score(maxPlayerPieces) - score(minPlayerPieces);
     }
 }
