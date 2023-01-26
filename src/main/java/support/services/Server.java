@@ -104,20 +104,21 @@ public class Server {
 //            System.out.println(this.socket.getLocalPort() + " -> " + response);
 
             switch (split[0]) {
-                case "OK":
+                case "OK" -> {
                     this.lastResponseSuccessful = true;
-
                     return new ServerResponse(null, ServerResponseEnum.OK);
-                case "ERR":
+                }
+                case "ERR" -> {
                     this.lastResponseSuccessful = false;
-
                     return new ServerResponse(null, ServerResponseEnum.ERROR);
-                case "SVR":
+                }
+                case "SVR" -> {
                     String type = !Objects.equals(split[1], "GAME") ? split[1] : split[2];
-
                     return new ServerResponse(this.parse(response), ServerResponseEnum.valueOf(type));
-                default:
+                }
+                default -> {
                     return new ServerResponse(null, ServerResponseEnum.NONE);
+                }
             }
         } catch (IllegalArgumentException $e) {
             return new ServerResponse(null, ServerResponseEnum.NONE);
