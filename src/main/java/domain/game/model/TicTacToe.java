@@ -4,10 +4,16 @@ import client.Application;
 
 import domain.game.ai.TicTacToeAI;
 import support.abstracts.AbstractGameBoard;
+import support.enums.GameEnum;
 import support.enums.SceneEnum;
 
 public class TicTacToe extends AbstractGameBoard<TicTacToe> {
     public TicTacToe() {this.generate(9);}
+
+    @Override
+    public GameEnum getGameEnum() {
+        return GameEnum.TIC_TAC_TOE;
+    }
 
     @Override
     public String getKey() {

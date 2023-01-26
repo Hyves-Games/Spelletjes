@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import domain.game.model.Game;
 import domain.game.model.Reversi;
 import domain.player.model.Player;
+import domain.player.query.PlayerQuery;
 import support.abstracts.AbstractGameAction;
 import support.abstracts.AbstractGameBoard;
 
@@ -25,13 +26,13 @@ public class ViewGameAction extends AbstractGameAction {
 
     @Override
     protected void handler() {
-        Player<?> opponent = new Player<>(this.data.get("OPPONENT").getAsString());
+        Player<?> opponent = new PlayerQuery().findOneOrCreate(this.data.get("OPPONENT").getAsString());
 
         Game game = this.player.getGame();
         AbstractGameBoard<?> gameBoard = game.getGameBoard();
 
         if (gameBoard instanceof Reversi) {
-            ((Reversi) gameBoard).setStarter(this.player.getUsername().equals(this.data.get("PLAYERTOMOVE").getAsString()));
+            gameBoard.setStarter(this.player.getUsername().equals(this.data.get("PLAYERTOMOVE").getAsString()));
         }
 
         game.start(opponent);

@@ -21,6 +21,10 @@ public class Auth {
     }
 
     public static void setPlayer(Player<?> player) {
+        if (player.isNew()) {
+            player.save();
+        }
+
         Auth.getInstance().player = player;
     }
 

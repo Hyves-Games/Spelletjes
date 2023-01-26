@@ -7,6 +7,7 @@ import domain.player.model.AI;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import support.abstracts.controllers.AbstractController;
+import support.enums.GameStrategyEnum;
 import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
 import support.exceptions.ServerConnectionFailedException;
@@ -52,12 +53,8 @@ public class LoginController extends AbstractController {
     }
 
     public void onTournamentClick() {
-        try {
-            Auth.setPlayer(new AI());
+        Auth.setPlayer(new AI());
 
-            SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();
-        } catch (ServerConnectionFailedException | FailedToCreateAIException e) {
-            throw new RuntimeException(e);
-        }
+        SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();
     }
 }

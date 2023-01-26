@@ -1,6 +1,7 @@
 package domain.player.model;
 
 import domain.game.model.Game;
+import domain.player.query.PlayerQuery;
 import domain.player.table.PlayerTable;
 import support.abstracts.AbstractGameBoard;
 import support.abstracts.AbstractModel;
