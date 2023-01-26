@@ -13,6 +13,10 @@ public class ATHENA implements AI {
     private String name = "ATHENA V0.1";
     private int maxDepth = 5;
 
+    public ATHENA() {
+
+    }
+
     public ATHENA(int maxDepth) {
         this.maxDepth = maxDepth;
     }
@@ -28,11 +32,6 @@ public class ATHENA implements AI {
 
     private int EVAL(long myPieces, long opponentPieces) {
         return 5 * MobilityEvaluation.evaluate(myPieces, opponentPieces) + 4 * StaticEvaluation.evaluate(myPieces, opponentPieces) + 2 * MaterialEvaluation.evaluate(myPieces, opponentPieces);
-    }
-
-    private int sortMoves() {
-        boolean[] b = new boolean[64];
-        return 0;
     }
 
     public int getScoreNegamax(long myPieces, long opponentPieces, int depth, boolean wasSkipped, int alpha, int beta) {
@@ -96,14 +95,13 @@ public class ATHENA implements AI {
         long opponentPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
 
         int depth = maxDepth;
-        // Dynamic depth calculation
-//        int pieceCount = Long.bitCount(myPieces & opponentPieces);
         int pieceCount = Long.bitCount(playerWhitePieces) + Long.bitCount(playerBlackPieces);
         if (pieceCount < 10) {
             depth = 6;
         } else if (pieceCount < 40) {
             depth = 5;
         }
+        // Dynamic depth calculation
 
         // Get best move using minimax for every move
         int bestScore = -999999;
@@ -111,6 +109,7 @@ public class ATHENA implements AI {
         for (int move : moves) {
             // Play a move
             BoardPosition board = MakeMoveFast.makeMove(myPieces, opponentPieces, true, move);
+
             int moveScore = getScoreNegamax(board.playerWhitePieces, board.playerBlackPieces, depth, false, bestScore, -bestScore);
             if (moveScore > bestScore) {
                 bestMove = move;

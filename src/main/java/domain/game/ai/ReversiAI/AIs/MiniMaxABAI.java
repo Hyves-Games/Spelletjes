@@ -21,7 +21,7 @@ public class MiniMaxABAI implements AI {
 
     @Override
     public String getAIName() {
-        return "Minimax AI, depth: " + this.MAX_DEPTH + ", strategy: " + this.strategy;
+        return "Minimax " + this.strategy + " (" + this.MAX_DEPTH + ")";
     }
 
     public void setAIDepth(int depth) {
