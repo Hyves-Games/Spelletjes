@@ -10,8 +10,13 @@ import support.exceptions.ServerConnectionFailedException;
 import support.helpers.AIResponseHandler;
 import support.services.Server;
 
+import java.util.ArrayList;
+import java.util.RandomAccess;
+
 public class AI extends Player<AI> {
     private Server connection;
+
+    private final ArrayList<String> winLoss = new ArrayList<String>();
 
     public AI() throws ServerConnectionFailedException, FailedToCreateAIException {
         super(createUsername());
@@ -63,5 +68,13 @@ public class AI extends Player<AI> {
 
     public Server getConnection() {
         return connection;
+    }
+
+    public void setWinLoss(String status) {
+        this.winLoss.add(status);
+    }
+
+    public ArrayList<String> getWinLoss() {
+        return this.winLoss;
     }
 }

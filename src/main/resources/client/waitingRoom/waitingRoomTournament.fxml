@@ -4,8 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane fx:controller="client.waitingRoom.controller.WaitingRoomTournamentController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.waitingRoom.controller.WaitingRoomTournamentController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -21,4 +20,14 @@
          </children>
       </VBox>
    </center>
+   <left>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="winLoss" maxWidth="365.0" prefHeight="258.0" prefWidth="276.0" style="-fx-padding: 10;" />
+         </content>
+      </ScrollPane>
+   </left>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

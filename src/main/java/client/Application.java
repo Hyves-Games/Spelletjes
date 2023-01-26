@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Application extends javafx.application.Application {
-    private static ArrayList<AI> AIList = new ArrayList<AI>();
+    private static final ArrayList<AI> AIList = new ArrayList<AI>();
 
     @Override
     public void start(Stage stage) {
