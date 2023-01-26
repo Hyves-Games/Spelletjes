@@ -144,6 +144,7 @@ public class ReversiController extends AbstractGameBoardController {
     }
 
     public void onLeaveClick(ActionEvent event) {
+
         Stage stage = SceneSwitcher.getInstance().getStage();
 
         Alert.AlertType type = Alert.AlertType.CONFIRMATION;
@@ -155,6 +156,9 @@ public class ReversiController extends AbstractGameBoardController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.get() == ButtonType.OK) {
+
+            SceneEnum.LOBBY.switchTo();
+
             new StopGameAction();
 
             if (Auth.getLastGameMode().equals(GameModeEnum.PVA)) {
@@ -163,8 +167,13 @@ public class ReversiController extends AbstractGameBoardController {
         }
     }
     protected void showEndScreen() {
+
         GameModeEnum GameMode = Auth.getLastGameMode();
         Stage stage = SceneSwitcher.getInstance().getStage();
+
+        if(SceneSwitcher.getInstance().getScene() == SceneEnum.LOBBY) {
+            return;
+        }
 
         ButtonBar.ButtonData done = ButtonBar.ButtonData.OK_DONE;
 
