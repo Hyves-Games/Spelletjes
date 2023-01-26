@@ -2,6 +2,7 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Interfaces.AI;
+import support.enums.GameStrategyEnum;
 
 import java.util.Random;
 
@@ -29,5 +30,10 @@ public class RandomAI implements AI {
     @Override
     public void setAIName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public GameStrategyEnum getGameStrategy() {
+        return GameStrategyEnum.RANDOM;
     }
 }

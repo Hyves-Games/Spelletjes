@@ -7,6 +7,7 @@ import domain.game.ai.ReversiAI.Heuristics.StaticWeightsHeuristic;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
+import support.enums.GameStrategyEnum;
 
 public class ATHENA implements AI {
     private String name = "ATHENA V0.1";
@@ -125,5 +126,10 @@ public class ATHENA implements AI {
 
     public void setAIName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public GameStrategyEnum getGameStrategy() {
+        return GameStrategyEnum.ATHENA;
     }
 }

@@ -1,6 +1,7 @@
 package domain.game.ai.ReversiAI.Testing;
 
 import domain.game.ai.ReversiAI.AIs.*;
+import domain.game.ai.ReversiAI.Converters.LongToBoardIntArray;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
@@ -10,15 +11,19 @@ import domain.game.ai.ReversiAI.Helpers.PieceCounter;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.ai.ReversiAI.Board.*;
 import domain.log.model.GameLog;
+import domain.log.model.GameSetLog;
 import domain.player.model.Player;
+import domain.player.query.PlayerQuery;
 import domain.simulation.model.Simulation;
 import domain.simulation.model.SimulationRound;
-import support.enums.GameStrategyEnum;
+import support.enums.*;
 
 import java.util.Arrays;
 
 public class AIBattle {
     public static void main(String[] args) throws Exception {
+        DatabaseTableEnum.createTables();
+
         new AIBattle().run();
     }
 
@@ -30,10 +35,10 @@ public class AIBattle {
     private int AIOneWinCount = 0;
     private int AITwoWinCount = 0;
 
-    private final Player<?> player = Player.createFromStrategy(GameStrategyEnum.ATHENA);
-    private final Player<?> opponent = Player.createFromStrategy(GameStrategyEnum.ATHENA).setAIDepth(3);
+    private final Player<?> player = new PlayerQuery().findOneOrCreate(new ATHENA(5));
+    private final Player<?> opponent = new PlayerQuery().findOneOrCreate(new ATHENA(3));
 
-    private final SimulationRound simulationRound = new SimulationRound(totalRounds, player, opponent);
+    private final SimulationRound simulationRound = new SimulationRound(totalRounds, player, opponent).save();
 
     private void createSimulation(GameLog gameLog) {
         Simulation simulation = new Simulation();
@@ -42,7 +47,7 @@ public class AIBattle {
         simulation.save();
     }
 
-    private void startSimulation(Player<?> WhiteAI, Player<?> BlackAI, GameLog log) throws Exception {
+    private void startSimulation(Player<?> whiteAI, Player<?> blackAI, GameLog log) throws Exception {
         // Set up board, default position
         long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
         long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
@@ -64,7 +69,7 @@ public class AIBattle {
                 }
             } else {
                 // A move can be played
-                AI selectedAI = isWhiteTurn ? WhiteAI.getAI() : BlackAI.getAI();
+                AI selectedAI = isWhiteTurn ? whiteAI.getAI() : blackAI.getAI();
                 if (randomMovesLeft > 0) {
                     randomMovesLeft += -1;
                     selectedAI = new RandomAI();
@@ -75,6 +80,18 @@ public class AIBattle {
 
                 BoardPosition newBoard = MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
 
+                // do game set log
+                GameSetLog logMove = new GameSetLog();
+                logMove.setBoard(LongToBoardIntArray.convert(newBoard.playerWhitePieces, newBoard.playerBlackPieces, 1, -1));
+                logMove.setGameLog(log);
+                if (isWhiteTurn) {
+                    logMove.setPlayer(whiteAI);
+                } else {
+                    logMove.setPlayer(blackAI);
+                }
+
+                logMove.save();
+
                 if ((newBoard.playerWhitePieces == playerWhitePieces) || (newBoard.playerBlackPieces == playerBlackPieces)) {
                     System.out.println("\nBoard before:");
                     BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
@@ -84,24 +101,32 @@ public class AIBattle {
                 playerWhitePieces = newBoard.playerWhitePieces;
                 playerBlackPieces = newBoard.playerBlackPieces;
             }
+
             isWhiteTurn = !isWhiteTurn;
         }
 
         // Determine winner and add to count
         if (PieceCounter.countPieces(playerWhitePieces) > PieceCounter.countPieces(playerBlackPieces)) {
+            log.setState(GameEndStateEnum.WIN);
+
             // White wins
             if (roundCount % 2 == 1) {
                 AIOneWinCount++;
             } else {
                 AITwoWinCount++;
             }
-        } else {
+        } else if (PieceCounter.countPieces(playerWhitePieces) < PieceCounter.countPieces(playerBlackPieces)) {
+            log.setState(GameEndStateEnum.LOSS);
+
             // Black wins
             if (roundCount % 2 == 1) {
                 AITwoWinCount++;
             } else {
                 AIOneWinCount++;
             }
+        } else {
+            // Draw
+            log.setState(GameEndStateEnum.DRAW);
         }
 
         // Update console
@@ -137,6 +162,8 @@ public class AIBattle {
         long start = System.currentTimeMillis();
         for (int i = 1; i <= totalRounds; i++) {
             GameLog log = new GameLog();
+            log.setGame(GameEnum.REVERSI);
+            log.setGameMode(GameModeEnum.AVA);
 
 
             if (roundCount % 2 == 1) {
@@ -150,6 +177,8 @@ public class AIBattle {
                 log.setPlayer(opponent);
                 log.setOpponent(player);
             }
+
+            log.save();
 
             createSimulation(log);
         }

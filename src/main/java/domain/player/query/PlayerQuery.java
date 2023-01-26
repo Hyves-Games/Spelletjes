@@ -1,5 +1,6 @@
 package domain.player.query;
 
+import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.player.model.Player;
 import domain.player.table.PlayerTable;
 import support.abstracts.AbstractQuery;
@@ -28,6 +29,16 @@ public class PlayerQuery extends AbstractQuery<PlayerQuery> {
         if (p.isNew()) {
             p.setUsername(username);
         }
+
+        return p;
+    }
+
+    public Player<?> findOneOrCreate(AI ai) {
+        this.filterByName(ai.getAIName());
+
+        Player<?> p = (Player<?>) this.findOneOrCreate();
+
+        p.setAI(ai);
 
         return p;
     }

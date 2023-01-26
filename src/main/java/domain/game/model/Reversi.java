@@ -1,9 +1,6 @@
 package domain.game.model;
 
 import client.Application;
-import domain.game.ai.ReversiAI.AIs.MiniMaxABAI;
-import domain.game.ai.ReversiAI.AIs.MiniMaxAI;
-import domain.game.ai.ReversiAI.AIs.RandomAI;
 import domain.game.ai.ReversiAI.AIs.Tournament;
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Converters.IntArrayToLong;

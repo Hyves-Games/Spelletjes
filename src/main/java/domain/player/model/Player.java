@@ -40,11 +40,15 @@ public class Player<T> extends AbstractModel<Player<T>> {
     }
 
     public AI getAI() {
-        if (this.gameStrategy == null) {
-            return null;
-        }
-
         return this.ai;
+    }
+
+    public Player<?> setAI(AI ai) {
+        this.ai = ai;
+        this.setUsername(ai.getAIName());
+        this.setGameStrategy(ai.getGameStrategy());
+
+        return this;
     }
 
     public static Player<?> createFromStrategy(GameStrategyEnum strategy) {

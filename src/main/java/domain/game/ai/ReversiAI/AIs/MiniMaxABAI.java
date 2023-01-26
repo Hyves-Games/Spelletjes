@@ -7,6 +7,7 @@ import domain.game.ai.ReversiAI.Evaluation.StaticEvaluation;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Interfaces.AI;
+import support.enums.GameStrategyEnum;
 
 public class MiniMaxABAI implements AI {
     private String name = "Minimax AI (Alpha Beta Pruning)";
@@ -97,5 +98,22 @@ public class MiniMaxABAI implements AI {
     @Override
     public void setAIName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public GameStrategyEnum getGameStrategy() {
+        switch (this.strategy) {
+            case DYNAMIC -> {
+                return GameStrategyEnum.MINIMAX_DYNAMIC;
+            }
+            case GREEDY -> {
+                return GameStrategyEnum.MINIMAX_GREEDY;
+            }
+            case HIGH -> {
+                return GameStrategyEnum.MINIMAX_HIGH;
+            }
+        }
+
+        return null;
     }
 }

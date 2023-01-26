@@ -8,7 +8,8 @@ import support.helpers.Auth;
 
 public enum GameModeEnum {
     PVP(SceneEnum.WAIT_ROOM),
-    PVA(SceneEnum.WAIT_ROOM_CHALLENGE);
+    PVA(SceneEnum.WAIT_ROOM_CHALLENGE),
+    AVA(SceneEnum.WAIT_ROOM_TOURNAMENT);
 
     private final SceneEnum scene;
 
