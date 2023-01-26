@@ -1,9 +1,9 @@
 package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
+import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.StaticEvaluation;
-import domain.game.ai.ReversiAI.Heuristics.StaticWeightsHeuristic;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
@@ -27,7 +27,7 @@ public class ATHENA implements AI {
     }
 
     private int EVAL(long myPieces, long opponentPieces) {
-        return MobilityEvaluation.evaluate(myPieces, opponentPieces);
+        return 5 * MobilityEvaluation.evaluate(myPieces, opponentPieces) + 4 * StaticEvaluation.evaluate(myPieces, opponentPieces) + 2 * MaterialEvaluation.evaluate(myPieces, opponentPieces);
     }
 
     private int sortMoves() {
@@ -98,19 +98,20 @@ public class ATHENA implements AI {
         int depth = maxDepth;
         // Dynamic depth calculation
 //        int pieceCount = Long.bitCount(myPieces & opponentPieces);
-//        if (pieceCount < 10) {
-//            depth = 6;
-//        } else if (pieceCount < 40) {
-//            depth = 5;
-//        } else {
-//            depth = 7;
-//        }
+        int pieceCount = Long.bitCount(playerWhitePieces) + Long.bitCount(playerBlackPieces);
+        if (pieceCount < 10) {
+            depth = 6;
+        } else if (pieceCount < 40) {
+            depth = 5;
+        }
 
         // Get best move using minimax for every move
         int bestScore = -999999;
         int bestMove = -1;
         for (int move : moves) {
-            int moveScore = getScoreNegamax(myPieces, opponentPieces, depth, false, bestScore, -bestScore);
+            // Play a move
+            BoardPosition board = MakeMoveFast.makeMove(myPieces, opponentPieces, true, move);
+            int moveScore = getScoreNegamax(board.playerWhitePieces, board.playerBlackPieces, depth, false, bestScore, -bestScore);
             if (moveScore > bestScore) {
                 bestMove = move;
                 bestScore = moveScore;
