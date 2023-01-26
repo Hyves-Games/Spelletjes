@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class AIBattleClassic {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 1; // Amount of games to be played
+        int GameCount = 100; // Amount of games to be played
         int RandomInitialMoveCount = 4; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
         AI AIOne = new RandomAI();
         AI AITwo = new MonteCarlo(10000);
@@ -55,7 +55,7 @@ public class AIBattleClassic {
                 int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
 
                 // Print board for debugging
-                BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
+                //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
 
                 // (SLOW) test accuracy of fast bitwise move-finder compared to slower and accurate iterative move-finder
 //                int[] accurateResult = MoveFinder.findAvailableMoves(LongToBoolArray.convert(playerWhitePieces), LongToBoolArray.convert(playerBlackPieces), isWhiteTurn);

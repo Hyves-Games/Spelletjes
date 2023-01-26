@@ -56,6 +56,7 @@ public class MonteCarlo implements AI {
             isWhiteTurn = !isWhiteTurn;
         }
 
+        // Return result of the game
         int whitePieceCount = Long.bitCount(whitePieces);
         int blackPieceCount = Long.bitCount(blackPieces);
         if (whitePieceCount > blackPieceCount) {
@@ -64,7 +65,6 @@ public class MonteCarlo implements AI {
             return -1;
         }
 
-        // Return result of the game
         return 0;
     }
 
@@ -89,7 +89,6 @@ public class MonteCarlo implements AI {
 
             moveScores[moveIndexIndex] += result;
         }
-        System.out.println("scores: " + Arrays.toString(moveScores));
         // Return move with the highest score
         int bestMove = -1;
         int bestScore = -99999999;
