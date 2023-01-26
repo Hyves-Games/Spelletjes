@@ -8,7 +8,6 @@ public class BoardPosition {
     public boolean isWhiteTurn;
     public GameEndStateEnum gameState;
 
-    public BoardPosition() {}
     public BoardPosition(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         this.playerWhitePieces = playerWhitePieces;
         this.playerBlackPieces = playerBlackPieces;

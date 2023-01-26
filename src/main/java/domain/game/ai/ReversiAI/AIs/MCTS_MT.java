@@ -3,7 +3,8 @@ package domain.game.ai.ReversiAI.AIs;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.AI;
+import domain.game.ai.ReversiAI.Interfaces.AI;
+import support.enums.GameStrategyEnum;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -90,6 +91,14 @@ public class MCTS_MT implements AI {
         return this.name;
     }
 
+    public void setAIDepth(int depth) {
+    }
+
+    @Override
+    public int getAIDepth() {
+        return 0;
+    }
+
     @Override
     public void setAIName(String name) {
         this.name = name;
@@ -116,5 +125,10 @@ public class MCTS_MT implements AI {
         System.out.println("search counter wins: " + sc.getWins(1));
 
         System.out.println((System.currentTimeMillis() - start) + " ms duration total");
+    }
+
+    @Override
+    public GameStrategyEnum getGameStrategy() {
+        return GameStrategyEnum.MC_TREE_SEARCH_MT;
     }
 }

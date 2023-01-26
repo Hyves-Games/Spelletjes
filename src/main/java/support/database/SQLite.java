@@ -18,7 +18,7 @@ public class SQLite {
         try {
             this.connection = DriverManager.getConnection(DB_PATH);
 
-            this.connection.createStatement().executeQuery("PRAGMA foreign_keys = ON;");
+//            this.connection.createStatement().executeQuery("PRAGMA foreign_keys = ON;");
         } catch (SQLException e) {
 
         }

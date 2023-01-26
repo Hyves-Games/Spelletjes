@@ -1,15 +1,10 @@
 package domain.game.ai.ReversiAI.Heuristics;
 
-import domain.game.ai.ReversiAI.SuperClassesInterfaces.Heuristic;
+import domain.game.ai.ReversiAI.Interfaces.Heuristic;
 
-public class MaterialHeuristic implements Heuristic {
-
-    public static int GetHeuristic(long minPlayerPieces, long maxPlayerPieces) {
-        // Count the number of pieces for each player
-        int minPlayerPieceCount = Long.bitCount(minPlayerPieces);
-        int maxPlayerPieceCount = Long.bitCount(maxPlayerPieces);
-
+public abstract class MaterialHeuristic implements Heuristic {
+    public static int getHeuristic(long minPlayerPieces, long maxPlayerPieces) {
         // Return the difference in piece count as the material advantage
-        return maxPlayerPieceCount - minPlayerPieceCount;
+        return Long.bitCount(maxPlayerPieces) - Long.bitCount(minPlayerPieces);
     }
 }

@@ -1,17 +1,13 @@
 package domain.game.ai.ReversiAI.AIs;
 
-import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 import support.enums.GameStrategyEnum;
 
-import java.util.Random;
-
-public class RandomAI implements AI {
-    static Random generator = new Random();
-    private String name = "Random AI";
+public class Tournament implements AI {
+    private final AI ai = new ATHENA(5);
+    private String name = "Tournament - ATHENA AI depth 8";
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
-        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
-        return moves[generator.nextInt(moves.length)];
+        return ai.getBestMove(playerWhitePieces, playerBlackPieces, isWhiteTurn);
     }
 
     public String getAIName() {
@@ -23,6 +19,11 @@ public class RandomAI implements AI {
     }
 
     @Override
+    public GameStrategyEnum getGameStrategy() {
+        return ai.getGameStrategy();
+    }
+
+    @Override
     public int getAIDepth() {
         return 0;
     }
@@ -30,10 +31,5 @@ public class RandomAI implements AI {
     @Override
     public void setAIName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public GameStrategyEnum getGameStrategy() {
-        return GameStrategyEnum.RANDOM;
     }
 }

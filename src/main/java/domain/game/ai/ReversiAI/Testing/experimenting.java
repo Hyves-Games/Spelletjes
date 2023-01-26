@@ -7,6 +7,7 @@ import domain.game.ai.ReversiAI.Converters.BoolArrayToLong;
 import domain.game.ai.ReversiAI.Converters.IntArrayToBoolean;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Converters.LongToMoves;
+import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
 import domain.game.ai.ReversiAI.Helpers.*;
 import domain.game.ai.ReversiAI.Masks.BitMasks;
 import domain.game.ai.ReversiAI.MoveLogic.*;
@@ -42,13 +43,17 @@ public class experimenting {
 
         System.out.println("start");
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000000; i++) {
+        int n = 100000000;
+        for (int i = 0; i < n; i++) {
             //MoveFinder.findAvailableMoves(test1, test2, true); // 100M: 128000 ms (unoptimised)
 
             //MoveFinderFast.findAvailableMoves(test1, test2, true); // 100M: 13100 ms
             //BoolArrayToLong.convert(test1); // 100M: 1900 ms
 
-            MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms // R.: 55700 ms per 100 MIL P.: 52s
+            //MoveFinderFast.findAvailableMoves(test3, test4, false); // 100M: 8700 ms // R.: 55700 ms per 1000 MIL P./J.: 52s
+            //MoveFinderFast.findMoveCount(test3, test4, false);
+            //MobilityEvaluation.evaluate(test3, test4);
+
             //LongToBoolArray.convert(test4); // 100M: 2500 ms
             //LongToMoves.convert(test4); // 100M : 2750 ms
 
@@ -58,17 +63,18 @@ public class experimenting {
 
             //LongToMoves.convert(test3); // 3500 ms
 
-            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 3100 ms
+            //MakeMove.makeMove(test1, test2, true, 43); // 100M: 3000 ms
             //MakeMove.makeMove(test3, test4, true, 13); // 100M: 14750 ms
-//            MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4550 ms
+            //MakeMoveFast.makeMove(test3, test4, false, 13); // 100M: 4300 ms
+            //MakeMove.testRemove(test1, test2, true, 43); // 100M: 3000 ms
 
             //StateHasher.Hash(test1, test2, true); // 100M: 5950 ms
             //StateHasher.Hash(test3, test3, true); // 100M: 7 ms
             //h.put(i, test3); // 100M: 2800 ms?
         }
-        System.out.println((System.currentTimeMillis() - start) + " ms duration");
+        System.out.println((System.currentTimeMillis() - start) + " ms, n = " + n);
 
-        BoardPrinter.printBoard(test5, test6);
+        BoardPrinter.printBoard(test3, test4);
         //BoardPosition resolved = MakeMoveFast.makeMove(test3, test4, false, 13);
         //BoardPrinter.printBoard(resolved.playerWhitePieces, resolved.playerBlackPieces);
 
@@ -79,10 +85,10 @@ public class experimenting {
         //long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
         //int[] availableMoves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, true);
 
-        System.out.println("available moves experimental: " + MoveFinderExperimental.findAvailableMoves(test5, test6, false, true));
-        System.out.println("available moves fast: " + Arrays.toString(MoveFinderFast.findAvailableMoves(test5, test6, false)));
-        System.out.println("available moves fast: " + MoveFinderFast.findAvailableMoves(test5, test6, false, true));
-        System.out.println("available moves slow: " + Arrays.toString(MoveFinder.findAvailableMoves(LongToBoolArray.convert(test5), LongToBoolArray.convert(test6), false)));
+        //System.out.println("available moves fast: " + Arrays.toString(MoveFinderFast.findAvailableMoves(test5, test6, false)));
+        //System.out.println("available moves slow: " + Arrays.toString(MoveFinder.findAvailableMoves(LongToBoolArray.convert(test5), LongToBoolArray.convert(test6), false)));
+
+        System.out.println(Arrays.equals(MoveFinderFast.findAvailableMoves(test5, test6, false), MoveFinder.findAvailableMoves(LongToBoolArray.convert(test5), LongToBoolArray.convert(test6), false)) ? "Fast move finder is accurate." : "Fast move finder is NOT accurate.");
 
         //System.out.println("bitset: " + b);
 

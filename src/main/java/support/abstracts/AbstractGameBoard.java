@@ -1,15 +1,21 @@
 package support.abstracts;
 
 import domain.game.exceptions.MoveNotAllowedException;
+import domain.log.helpers.LogHandler;
+import domain.log.model.GameLog;
 import domain.player.model.AI;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
 import support.actions.MoveServerAction;
 import support.enums.GameEndStateEnum;
+import support.enums.GameEnum;
+import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
+import support.helpers.Auth;
 import support.services.Server;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public abstract class AbstractGameBoard<T> {
     private Server connection;
@@ -45,6 +51,8 @@ public abstract class AbstractGameBoard<T> {
             this.useAI = true;
             this.connection = ((AI) player).getConnection();
         }
+
+        LogHandler.updateBoard(this.board);
     }
 
     public Player<?> getPlayer() {
@@ -91,6 +99,8 @@ public abstract class AbstractGameBoard<T> {
     public void setGameEnd() {
         this.ended = true;
 
+        LogHandler.updateBoard(this.board);
+
         this.runEventListeners(this.eventListenersForEnd);
     }
 
@@ -105,6 +115,8 @@ public abstract class AbstractGameBoard<T> {
     public void doMove(Integer index) {
         if (this.checkMove(index) && this.isPlayerTurn()) {
             try {
+                this.setOpponentTurn();
+
                 if (this.useAI) {
                     new MoveServerAction(index, this.connection);
                 } else {
@@ -122,6 +134,8 @@ public abstract class AbstractGameBoard<T> {
 
     public void setMove(Integer index, Integer value) {
         this.board.set(index, value);
+
+        LogHandler.makeMove(player, this.board);
 
         this.runLogic(index, value);
 
@@ -147,6 +161,8 @@ public abstract class AbstractGameBoard<T> {
     protected void runLogic(Integer index, Integer value) {}
 
     public abstract String getKey();
+
+    public abstract GameEnum getGameEnum();
 
     public abstract SceneEnum getScene();
 

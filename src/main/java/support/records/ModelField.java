@@ -107,6 +107,10 @@ public record ModelField(Field field, AbstractModel<?> model) {
     }
 
     private void setEnumValue(String value) throws IllegalAccessException {
+        if (value == null) {
+            return;
+        }
+
         this.field.set(this.model, createEnumInstance(value, this.getType()));
     }
 
@@ -155,13 +159,13 @@ public record ModelField(Field field, AbstractModel<?> model) {
     public void setValue(ResultSet resultSet) {
         try {
             if (this.isEnum()) {
-                this.setEnumValue(resultSet.toString());
+                this.setEnumValue(resultSet.getString(this.databaseName()));
             } else if (this.isModel()) {
                 this.setModelValue(resultSet.getInt(this.databaseName()));
             } else if (this.isTimestamp()) {
                 this.field.set(this.model, resultSet.getTimestamp(this.databaseName()));
             } else if (this.isArrayList()) {
-                this.setArrayList(resultSet.toString());
+                this.setArrayList(resultSet.getString(this.databaseName()));
             } else {
                 this.field.set(this.model, resultSet.getObject(this.databaseName()));
             }
@@ -172,7 +176,12 @@ public record ModelField(Field field, AbstractModel<?> model) {
 
     public Object getValue() {
         try {
-            return this.field.get(this.model);
+            Object value = this.field.get(this.model);
+            if (this.isEnum() && value != null) {
+                return value.toString();
+            }
+
+            return value;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -239,6 +248,10 @@ public record ModelField(Field field, AbstractModel<?> model) {
     }
 
     public String getInsertType() {
+        if (this.getValue() == null) {
+            return "Null";
+        }
+
         if (this.isEnum()) {
             return "String";
         }
@@ -257,11 +270,11 @@ public record ModelField(Field field, AbstractModel<?> model) {
 
     public PreparedStatement prepareStatement(PreparedStatement preparedStatement, int index) throws SQLException {
         switch (this.getInsertType()) {
-            case "String" -> preparedStatement.setString(index, (String) this.getValue());
+            case "String" -> preparedStatement.setString(index, (String) this.getValue().toString());
             case "Integer" -> preparedStatement.setInt(index, (Integer) this.getValue());
             case "Boolean" -> preparedStatement.setBoolean(index, (Boolean) this.getValue());
             case "Timestamp" -> preparedStatement.setTimestamp(index, (Timestamp) this.getValue());
-            case "Serializable", "arraylist" -> preparedStatement.setString(index, Utils.convertSerializableToString((Serializable) this.getValue()));
+            case "Serializable", "ArrayList" -> preparedStatement.setString(index, Utils.convertSerializableToString((Serializable) this.getValue()));
             case "ForeignKey" -> preparedStatement.setInt(index, this.getModelId());
             case "Null" -> preparedStatement.setNull(index, 0);
             default -> throw new RuntimeException("Unsupported field type: " + field.getType().getSimpleName());

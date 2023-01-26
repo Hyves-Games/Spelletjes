@@ -3,6 +3,7 @@ package support.actions;
 import com.google.gson.JsonObject;
 import domain.game.exceptions.FailedToAcceptChallengeException;
 import domain.game.model.Game;
+import domain.log.model.GameLog;
 import domain.player.model.AI;
 import domain.player.model.Player;
 import support.abstracts.AbstractServerAction;

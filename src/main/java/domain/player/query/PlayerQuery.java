@@ -1,5 +1,7 @@
 package domain.player.query;
 
+import domain.game.ai.ReversiAI.Interfaces.AI;
+import domain.player.model.Player;
 import domain.player.table.PlayerTable;
 import support.abstracts.AbstractQuery;
 import support.abstracts.AbstractTable;
@@ -17,5 +19,27 @@ public class PlayerQuery extends AbstractQuery<PlayerQuery> {
 
     public AbstractQuery<PlayerQuery> filterByGameStrategy(GameStrategyEnum strategyEnum) {
         return this.where("game_strategy", "=", strategyEnum.toString());
+    }
+
+    public Player<?> findOneOrCreate(String username) {
+        this.filterByName(username);
+
+        Player<?> p = (Player<?>) this.findOneOrCreate();
+
+        if (p.isNew()) {
+            p.setUsername(username);
+        }
+
+        return p;
+    }
+
+    public Player<?> findOneOrCreate(AI ai) {
+        this.filterByName(ai.getAIName());
+
+        Player<?> p = (Player<?>) this.findOneOrCreate();
+
+        p.setAI(ai);
+
+        return p;
     }
 }
