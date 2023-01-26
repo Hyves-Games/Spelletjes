@@ -15,12 +15,12 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 1000; // Amount of games to be played
-        int RandomInitialMoveCount = 6; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
+        int GameCount = 100; // Amount of games to be played
+        int RandomInitialMoveCount = 4; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
         AI AIOne = new ATHENA(3);
-        AI AITwo = new ATHENA(5);
+        AI AITwo = new ATHENA(8);
         AIOne.setAIName("ATHENA, depth 3");
-        AITwo.setAIName("ATHENA, depth 5");
+        AITwo.setAIName("ATHENA, depth 8");
         //////////////////////////////
 
         int AIOneWinCount = 0;

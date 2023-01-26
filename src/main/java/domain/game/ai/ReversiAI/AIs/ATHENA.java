@@ -41,6 +41,7 @@ public class ATHENA implements AI {
                 int opponentPieceCount = Long.bitCount(opponentPieces);
                 int differencePieceCount = myPieceCount - opponentPieceCount; // Consider two winning (or losing) game states, favor the one with most pieces
 
+                // Calculate final score
                 if (myPieceCount > opponentPieceCount) {
                     // Win
                     return 100000 + differencePieceCount;
@@ -52,8 +53,9 @@ public class ATHENA implements AI {
                     return 0;
                 }
             } else {
-                // Skip turns
-                return getScoreNegamax(opponentPieces, myPieces, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
+                // Turn skipped
+                //@TODO: Check if this is correct
+                return -getScoreNegamax(opponentPieces, myPieces, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
             }
         }
 
