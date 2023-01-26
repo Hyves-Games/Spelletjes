@@ -1,9 +1,9 @@
 package domain.game.ai.ReversiAI.AIs.enums;
 
 public enum MiniMaxStragegyEnum {
-    HIGH(8),
-    DYNAMIC(8),
-    GREEDY(8);
+    HIGH(2),
+    DYNAMIC(2),
+    GREEDY(2);
 
     private final int depth;
 

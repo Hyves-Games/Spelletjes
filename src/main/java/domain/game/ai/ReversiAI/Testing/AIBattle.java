@@ -22,9 +22,17 @@ import java.util.Arrays;
 
 public class AIBattle {
     public static void main(String[] args) throws Exception {
-        DatabaseTableEnum.createTables();
+        AIBattle sim = new AIBattle(
+                new PlayerQuery().findOneOrCreate(new ATHENA(3)),
+                new PlayerQuery().findOneOrCreate(new ATHENA(5))
+        );
 
-        new AIBattle().run();
+        sim.run();
+    }
+
+    public AIBattle(Player<?> player, Player<?> opponent) {
+        this.player = player;
+        this.opponent = opponent;
     }
 
     private final int totalRounds = 100;
@@ -35,8 +43,8 @@ public class AIBattle {
     private int AIOneWinCount = 0;
     private int AITwoWinCount = 0;
 
-    private final Player<?> player = new PlayerQuery().findOneOrCreate(new ATHENA(5));
-    private final Player<?> opponent = new PlayerQuery().findOneOrCreate(new ATHENA(3));
+    private Player<?> player;
+    private Player<?> opponent;
 
     private final SimulationRound simulationRound = new SimulationRound(totalRounds, player, opponent).save();
 
