@@ -13,6 +13,10 @@ public class ATHENA implements AI {
     private String name = "ATHENA V0.1";
     private int maxDepth = 5;
 
+    public ATHENA() {
+
+    }
+
     public ATHENA(int maxDepth) {
         this.maxDepth = maxDepth;
     }
