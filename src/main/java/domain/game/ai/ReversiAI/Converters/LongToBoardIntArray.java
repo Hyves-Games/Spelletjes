@@ -8,8 +8,7 @@ public class LongToBoardIntArray {
         for (int i = 0; i < 64; i++) {
             if ((playerAPieces & bitMaskSingleBit[i]) != 0) {
                 board[i] = aPiecesInt;
-            }
-            if ((playerBPieces & bitMaskSingleBit[i]) != 0) {
+            } else if ((playerBPieces & bitMaskSingleBit[i]) != 0) {
                 board[i] = bPiecesInt;
             }
         }
