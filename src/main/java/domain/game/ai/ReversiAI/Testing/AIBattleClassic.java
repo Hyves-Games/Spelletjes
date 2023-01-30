@@ -1,6 +1,7 @@
 package domain.game.ai.ReversiAI.Testing;
 
 import domain.game.ai.ReversiAI.AIs.*;
+import domain.game.ai.ReversiAI.AIs.enums.MiniMaxStragegyEnum;
 import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
 import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
@@ -19,8 +20,9 @@ public class AIBattleClassic {
         //////////////////////////////
         int GameCount = 100; // Amount of games to be played
         int RandomInitialMoveCount = 4; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
-        AI AIOne = new RandomAI();
-        AI AITwo = new MonteCarlo(10000);
+        //AI AIOne = new MiniMaxABAI(MiniMaxStragegyEnum.DYNAMIC);
+        AI AIOne = new ATHENA(8);
+        AI AITwo = new ATHENA(1);
         //////////////////////////////
 
         int AIOneWinCount = 0;

@@ -31,10 +31,10 @@ public class ATHENA implements AI {
     }
 
     private int EVAL(long myPieces, long opponentPieces) {
-        return 5 * MobilityEvaluation.evaluate(myPieces, opponentPieces) + 4 * StaticEvaluation.evaluate(myPieces, opponentPieces) + 2 * MaterialEvaluation.evaluate(myPieces, opponentPieces);
+        return StaticEvaluation.evaluate(myPieces, opponentPieces);
     }
 
-    public int getScoreNegamax(long myPieces, long opponentPieces, int depth, boolean wasSkipped, int alpha, int beta) {
+    public int getScoreMinimax(long myPieces, long opponentPieces, int depth, boolean wasSkipped, int alpha, int beta) {
         if (depth == 0) {
             // Leaf node, return final evaluation
             return EVAL(myPieces, opponentPieces);
@@ -64,7 +64,7 @@ public class ATHENA implements AI {
             } else {
                 // Turn skipped
                 //@TODO: Check if this is correct
-                return -getScoreNegamax(opponentPieces, myPieces, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
+                return -getScoreMinimax(opponentPieces, myPieces, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
             }
         }
 
@@ -72,7 +72,7 @@ public class ATHENA implements AI {
         for (int move : moves) {
             // Play a move
             BoardPosition board = MakeMoveFast.makeMove(myPieces, opponentPieces, true, move);
-            int score = -getScoreNegamax(board.playerBlackPieces, board.playerWhitePieces, depth - 1, false, -beta, -alpha);
+            int score = getScoreMinimax(board.playerBlackPieces, board.playerWhitePieces, depth - 1, false, -beta, -alpha);
             maxScore = Math.max(maxScore, score);
             alpha = Math.max(alpha, score);
             if (alpha >= beta) {
@@ -95,13 +95,16 @@ public class ATHENA implements AI {
         long opponentPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
 
         int depth = maxDepth;
-        int pieceCount = Long.bitCount(playerWhitePieces) + Long.bitCount(playerBlackPieces);
-        if (pieceCount < 10) {
-            depth = 6;
-        } else if (pieceCount < 40) {
-            depth = 5;
-        }
         // Dynamic depth calculation
+        int pieceCount = Long.bitCount(playerWhitePieces) + Long.bitCount(playerBlackPieces);
+//        depth = 10;
+//        if (pieceCount > 10) {
+//            depth = 16;
+//        } else if (pieceCount > 20) {
+//            depth = 14;
+//        } else if (pieceCount > 40) {
+//            depth = 16;
+//        }
 
         // Get best move using minimax for every move
         int bestScore = -999999;
@@ -109,14 +112,12 @@ public class ATHENA implements AI {
         for (int move : moves) {
             // Play a move
             BoardPosition board = MakeMoveFast.makeMove(myPieces, opponentPieces, true, move);
-
-            int moveScore = getScoreNegamax(board.playerWhitePieces, board.playerBlackPieces, depth, false, bestScore, -bestScore);
+            int moveScore = getScoreMinimax(board.playerWhitePieces, board.playerBlackPieces, depth, false, bestScore, -bestScore);
             if (moveScore > bestScore) {
                 bestMove = move;
                 bestScore = moveScore;
             }
         }
-
         return bestMove;
     }
 

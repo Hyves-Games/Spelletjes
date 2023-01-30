@@ -2,6 +2,8 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.AIs.enums.MiniMaxStragegyEnum;
 import domain.game.ai.ReversiAI.Board.BoardPosition;
+import domain.game.ai.ReversiAI.Evaluation.DynamicEvaluation;
+import domain.game.ai.ReversiAI.Evaluation.GreedyEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
 import domain.game.ai.ReversiAI.Evaluation.StaticEvaluation;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
@@ -38,7 +40,14 @@ public class MiniMaxABAI implements AI {
 //        System.out.println(board.isWhiteTurn);
 //        System.out.println(depth);
         if (depth == 0 || (board.gameState != null)) {
-            return StaticEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
+            switch (this.strategy) {
+                case HIGH:
+                    return StaticEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
+                case GREEDY:
+                    return GreedyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
+                case DYNAMIC:
+                    return DynamicEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn ? false : true);
+            }
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;
         if (moves.length == 0) {
