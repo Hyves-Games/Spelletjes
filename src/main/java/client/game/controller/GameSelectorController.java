@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import support.abstracts.AbstractGameBoard;
 import support.enums.GameEnum;
 import support.enums.SceneEnum;
@@ -26,7 +27,6 @@ public class GameSelectorController {
             VBox gameContainer = new VBox();
             Button gameButton = new Button();
             Label gameName = new Label(gameProperties.getName());
-
             ImageView icon = this.createImage(gameProperties.getIconPath(), 60, 60);
 
             gameButton.setGraphic(icon);
@@ -36,7 +36,9 @@ public class GameSelectorController {
 
             gameContainer.getChildren().add(gameButton);
             gameContainer.getChildren().add(gameName);
+
             container.getChildren().add(gameContainer);
+            container.setSpacing(10);
         }
     }
 

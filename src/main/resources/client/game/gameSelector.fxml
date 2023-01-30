@@ -18,7 +18,7 @@
       </Text>
    </top>
    <center>
-      <HBox fx:id="container" alignment="CENTER" prefHeight="217.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="container" alignment="TOP_CENTER" prefHeight="217.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="30.0" />
          </BorderPane.margin></HBox>

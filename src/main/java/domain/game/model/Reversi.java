@@ -29,7 +29,7 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     public String getIconPath() {
-        return Application.class.getResource("assets/icons/reversi.jpg").toString();
+        return Application.class.getResource("assets/icons/reversi.png").toString();
     }
 
     @Override
