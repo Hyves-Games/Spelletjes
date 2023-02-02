@@ -19,10 +19,10 @@ public class AIBattleClassic {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
         int GameCount = 100; // Amount of games to be played
-        int RandomInitialMoveCount = 4; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
+        int RandomInitialMoveCount = 0; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
         //AI AIOne = new MiniMaxABAI(MiniMaxStragegyEnum.DYNAMIC);
-        AI AIOne = new ATHENA(8);
-        AI AITwo = new ATHENA(1);
+        AI AIOne = new RandomAI();
+        AI AITwo = new ATHENA(4);
         //////////////////////////////
 
         int AIOneWinCount = 0;
@@ -145,5 +145,6 @@ public class AIBattleClassic {
         // Print results
         System.out.println("\n" + AIOne.getAIName() + " won " + AIOneWinCount + " games.\n" + AITwo.getAIName() + " won " + AITwoWinCount + " games.");
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
+        System.out.println(((ATHENA) AITwo).nodesExplored + " nodes explored");
     }
 }

@@ -46,7 +46,7 @@ public class MiniMaxABAI implements AI {
                 case GREEDY:
                     return GreedyEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
                 case DYNAMIC:
-                    return DynamicEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces, board.isWhiteTurn ? false : true);
+                    return DynamicEvaluation.evaluate(board.isWhiteTurn ? board.playerBlackPieces : board.playerWhitePieces, board.isWhiteTurn ? board.playerWhitePieces : board.playerBlackPieces);
             }
         }
         int bestValue = isMax ? -Integer.MAX_VALUE: Integer.MAX_VALUE;

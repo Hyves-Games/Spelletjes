@@ -1,20 +1,18 @@
 package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
-import domain.game.ai.ReversiAI.Evaluation.MaterialEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.MobilityEvaluation;
-import domain.game.ai.ReversiAI.Evaluation.StaticEvaluation;
+import domain.game.ai.ReversiAI.Evaluation.*;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
 import support.enums.GameStrategyEnum;
 
 public class ATHENA implements AI {
-    private String name = "ATHENA V0.1";
+    private String name = "ATHENA";
     private int maxDepth = 5;
+    public int nodesExplored = 0;
 
     public ATHENA() {
-
     }
 
     public ATHENA(int maxDepth) {
@@ -30,56 +28,73 @@ public class ATHENA implements AI {
         return this.maxDepth;
     }
 
-    private int EVAL(long myPieces, long opponentPieces) {
-        return StaticEvaluation.evaluate(myPieces, opponentPieces);
+    private int EVAL(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
+        long maxPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
+        long minPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
+        return StaticEvaluation.evaluate(minPieces, maxPieces);
+        //return MobilityEvaluation.evaluate(minPieces, maxPieces);
     }
 
-    public int getScoreMinimax(long myPieces, long opponentPieces, int depth, boolean wasSkipped, int alpha, int beta) {
+    public int getScoreNegamax(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int depth, boolean wasSkipped, int alpha, int beta) {
+        nodesExplored++;
         if (depth == 0) {
             // Leaf node, return final evaluation
-            return EVAL(myPieces, opponentPieces);
+            return EVAL(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         }
 
         // Generate available moves
-        int[] moves = MoveFinderFast.findAvailableMoves(myPieces, opponentPieces, true);
+        int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+
         if (moves.length == 0) {
             // No move can be played
             if (wasSkipped) {
-                // Game ended, return final lose/win/draw evaluation
-                int myPieceCount = Long.bitCount(myPieces);
-                int opponentPieceCount = Long.bitCount(opponentPieces);
-                int differencePieceCount = myPieceCount - opponentPieceCount; // Consider two winning (or losing) game states, favor the one with most pieces
-
-                // Calculate final score
-                if (myPieceCount > opponentPieceCount) {
-                    // Win
-                    return 100000 + differencePieceCount;
-                } else if (myPieceCount < opponentPieceCount) {
-                    // Loss
-                    return -100000 + differencePieceCount;
+                // Game ended, calculate final score
+                long maxPiecesCount = Long.bitCount(isWhiteTurn ? playerWhitePieces : playerBlackPieces);
+                long minPiecesCount = Long.bitCount(isWhiteTurn ? playerBlackPieces : playerWhitePieces);
+                if (maxPiecesCount > minPiecesCount) {
+                    return 100000;
+                } else if (maxPiecesCount < minPiecesCount) {
+                    return -100000;
                 } else {
                     // Draw
                     return 0;
                 }
             } else {
                 // Turn skipped
-                //@TODO: Check if this is correct
-                return -getScoreMinimax(opponentPieces, myPieces, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
+                return -getScoreNegamax(playerWhitePieces, playerBlackPieces, !isWhiteTurn, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
             }
         }
 
-        int maxScore = -999999;
+//        int maxScore = -9999999;
+//        for (int move : moves) {
+//            // Play a move
+//            BoardPosition board = MakeMoveFast.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, move);
+//            int currentScore = -getScoreNegamax(board.playerWhitePieces, board.playerBlackPieces, !isWhiteTurn, depth - 1, false, -beta, -alpha);
+//            if (currentScore > maxScore) {
+//                maxScore = currentScore;
+//            }
+//            if (maxScore > alpha) {
+//                alpha = maxScore;
+//            }
+//            if (alpha >= beta) {
+//                return alpha;
+//            }
+//        }
+//
+//        //return maxScore;
+//        return alpha;
+
+        int maxScore = Integer.MIN_VALUE;
         for (int move : moves) {
             // Play a move
-            BoardPosition board = MakeMoveFast.makeMove(myPieces, opponentPieces, true, move);
-            int score = getScoreMinimax(board.playerBlackPieces, board.playerWhitePieces, depth - 1, false, -beta, -alpha);
-            maxScore = Math.max(maxScore, score);
-            alpha = Math.max(alpha, score);
+            BoardPosition board = MakeMoveFast.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, move);
+            int currentScore = -getScoreNegamax(board.playerWhitePieces, board.playerBlackPieces, !isWhiteTurn, depth - 1, false, -beta, -alpha);
+            maxScore = Math.max(maxScore, currentScore);
+            alpha = Math.max(alpha, maxScore);
             if (alpha >= beta) {
-                break;
+                return alpha;
             }
         }
-
         return maxScore;
     }
 
@@ -90,9 +105,6 @@ public class ATHENA implements AI {
         if (moves.length == 1) {
             return moves[0];
         }
-
-        long myPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
-        long opponentPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
 
         int depth = maxDepth;
         // Dynamic depth calculation
@@ -111,8 +123,8 @@ public class ATHENA implements AI {
         int bestMove = -1;
         for (int move : moves) {
             // Play a move
-            BoardPosition board = MakeMoveFast.makeMove(myPieces, opponentPieces, true, move);
-            int moveScore = getScoreMinimax(board.playerWhitePieces, board.playerBlackPieces, depth, false, bestScore, -bestScore);
+            BoardPosition board = MakeMoveFast.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, move);
+            int moveScore = getScoreNegamax(board.playerWhitePieces, board.playerBlackPieces, isWhiteTurn, depth, false, bestScore, -bestScore);
             if (moveScore > bestScore) {
                 bestMove = move;
                 bestScore = moveScore;
