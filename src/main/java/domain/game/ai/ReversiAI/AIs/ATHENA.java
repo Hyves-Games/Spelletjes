@@ -56,7 +56,7 @@ class Calculation implements Runnable {
 
 public class ATHENA implements AI {
     private String name = "ATHENA";
-    private int maxTime = 3;
+    private int maxTime = 9;
     private int maxDepth = 5; // ignored
     public int nodesExplored = 0;
 
