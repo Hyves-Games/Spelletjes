@@ -4,8 +4,8 @@ import domain.game.ai.ReversiAI.Interfaces.AI;
 import support.enums.GameStrategyEnum;
 
 public class Tournament implements AI {
-    private final AI ai = new ATHENA(5);
-    private String name = "Tournament - ATHENA AI depth 8";
+    private final AI ai = new ATHENA();
+    private String name = "Tournament - ATHENA AI";
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return ai.getBestMove(playerWhitePieces, playerBlackPieces, isWhiteTurn);
     }

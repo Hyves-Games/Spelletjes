@@ -18,7 +18,7 @@ public class Player<T> extends AbstractModel<Player<T>> {
     protected AI ai;
 
     // db fields
-    protected String username;
+    protected String username = "username";
     private GameStrategyEnum gameStrategy;
     private Timestamp lastLogin;
 
