@@ -168,6 +168,7 @@ public class ATHENA implements AI {
             thread.interrupt();
         }
         thread = new Thread(calculation);
+        thread.setPriority(9);
         thread.start();
 
         try {

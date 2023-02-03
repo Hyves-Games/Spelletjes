@@ -44,7 +44,7 @@ public class DynamicEvaluation implements Evaluation {
         int cornerScore = CornersHeuristic.getHeuristic(minPieces, maxPieces) * cornerFactor;
         int parityScore = ParityHeuristic.getHeuristic(minPieces, maxPieces) * parityFactor;
         int staticScore = StaticWeightsHeuristic.getHeuristic(minPieces, maxPieces) * staticFactor;
-        int mobilityScore = MobilityHeuristic.getHeuristic(minPieces, maxPieces) * mobilityFactor;
+        int mobilityScore = 0;//MobilityHeuristic.getHeuristic(minPieces, maxPieces) * mobilityFactor; // Removed to achieve higher depth
 
         return cornerScore + parityScore + staticScore + mobilityScore;
     }
