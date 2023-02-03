@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class AIBattleClassic {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
-        int GameCount = 100; // Amount of games to be played
+        int GameCount = 1000; // Amount of games to be played
         int RandomInitialMoveCount = 0; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
         //AI AIOne = new MiniMaxABAI(MiniMaxStragegyEnum.DYNAMIC);
         AI AIOne = new RandomAI();
