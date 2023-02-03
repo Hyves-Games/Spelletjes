@@ -169,6 +169,7 @@ public class ATHENA implements AI {
 
     private static Thread thread;
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
+        System.out.println("Calculating move...");
         Calculation calculation = new Calculation(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         if (thread != null) {
             thread.interrupt();
@@ -185,6 +186,8 @@ public class ATHENA implements AI {
 
         int result = calculation.getResult();
         calculation.stop();
+
+        System.out.println("Move chosen: " + result);
 
         return result;
 
