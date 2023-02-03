@@ -56,7 +56,7 @@ class Calculation implements Runnable {
 
 public class ATHENA implements AI {
     private String name = "ATHENA";
-    private int maxTime = 9;
+    private int maxTime = 1;
     private int maxDepth = 5; // ignored
     public int nodesExplored = 0;
 
@@ -192,7 +192,7 @@ public class ATHENA implements AI {
     }
 
     public String getAIName() {
-        return "ATHENA, depth: " + this.maxDepth;
+        return "ATHENA, iterative deepening";
     }
 
     public void setAIName(String name) {
@@ -204,13 +204,13 @@ public class ATHENA implements AI {
         return GameStrategyEnum.ATHENA;
     }
 
-    public static void main(String[] args) {
-        // Set up board, default position
-        long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
-        long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
-        ATHENA a = new ATHENA(3);
-        int bestMove = a.getBestMove(playerWhitePieces, playerBlackPieces, false);
-        System.out.println(bestMove);
-        System.out.println("nodes explored: " + a.nodesExplored);
-    }
+//    public static void main(String[] args) {
+//        // Set up board, default position
+//        long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
+//        long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
+//        ATHENA a = new ATHENA(3);
+//        int bestMove = a.getBestMove(playerWhitePieces, playerBlackPieces, false);
+//        System.out.println(bestMove);
+//        System.out.println("nodes explored: " + a.nodesExplored);
+//    }
 }

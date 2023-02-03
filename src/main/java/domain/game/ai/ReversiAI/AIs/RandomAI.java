@@ -11,6 +11,13 @@ public class RandomAI implements AI {
     private String name = "Random AI";
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         int[] moves = MoveFinderFast.findAvailableMoves(playerWhitePieces, playerBlackPieces, isWhiteTurn);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // handle interruption
+        }
+
         return moves[generator.nextInt(moves.length)];
     }
 
