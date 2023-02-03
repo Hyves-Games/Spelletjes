@@ -5,7 +5,7 @@ import support.enums.GameStrategyEnum;
 
 public class Tournament implements AI {
     private final AI ai = new ATHENA();
-    private String name = "Tournament - ATHENA AI";
+    private String name = "TournamentATHENAAI";
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         return ai.getBestMove(playerWhitePieces, playerBlackPieces, isWhiteTurn);
     }
