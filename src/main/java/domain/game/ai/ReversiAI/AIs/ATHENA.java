@@ -156,6 +156,12 @@ public class ATHENA implements AI {
             }
         }
 
+        if (bestScore >= 1000000) {
+            System.out.println("WIN GUARANTEED!");
+        } else if (bestScore <= -1000000) {
+            System.out.println("LOSS COMING!");
+        }
+
         //System.out.println("Best score: " + bestScore);
 
         return bestMove;
