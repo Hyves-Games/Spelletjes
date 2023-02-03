@@ -52,7 +52,7 @@ public abstract class AbstractGameBoard<T> {
             this.connection = ((AI) player).getConnection();
         }
 
-        LogHandler.updateBoard(this.board);
+//        LogHandler.updateBoard(this.board);
     }
 
     public Player<?> getPlayer() {
@@ -99,7 +99,7 @@ public abstract class AbstractGameBoard<T> {
     public void setGameEnd() {
         this.ended = true;
 
-        LogHandler.updateBoard(this.board);
+//        LogHandler.updateBoard(this.board);
 
         this.runEventListeners(this.eventListenersForEnd);
     }
@@ -135,7 +135,7 @@ public abstract class AbstractGameBoard<T> {
     public void setMove(Integer index, Integer value) {
         this.board.set(index, value);
 
-        LogHandler.makeMove(player, this.board);
+//        LogHandler.makeMove(player, this.board);
 
         this.runLogic(index, value);
 
