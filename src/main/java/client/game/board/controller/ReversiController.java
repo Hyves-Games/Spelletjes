@@ -1,7 +1,7 @@
 package client.game.board.controller;
 
 import client.Application;
-import support.AIs.Reversi.MoveLogic.MoveFinderFast;
+import support.ais.Reversi.MoveLogic.MoveFinderFast;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;

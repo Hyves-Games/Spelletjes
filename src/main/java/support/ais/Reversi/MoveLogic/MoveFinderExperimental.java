@@ -6,9 +6,9 @@ Moving masks and shifts out of shifting function almost quadrupled performance.
 Changing the shifts from long to byte increased performance slightly.
  */
 
-package support.AIs.Reversi.MoveLogic;
+package support.ais.Reversi.MoveLogic;
 
-import support.AIs.Reversi.Converters.*;
+import support.ais.Reversi.Converters.*;
 
 public class MoveFinderExperimental {
     static long[] directionMasks = {

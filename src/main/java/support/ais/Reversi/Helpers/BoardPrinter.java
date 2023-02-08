@@ -1,8 +1,8 @@
-package support.AIs.Reversi.Helpers;
+package support.ais.Reversi.Helpers;
 
-import support.AIs.Reversi.Converters.LongToBoolArray;
+import support.ais.Reversi.Converters.LongToBoolArray;
 
-import static support.AIs.Reversi.Constants.Constants.*;
+import static support.ais.Reversi.Constants.Constants.*;
 
 public class BoardPrinter {
     public static void printBoard(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean[] highlightPieces) {

@@ -1,11 +1,11 @@
-package support.AIs.Reversi.MoveLogic;
+package support.ais.Reversi.MoveLogic;
 
-import support.AIs.Reversi.Board.BoardPosition;
-import support.AIs.Reversi.Converters.BoolArrayToLong;
-import support.AIs.Reversi.Converters.IntArrayToBoolean;
-import support.AIs.Reversi.Converters.LongToBoolArray;
+import support.ais.Reversi.Board.BoardPosition;
+import support.ais.Reversi.Converters.BoolArrayToLong;
+import support.ais.Reversi.Converters.IntArrayToBoolean;
+import support.ais.Reversi.Converters.LongToBoolArray;
 
-import static support.AIs.Reversi.Constants.Constants.*;
+import static support.ais.Reversi.Constants.Constants.*;
 
 public class MakeMove {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};

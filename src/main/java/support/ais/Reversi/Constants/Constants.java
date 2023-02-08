@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Constants;
+package support.ais.Reversi.Constants;
 
 public class Constants {
     public static final int boardWidth = 8;

@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Converters;
+package support.ais.Reversi.Converters;
 
 public class IntArrayToBoolean {
     public static boolean[] convert(int[] intArray, int value) {

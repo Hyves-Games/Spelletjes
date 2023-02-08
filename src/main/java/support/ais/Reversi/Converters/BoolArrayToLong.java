@@ -1,6 +1,6 @@
-package support.AIs.Reversi.Converters;
+package support.ais.Reversi.Converters;
 
-import static support.AIs.Reversi.Constants.Constants.boardSquareCount;
+import static support.ais.Reversi.Constants.Constants.boardSquareCount;
 
 public class BoolArrayToLong {
     public static long convert(boolean[] b) {

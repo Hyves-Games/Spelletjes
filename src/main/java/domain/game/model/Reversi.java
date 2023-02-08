@@ -1,11 +1,11 @@
 package domain.game.model;
 
 import client.Application;
-import support.AIs.Reversi.AIs.RandomAI;
-import support.AIs.Reversi.Board.BoardPosition;
-import support.AIs.Reversi.Converters.IntArrayToLong;
-import support.AIs.Reversi.Converters.LongToBoolArray;
-import support.AIs.Reversi.MoveLogic.MakeMove;
+import support.ais.Reversi.RandomAI;
+import support.ais.Reversi.Board.BoardPosition;
+import support.ais.Reversi.Converters.IntArrayToLong;
+import support.ais.Reversi.Converters.LongToBoolArray;
+import support.ais.Reversi.MoveLogic.MakeMove;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
 import support.abstracts.AbstractGameBoard;

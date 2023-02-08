@@ -1,10 +1,10 @@
-package support.AIs.Reversi.MoveLogic;
+package support.ais.Reversi.MoveLogic;
 
-import support.AIs.Reversi.Converters.IntArrayToBoolean;
+import support.ais.Reversi.Converters.IntArrayToBoolean;
 
 import java.util.Arrays;
 
-import static support.AIs.Reversi.Constants.Constants.*;
+import static support.ais.Reversi.Constants.Constants.*;
 
 public class MoveFinder {
     static int[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};

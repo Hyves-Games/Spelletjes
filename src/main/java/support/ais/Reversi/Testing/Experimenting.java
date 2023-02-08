@@ -1,11 +1,11 @@
-package support.AIs.Reversi.Testing;
+package support.ais.Reversi.Testing;
 
-import static support.AIs.Reversi.Constants.Constants.*;
+import static support.ais.Reversi.Constants.Constants.*;
 
-import support.AIs.Reversi.Converters.LongToBoolArray;
-import support.AIs.Reversi.Converters.LongToMoves;
-import support.AIs.Reversi.Helpers.*;
-import support.AIs.Reversi.MoveLogic.*;
+import support.ais.Reversi.Converters.LongToBoolArray;
+import support.ais.Reversi.Converters.LongToMoves;
+import support.ais.Reversi.Helpers.*;
+import support.ais.Reversi.MoveLogic.*;
 
 import java.util.Arrays;
 import java.util.BitSet;

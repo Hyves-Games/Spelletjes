@@ -1,6 +1,6 @@
-package support.AIs.Reversi.AIs;
+package support.ais.Reversi;
 
-import support.AIs.Reversi.SuperClasses.AI;
+import support.ais.Reversi.AI;
 
 public class GreedyAI extends AI {
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {

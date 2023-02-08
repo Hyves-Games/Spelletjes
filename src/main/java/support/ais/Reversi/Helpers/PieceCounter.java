@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Helpers;
+package support.ais.Reversi.Helpers;
 
 public class PieceCounter {
     public static int countPieces(long playerPieces) {

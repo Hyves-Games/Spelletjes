@@ -2,7 +2,7 @@ package domain.game.model;
 
 import client.Application;
 
-import support.AIs.TicTacToe.AI;
+import support.ais.TicTacToe.AI;
 import support.abstracts.AbstractGameBoard;
 import support.enums.SceneEnum;
 

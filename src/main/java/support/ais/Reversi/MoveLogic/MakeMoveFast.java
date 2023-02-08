@@ -1,10 +1,10 @@
-package support.AIs.Reversi.MoveLogic;
+package support.ais.Reversi.MoveLogic;
 
-import support.AIs.Reversi.Board.BoardPosition;
-import support.AIs.Reversi.Masks.BitMasks;
+import support.ais.Reversi.Board.BoardPosition;
+import support.ais.Reversi.Masks.BitMasks;
 
-import static support.AIs.Reversi.Constants.Constants.boardWidth;
-import static support.AIs.Reversi.Constants.Constants.halfBoardWidth;
+import static support.ais.Reversi.Constants.Constants.boardWidth;
+import static support.ais.Reversi.Constants.Constants.halfBoardWidth;
 
 public class MakeMoveFast {
     static byte[] directionsX = {-1, 0, 1, -1, 1, -1, 0, 1};

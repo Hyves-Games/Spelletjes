@@ -1,14 +1,14 @@
-package support.AIs.Reversi.Testing;
+package support.ais.Reversi.Testing;
 
-import support.AIs.Reversi.AIs.*;
-import support.AIs.Reversi.Converters.LongToBoolArray;
-import support.AIs.Reversi.Helpers.BoardPrinter;
-import support.AIs.Reversi.MoveLogic.MakeMove;
-import support.AIs.Reversi.MoveLogic.MoveFinder;
-import support.AIs.Reversi.MoveLogic.MoveFinderFast;
-import support.AIs.Reversi.Helpers.PieceCounter;
-import support.AIs.Reversi.SuperClasses.AI;
-import support.AIs.Reversi.Board.*;
+import support.ais.Reversi.Converters.LongToBoolArray;
+import support.ais.Reversi.Helpers.BoardPrinter;
+import support.ais.Reversi.MoveLogic.MakeMove;
+import support.ais.Reversi.MoveLogic.MoveFinder;
+import support.ais.Reversi.MoveLogic.MoveFinderFast;
+import support.ais.Reversi.Helpers.PieceCounter;
+import support.ais.Reversi.AI;
+import support.ais.Reversi.Board.*;
+import support.ais.Reversi.RandomAI;
 
 import java.util.Arrays;
 

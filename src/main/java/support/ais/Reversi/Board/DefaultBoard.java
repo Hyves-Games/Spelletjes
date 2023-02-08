@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Board;
+package support.ais.Reversi.Board;
 
 public class DefaultBoard extends BoardPosition {
     public BoardPosition getBoard() {

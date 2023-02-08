@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Board;
+package support.ais.Reversi.Board;
 
 public class BoardPosition {
     public long playerWhitePieces;

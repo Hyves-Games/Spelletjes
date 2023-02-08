@@ -1,4 +1,4 @@
-package support.AIs.Reversi.SuperClasses;
+package support.ais.Reversi;
 
 public class AI {
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {

@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Converters;
+package support.ais.Reversi.Converters;
 
 public class IntArrayToLong {
     public static long convert(Integer[] a, int value) {

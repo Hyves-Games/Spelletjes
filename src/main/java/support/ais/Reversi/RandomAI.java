@@ -1,7 +1,7 @@
-package support.AIs.Reversi.AIs;
+package support.ais.Reversi;
 
-import support.AIs.Reversi.MoveLogic.MoveFinderFast;
-import support.AIs.Reversi.SuperClasses.AI;
+import support.ais.Reversi.MoveLogic.MoveFinderFast;
+import support.ais.Reversi.AI;
 
 import java.util.Random;
 

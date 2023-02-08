@@ -1,4 +1,4 @@
-package support.AIs.TicTacToe;
+package support.ais.TicTacToe;
 
 public class AI {
     final int maximisingPlayerPiece = 1;

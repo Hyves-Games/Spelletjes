@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Masks;
+package support.ais.Reversi.Masks;
 
 public class BitMasks {
     public static final long[] bitMaskSingleBit = {

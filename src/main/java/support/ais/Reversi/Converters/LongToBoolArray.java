@@ -1,6 +1,6 @@
-package support.AIs.Reversi.Converters;
+package support.ais.Reversi.Converters;
 
-import static support.AIs.Reversi.Masks.BitMasks.bitMaskSingleBit;
+import static support.ais.Reversi.Masks.BitMasks.bitMaskSingleBit;
 
 public class LongToBoolArray {
     public static boolean[] convert(long playerPieces) {

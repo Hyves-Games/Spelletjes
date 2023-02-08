@@ -1,4 +1,4 @@
-package support.AIs.Reversi.SearchAlgorithms;
+package support.ais.Reversi.SearchAlgorithms;
 
 public class MinimaxDepthLimited {
 }

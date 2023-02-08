@@ -1,13 +1,12 @@
-package support.AIs.Reversi.AIs;
+package support.ais.Reversi;
 
-import support.AIs.Reversi.MoveLogic.MakeMove;
-import support.AIs.Reversi.MoveLogic.MoveFinderFast;
-import support.AIs.Reversi.Heuristics.GreedyEvaluation;
-import support.AIs.Reversi.SuperClasses.AI;
+import support.ais.Reversi.MoveLogic.MakeMove;
+import support.ais.Reversi.MoveLogic.MoveFinderFast;
+import support.ais.Reversi.Heuristics.GreedyEvaluation;
 
 import java.util.concurrent.CountDownLatch;
 
-import static support.AIs.Reversi.Constants.Constants.boardSquareCount;
+import static support.ais.Reversi.Constants.Constants.boardSquareCount;
 
 class SearchCounter {
     private int[] wins = new int[boardSquareCount];

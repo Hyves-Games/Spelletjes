@@ -2,9 +2,9 @@
 Needs heavy optimisation for performance.
  */
 
-package support.AIs.Reversi.Helpers;
+package support.ais.Reversi.Helpers;
 
-import support.AIs.Reversi.Converters.BoolArrayToLong;
+import support.ais.Reversi.Converters.BoolArrayToLong;
 
 public class StateHasher {
     public static long Hash(boolean[] playerWhitePieces, boolean[] playerBlackPieces, boolean isWhiteTurn) {

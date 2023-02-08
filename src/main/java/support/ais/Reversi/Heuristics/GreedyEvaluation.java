@@ -1,4 +1,4 @@
-package support.AIs.Reversi.Heuristics;
+package support.ais.Reversi.Heuristics;
 
 public class GreedyEvaluation {
     public static int evaluate(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
