@@ -1,9 +1,7 @@
 package client.waitingRoom.controller;
 
-import domain.game.exceptions.GameNotImplementedException;
-import support.actions.StopGameAction;
-import support.actions.SubscribeServerAction;
-import support.enums.SceneEnum;
+import Support.Actions.StopGameAction;
+import Support.Enums.SceneEnum;
 
 public class WaitingRoomController {
     public void initialize() {

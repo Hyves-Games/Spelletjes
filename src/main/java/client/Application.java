@@ -1,27 +1,23 @@
 package client;
 
-import domain.log.model.GameLog;
-import domain.log.query.GameLogQuery;
-import domain.player.actions.LoginAction;
-import domain.player.exceptions.LoginFailedException;
-import domain.player.model.AI;
-import domain.player.model.Player;
-import domain.player.query.PlayerQuery;
-import domain.setting.enums.Settings;
-import domain.setting.model.Setting;
-import domain.setting.query.SettingQuery;
+import Domain.Player.Actions.LoginAction;
+import Domain.Player.Exceptions.LoginFailedException;
+import Domain.Player.Model.AI;
+import Domain.Player.Model.Player;
+import Domain.Setting.Enums.Settings;
+import Domain.Setting.Model.Setting;
+import Domain.Setting.Query.SettingQuery;
 import javafx.stage.Stage;
-import support.actions.ConnectServerAction;
-import support.enums.DatabaseTableEnum;
-import support.enums.SceneEnum;
-import support.exceptions.NoServerConnectionException;
-import support.exceptions.ServerConnectionFailedException;
-import support.helpers.AudioPlayer;
-import support.helpers.SceneSwitcher;
+import Support.Actions.ConnectServerAction;
+import Support.Enums.DatabaseTableEnum;
+import Support.Enums.SceneEnum;
+import Support.Exceptions.NoServerConnectionException;
+import Support.Exceptions.ServerConnectionFailedException;
+import Support.Helpers.AudioPlayer;
+import Support.Helpers.SceneSwitcher;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Application extends javafx.application.Application {
     private static final ArrayList<AI> AIList = new ArrayList<AI>();

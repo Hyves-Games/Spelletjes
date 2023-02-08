@@ -1,10 +1,10 @@
-package support.abstracts;
+package Support.Abstracts;
 
-import support.enums.SceneEnum;
-import support.exceptions.NoServerConnectionException;
-import support.helpers.Auth;
-import support.helpers.SceneSwitcher;
-import support.services.Server;
+import Support.Enums.SceneEnum;
+import Support.Exceptions.NoServerConnectionException;
+import Support.Helpers.Auth;
+import Support.Helpers.SceneSwitcher;
+import Support.Services.Server;
 
 public abstract class AbstractServerAction extends AbstractAction {
     protected Boolean skip = false;

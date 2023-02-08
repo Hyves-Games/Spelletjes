@@ -1,8 +1,9 @@
 package client.playerList.controller;
 
+import Support.Enums.GameModeEnum;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import domain.player.model.Player;
+import Domain.Player.Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -11,10 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import support.actions.ChallengeServerAction;
-import support.enums.GameEnum;
-import support.enums.SceneEnum;
-import support.helpers.Auth;
+import Support.Actions.ChallengeServerAction;
+import Support.Enums.GameEnum;
+import Support.Enums.SceneEnum;
+import Support.Helpers.Auth;
 
 public class PlayerListController {
     @FXML VBox playerContainer;
@@ -58,10 +59,15 @@ public class PlayerListController {
     }
 
     public void onInviteClick(ActionEvent event) {
-        // Hier kan de client & server verder gaan met het inviten van een player in de player variabele hieronder zit de naam van de player.
+        GameEnum game = GameEnum.TIC_TAC_TOE;
         Player<?> opponent = new Player<>(((Node)event.getSource()).getId());
 
-        new ChallengeServerAction(opponent, GameEnum.TIC_TAC_TOE.getKey());
+        Auth.setLastGame(game);
+        Auth.setLastGameMode(GameModeEnum.PVP);
+
+        game.create().setAuthPlayer();
+
+        new ChallengeServerAction(opponent, game.getKey());
 
         SceneEnum.WAIT_ROOM_CHALLENGE.switchTo();
     }

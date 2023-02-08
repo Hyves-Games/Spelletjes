@@ -1,15 +1,10 @@
 package client.waitingRoom.controller;
 
-import support.actions.StopGameAction;
-import support.enums.GameEnum;
-import support.enums.SceneEnum;
-import support.helpers.Auth;
+import Support.Actions.StopGameAction;
+import Support.Enums.SceneEnum;
+import Support.Helpers.Auth;
 
 public class WaitingRoomChallengeController {
-    public void initialize() {
-        Auth.getLastGame().create().setAuthPlayer();
-    }
-
     public void onCancel() {
         new StopGameAction();
 

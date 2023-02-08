@@ -1,7 +1,4 @@
-package support.abstracts;
-
-import support.exceptions.NoServerConnectionException;
-import support.exceptions.ServerConnectionFailedException;
+package Support.Abstracts;
 
 public abstract class AbstractAction {
     protected abstract void handler() throws Exception;

@@ -1,7 +1,7 @@
-package support.abstracts;
+package Support.Abstracts;
 
-import domain.player.model.Player;
-import support.helpers.Auth;
+import Domain.Player.Model.Player;
+import Support.Helpers.Auth;
 
 public abstract class AbstractGameAction extends AbstractAction {
     protected Player<?> player = Auth.getPlayer();

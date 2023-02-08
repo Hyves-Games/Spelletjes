@@ -209,7 +209,7 @@ buildNumber.properties
 .history
 .ionide
 
-# support for Project snippet scope
+# Support for Project snippet scope
 .vscode/*.code-snippets
 
 # Ignore code-workspaces

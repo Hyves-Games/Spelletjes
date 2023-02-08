@@ -1,7 +1,7 @@
 package client.game.controller;
 
-import domain.game.model.Reversi;
-import domain.game.model.TicTacToe;
+import Domain.Game.Model.Reversi;
+import Domain.Game.Model.TicTacToe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,11 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
-import support.abstracts.AbstractGameBoard;
-import support.enums.GameEnum;
-import support.enums.SceneEnum;
-import support.helpers.Auth;
+import Support.Abstracts.AbstractGameBoard;
+import Support.Enums.GameEnum;
+import Support.Enums.SceneEnum;
+import Support.Helpers.Auth;
 
 public class GameSelectorController {
     @FXML HBox container;
