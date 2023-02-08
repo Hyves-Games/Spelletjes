@@ -1,14 +1,14 @@
-package Support.Helpers;
+package support.helpers;
 
-import Domain.Game.Actions.EndGameAction;
-import Domain.Game.Actions.MoveGameAction;
-import Domain.Game.Actions.ViewGameAction;
-import Domain.Game.Actions.YourTurnAction;
-import Domain.Player.Actions.ChallengeCancelledAction;
-import Domain.Player.Actions.PlayerListAction;
-import Support.Actions.ChallengeAcceptServerAction;
-import Support.Records.ServerResponse;
-import Support.Services.Server;
+import domain.game.actions.EndGameAction;
+import domain.game.actions.MoveGameAction;
+import domain.game.actions.ViewGameAction;
+import domain.game.actions.YourTurnAction;
+import domain.player.actions.ChallengeCancelledAction;
+import domain.player.actions.PlayerListAction;
+import support.actions.ChallengeAcceptServerAction;
+import support.records.ServerResponse;
+import support.services.Server;
 
 public class ResponseHandler implements Runnable {
     private final Server connection = Server.getConnection();

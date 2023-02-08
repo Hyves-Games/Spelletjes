@@ -1,7 +1,7 @@
-package Support.Actions;
+package support.actions;
 
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
 
 public class GetServerPlayerListAction extends AbstractServerAction {
 

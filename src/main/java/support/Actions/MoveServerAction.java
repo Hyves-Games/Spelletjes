@@ -1,9 +1,9 @@
-package Support.Actions;
+package support.actions;
 
-import Domain.Game.Exceptions.MoveNotAllowedException;
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Services.Server;
+import domain.game.exceptions.MoveNotAllowedException;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
+import support.services.Server;
 
 public class MoveServerAction extends AbstractServerAction {
     private final int index;

@@ -1,16 +1,16 @@
 package client.settings.controller;
 
-import Domain.Setting.Enums.Settings;
+import domain.setting.enums.Settings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import Support.Abstracts.Controllers.AbstractController;
-import Support.Enums.SceneEnum;
-import Support.Helpers.AudioPlayer;
-import Support.Actions.ConnectServerAction;
-import Support.Exceptions.ServerConnectionFailedException;
-import Support.Helpers.Auth;
+import support.abstracts.controllers.AbstractController;
+import support.enums.SceneEnum;
+import support.helpers.AudioPlayer;
+import support.actions.ConnectServerAction;
+import support.exceptions.ServerConnectionFailedException;
+import support.helpers.Auth;
 
 public class SettingsController extends AbstractController {
 

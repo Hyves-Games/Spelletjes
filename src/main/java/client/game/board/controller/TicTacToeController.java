@@ -2,7 +2,7 @@ package client.game.board.controller;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import Support.Abstracts.Controllers.AbstractGameBoardController;
+import support.abstracts.controllers.AbstractGameBoardController;
 
 public class TicTacToeController extends AbstractGameBoardController {
     @Override

@@ -1,8 +1,8 @@
-package Support.Helpers;
+package support.helpers;
 
-import Domain.Player.Model.Player;
-import Support.Enums.GameEnum;
-import Support.Enums.GameModeEnum;
+import domain.player.model.Player;
+import support.enums.GameEnum;
+import support.enums.GameModeEnum;
 
 public class Auth {
     private static Auth auth;

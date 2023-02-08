@@ -1,9 +1,9 @@
-package Support.Records;
+package support.records;
 
-import Support.Abstracts.AbstractModel;
-import Support.Abstracts.AbstractQuery;
-import Support.Abstracts.AbstractTable;
-import Support.Helpers.Utils;
+import support.abstracts.AbstractModel;
+import support.abstracts.AbstractQuery;
+import support.abstracts.AbstractTable;
+import support.helpers.Utils;
 
 import java.io.Serializable;
 import java.lang.reflect.*;

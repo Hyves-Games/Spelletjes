@@ -1,9 +1,8 @@
-package Support.Actions;
+package support.actions;
 
-import Domain.Player.Model.Player;
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Services.Server;
+import domain.player.model.Player;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
 
 public class ChallengeServerAction extends AbstractServerAction {
     private final String key;

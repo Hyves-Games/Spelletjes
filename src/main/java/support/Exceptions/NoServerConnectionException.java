@@ -1,4 +1,4 @@
-package Support.Exceptions;
+package support.exceptions;
 
 public class NoServerConnectionException extends Exception{
 }

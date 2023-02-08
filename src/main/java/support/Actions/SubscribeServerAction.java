@@ -1,9 +1,9 @@
-package Support.Actions;
+package support.actions;
 
-import Domain.Game.Exceptions.GameNotImplementedException;
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Helpers.Auth;
+import domain.game.exceptions.GameNotImplementedException;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
+import support.helpers.Auth;
 
 public class SubscribeServerAction extends AbstractServerAction {
     public SubscribeServerAction() throws GameNotImplementedException {

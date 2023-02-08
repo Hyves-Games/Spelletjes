@@ -1,14 +1,14 @@
 package client.waitingRoom.controller;
 
-import Domain.Player.Model.AI;
+import domain.player.model.AI;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import Support.Actions.StopGameAction;
-import Support.Enums.GameEnum;
-import Support.Enums.SceneEnum;
-import Support.Helpers.Auth;
-import Support.Services.Server;
+import support.actions.StopGameAction;
+import support.enums.GameEnum;
+import support.enums.SceneEnum;
+import support.helpers.Auth;
+import support.services.Server;
 
 public class WaitingRoomTournamentController {
     public VBox winLoss;

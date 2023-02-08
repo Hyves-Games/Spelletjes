@@ -1,9 +1,9 @@
-package Support.Enums;
+package support.enums;
 
-import Domain.Game.Model.Reversi;
-import Domain.Game.Model.TicTacToe;
-import Domain.Game.Factories.GameFactory;
-import Support.Abstracts.AbstractGameBoard;
+import domain.game.model.Reversi;
+import domain.game.model.TicTacToe;
+import domain.game.factories.GameFactory;
+import support.abstracts.AbstractGameBoard;
 
 import java.lang.reflect.InvocationTargetException;
 

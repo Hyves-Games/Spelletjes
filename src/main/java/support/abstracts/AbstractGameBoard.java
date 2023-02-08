@@ -1,13 +1,13 @@
-package Support.Abstracts;
+package support.abstracts;
 
-import Domain.Game.Exceptions.MoveNotAllowedException;
-import Domain.Player.Model.AI;
-import Domain.Player.Model.Player;
+import domain.game.exceptions.MoveNotAllowedException;
+import domain.player.model.AI;
+import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
-import Support.Actions.MoveServerAction;
-import Support.Enums.GameEndStateEnum;
-import Support.Enums.SceneEnum;
-import Support.Services.Server;
+import support.actions.MoveServerAction;
+import support.enums.GameEndStateEnum;
+import support.enums.SceneEnum;
+import support.services.Server;
 
 import java.util.ArrayList;
 

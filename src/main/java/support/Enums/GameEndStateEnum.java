@@ -1,4 +1,4 @@
-package Support.Enums;
+package support.enums;
 
 public enum GameEndStateEnum {
     WIN,

@@ -1,9 +1,9 @@
-package Support.Actions;
+package support.actions;
 
-import Domain.Player.Exceptions.LoginFailedException;
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Services.Server;
+import domain.player.exceptions.LoginFailedException;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
+import support.services.Server;
 
 public class LoginServerAction extends AbstractServerAction {
     private final String username;

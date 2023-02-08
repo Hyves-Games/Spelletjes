@@ -1,7 +1,7 @@
-package Support.Enums;
+package support.enums;
 
-import Support.Helpers.SceneSwitcher;
-import Support.Records.ClientScene;
+import support.helpers.SceneSwitcher;
+import support.records.ClientScene;
 
 public enum SceneEnum {
     LOGIN(new ClientScene("authenticator", "login", "Login")),

@@ -1,8 +1,7 @@
-package Support.Actions;
+package support.actions;
 
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Helpers.Auth;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
 
 public class StopGameAction extends AbstractServerAction {
     public StopGameAction() {

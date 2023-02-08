@@ -1,12 +1,12 @@
-package Support.Enums;
+package support.enums;
 
-import Domain.Log.Table.GameLogTable;
-import Domain.Log.Table.GameSetLogTable;
-import Domain.Player.Table.PlayerTable;
-import Domain.Setting.Table.SettingTable;
-import Domain.Simulation.Table.SimulationRoundTable;
-import Domain.Simulation.Table.SimulationTable;
-import Support.Abstracts.AbstractTable;
+import domain.log.table.GameLogTable;
+import domain.log.table.GameSetLogTable;
+import domain.player.table.PlayerTable;
+import domain.setting.table.SettingTable;
+import domain.simulation.table.SimulationRoundTable;
+import domain.simulation.table.SimulationTable;
+import support.abstracts.AbstractTable;
 
 import java.sql.SQLException;
 

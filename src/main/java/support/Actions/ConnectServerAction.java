@@ -1,8 +1,8 @@
-package Support.Actions;
+package support.actions;
 
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.ServerConnectionFailedException;
-import Support.Helpers.ResponseHandler;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.ServerConnectionFailedException;
+import support.helpers.ResponseHandler;
 
 public class ConnectServerAction extends AbstractServerAction {
     private final String host;

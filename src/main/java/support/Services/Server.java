@@ -1,4 +1,4 @@
-package Support.Services;
+package support.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,9 +10,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import Support.Exceptions.ServerConnectionFailedException;
-import Support.Records.ServerResponse;
-import Support.Enums.ServerResponseEnum;
+import support.exceptions.ServerConnectionFailedException;
+import support.records.ServerResponse;
+import support.enums.ServerResponseEnum;
 
 public class Server {
     private String host;

@@ -1,7 +1,7 @@
-package Support.Enums;
+package support.enums;
 
-import Domain.Game.Factories.GameFactory;
-import Support.Helpers.Auth;
+import domain.game.factories.GameFactory;
+import support.helpers.Auth;
 
 public enum GameModeEnum {
     PVP(SceneEnum.WAIT_ROOM),

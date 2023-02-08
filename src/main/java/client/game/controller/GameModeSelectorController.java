@@ -2,9 +2,9 @@ package client.game.controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import Support.Enums.GameModeEnum;
-import Support.Enums.SceneEnum;
-import Support.Helpers.Auth;
+import support.enums.GameModeEnum;
+import support.enums.SceneEnum;
+import support.helpers.Auth;
 
 public class GameModeSelectorController {
 

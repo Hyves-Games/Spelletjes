@@ -1,9 +1,9 @@
-package Support.Abstracts;
+package support.abstracts;
 
-import Support.Database.DatabaseLogger;
-import Support.Database.SQLite;
-import Support.Helpers.Utils;
-import Support.Records.ModelField;
+import support.database.DatabaseLogger;
+import support.database.SQLite;
+import support.helpers.Utils;
+import support.records.ModelField;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;

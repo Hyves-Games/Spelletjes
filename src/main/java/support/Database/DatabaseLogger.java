@@ -1,4 +1,4 @@
-package Support.Database;
+package support.database;
 
 public class DatabaseLogger {
 

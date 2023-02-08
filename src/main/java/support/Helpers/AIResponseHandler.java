@@ -1,13 +1,13 @@
-package Support.Helpers;
+package support.helpers;
 
-import Domain.Game.Actions.EndGameAction;
-import Domain.Game.Actions.MoveGameAction;
-import Domain.Game.Actions.ViewGameAction;
-import Domain.Game.Actions.YourTurnAction;
-import Domain.Player.Model.AI;
-import Support.Actions.ChallengeAcceptServerAction;
-import Support.Records.ServerResponse;
-import Support.Services.Server;
+import domain.game.actions.EndGameAction;
+import domain.game.actions.MoveGameAction;
+import domain.game.actions.ViewGameAction;
+import domain.game.actions.YourTurnAction;
+import domain.player.model.AI;
+import support.actions.ChallengeAcceptServerAction;
+import support.records.ServerResponse;
+import support.services.Server;
 
 public class AIResponseHandler implements Runnable {
     private final AI player;

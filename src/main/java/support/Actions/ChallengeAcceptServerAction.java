@@ -1,14 +1,14 @@
-package Support.Actions;
+package support.actions;
 
-import Support.Enums.GameEnum;
-import Support.Enums.GameModeEnum;
-import Support.Enums.SceneEnum;
-import Support.Helpers.SceneSwitcher;
+import support.enums.GameEnum;
+import support.enums.GameModeEnum;
+import support.enums.SceneEnum;
+import support.helpers.SceneSwitcher;
 import com.google.gson.JsonObject;
-import Domain.Player.Model.AI;
-import Support.Abstracts.AbstractServerAction;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Helpers.Auth;
+import domain.player.model.AI;
+import support.abstracts.AbstractServerAction;
+import support.exceptions.NoServerConnectionException;
+import support.helpers.Auth;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;

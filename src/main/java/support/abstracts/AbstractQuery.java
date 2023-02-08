@@ -1,9 +1,9 @@
-package Support.Abstracts;
+package support.abstracts;
 
-import Support.Database.SQLite;
-import Support.Database.SQLiteValue;
-import Support.Database.WhereClause;
-import Support.Records.ModelField;
+import support.database.SQLite;
+import support.database.SQLiteValue;
+import support.database.WhereClause;
+import support.records.ModelField;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

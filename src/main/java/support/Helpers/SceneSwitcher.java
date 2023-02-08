@@ -1,4 +1,4 @@
-package Support.Helpers;
+package support.helpers;
 
 import client.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
-import Support.Enums.SceneEnum;
-import Support.Records.ClientScene;
+import support.enums.SceneEnum;
+import support.records.ClientScene;
 
 import java.io.IOException;
 import java.util.HashMap;

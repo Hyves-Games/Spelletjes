@@ -1,4 +1,4 @@
-package Support.Helpers;
+package support.helpers;
 
 import client.Application;
 import javafx.scene.media.Media;

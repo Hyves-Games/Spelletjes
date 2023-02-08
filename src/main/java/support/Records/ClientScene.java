@@ -1,4 +1,4 @@
-package Support.Records;
+package support.records;
 
 import java.util.Objects;
 

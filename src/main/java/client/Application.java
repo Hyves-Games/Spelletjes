@@ -1,20 +1,20 @@
 package client;
 
-import Domain.Player.Actions.LoginAction;
-import Domain.Player.Exceptions.LoginFailedException;
-import Domain.Player.Model.AI;
-import Domain.Player.Model.Player;
-import Domain.Setting.Enums.Settings;
-import Domain.Setting.Model.Setting;
-import Domain.Setting.Query.SettingQuery;
+import domain.player.actions.LoginAction;
+import domain.player.exceptions.LoginFailedException;
+import domain.player.model.AI;
+import domain.player.model.Player;
+import domain.setting.enums.Settings;
+import domain.setting.model.Setting;
+import domain.setting.query.SettingQuery;
 import javafx.stage.Stage;
-import Support.Actions.ConnectServerAction;
-import Support.Enums.DatabaseTableEnum;
-import Support.Enums.SceneEnum;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Exceptions.ServerConnectionFailedException;
-import Support.Helpers.AudioPlayer;
-import Support.Helpers.SceneSwitcher;
+import support.actions.ConnectServerAction;
+import support.enums.DatabaseTableEnum;
+import support.enums.SceneEnum;
+import support.exceptions.NoServerConnectionException;
+import support.exceptions.ServerConnectionFailedException;
+import support.helpers.AudioPlayer;
+import support.helpers.SceneSwitcher;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

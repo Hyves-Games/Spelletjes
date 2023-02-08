@@ -1,8 +1,8 @@
-package Support.Abstracts;
+package support.abstracts;
 
-import Support.Database.DatabaseLogger;
-import Support.Database.SQLite;
-import Support.Records.ModelField;
+import support.database.DatabaseLogger;
+import support.database.SQLite;
+import support.records.ModelField;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;

@@ -1,11 +1,11 @@
-package Support.Abstracts.Controllers;
+package support.abstracts.controllers;
 
-import Domain.Player.Model.AI;
-import Support.Actions.ChallengeServerAction;
-import Support.Actions.StopGameAction;
-import Support.Enums.GameModeEnum;
-import Support.Enums.SceneEnum;
-import Support.Helpers.SceneSwitcher;
+import domain.player.model.AI;
+import support.actions.ChallengeServerAction;
+import support.actions.StopGameAction;
+import support.enums.GameModeEnum;
+import support.enums.SceneEnum;
+import support.helpers.SceneSwitcher;
 import client.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,10 +15,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import Support.Abstracts.AbstractGameBoard;
-import Support.Helpers.Auth;
+import support.abstracts.AbstractGameBoard;
+import support.helpers.Auth;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.Optional;
 

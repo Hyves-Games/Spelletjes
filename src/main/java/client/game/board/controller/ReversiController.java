@@ -1,11 +1,11 @@
 package client.game.board.controller;
 
 import client.Application;
-import Support.AIs.Reversi.MoveLogic.MoveFinderFast;
+import support.AIs.Reversi.MoveLogic.MoveFinderFast;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import Support.Abstracts.Controllers.AbstractGameBoardController;
+import support.abstracts.controllers.AbstractGameBoardController;
 
 import java.net.URL;
 

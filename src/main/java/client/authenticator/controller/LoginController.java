@@ -1,17 +1,17 @@
 package client.authenticator.controller;
 
-import Domain.Player.Actions.LoginAction;
-import Domain.Player.Exceptions.FailedToCreateAIException;
-import Domain.Player.Exceptions.LoginFailedException;
-import Domain.Player.Model.AI;
+import domain.player.actions.LoginAction;
+import domain.player.exceptions.FailedToCreateAIException;
+import domain.player.exceptions.LoginFailedException;
+import domain.player.model.AI;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import Support.Abstracts.Controllers.AbstractController;
-import Support.Enums.SceneEnum;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Exceptions.ServerConnectionFailedException;
-import Support.Helpers.Auth;
-import Support.Services.Server;
+import support.abstracts.controllers.AbstractController;
+import support.enums.SceneEnum;
+import support.exceptions.NoServerConnectionException;
+import support.exceptions.ServerConnectionFailedException;
+import support.helpers.Auth;
+import support.services.Server;
 
 public class LoginController extends AbstractController {
     public Label errorMessage;

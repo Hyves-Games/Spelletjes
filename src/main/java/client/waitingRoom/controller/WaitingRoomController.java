@@ -1,7 +1,7 @@
 package client.waitingRoom.controller;
 
-import Support.Actions.StopGameAction;
-import Support.Enums.SceneEnum;
+import support.actions.StopGameAction;
+import support.enums.SceneEnum;
 
 public class WaitingRoomController {
     public void initialize() {

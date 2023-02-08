@@ -1,6 +1,6 @@
-package Support.Database;
+package support.database;
 
-import Support.Helpers.Utils;
+import support.helpers.Utils;
 
 import java.io.Serializable;
 import java.lang.reflect.GenericDeclaration;

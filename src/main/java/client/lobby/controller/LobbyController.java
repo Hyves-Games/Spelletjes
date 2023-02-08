@@ -2,10 +2,10 @@ package client.lobby.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import Support.Actions.GetServerPlayerListAction;
-import Support.Enums.SceneEnum;
-import Support.Exceptions.NoServerConnectionException;
-import Support.Services.Server;
+import support.actions.GetServerPlayerListAction;
+import support.enums.SceneEnum;
+import support.exceptions.NoServerConnectionException;
+import support.services.Server;
 
 public class LobbyController
 {

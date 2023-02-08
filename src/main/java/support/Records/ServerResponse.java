@@ -1,7 +1,7 @@
-package Support.Records;
+package support.records;
 
 import com.google.gson.JsonObject;
-import Support.Enums.ServerResponseEnum;
+import support.enums.ServerResponseEnum;
 
 public record ServerResponse(JsonObject data, ServerResponseEnum type) {
     @Override
