@@ -61,4 +61,9 @@ public class GameSetLog extends AbstractModel<GameSetLog> {
 
         return this;
     }
+
+    @Override
+    public void preSave() {
+        getGameLog().setBoard(this.getBoard());
+    }
 }

@@ -1,5 +1,6 @@
 package support.abstracts;
 
+import support.database.DatabaseLogger;
 import support.database.SQLite;
 import support.database.SQLiteValue;
 import support.database.WhereClause;
@@ -14,10 +15,18 @@ import java.util.ArrayList;
 
 abstract public class AbstractQuery<T extends AbstractQuery<T>> {
 
-    private final StringBuilder query = new StringBuilder("SELECT * FROM " + this.getTable().getTableName());
+    private StringBuilder query;
     private final ArrayList<WhereClause> whereClauses = new ArrayList<>();
 
     abstract public AbstractTable getTable();
+
+    private void resetQuery() {
+        this.query = new StringBuilder("SELECT * FROM " + this.getTable().getTableName());
+    }
+
+    public AbstractQuery() {
+        this.resetQuery();
+    }
 
     private PreparedStatement getStatement() {
         // add where clauses to query
@@ -32,6 +41,8 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
         // bind data to where clauses
         try {
             PreparedStatement statement = SQLite.getInstance().getConnection().prepareStatement(this.query.toString());
+
+            DatabaseLogger.log(this.query.toString());
 
             for (WhereClause whereClause : this.whereClauses) {
                 whereClause.bindValue(statement, whereClauses.indexOf(whereClause) + 1);
@@ -77,11 +88,21 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
             while (result.next()) {
                 models.add(this.getModelFromResultSet(result));
             }
-        } catch (SQLException e) {
+        } catch (SQLException|NullPointerException e) {
+            System.out.println("Query failed: " + this.query);
+
             e.printStackTrace();
         }
 
+        this.resetQuery();
+
         return (ArrayList<M>) models;
+    }
+
+    public T printQuery() {
+        System.out.println(this.query);
+
+        return (T) this;
     }
 
     public <M extends AbstractModel<M>> M findOne() {
@@ -124,5 +145,9 @@ abstract public class AbstractQuery<T extends AbstractQuery<T>> {
         this.where("id", "=", id);
 
         return (T) this;
+    }
+
+    public int count() {
+        return this.find().size();
     }
 }

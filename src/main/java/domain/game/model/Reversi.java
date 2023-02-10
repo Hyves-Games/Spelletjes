@@ -1,7 +1,7 @@
 package domain.game.model;
 
 import client.Application;
-import support.ais.Reversi.RandomAI;
+import support.ais.Reversi.Tournament;
 import support.ais.Reversi.Board.BoardPosition;
 import support.ais.Reversi.Converters.IntArrayToLong;
 import support.ais.Reversi.Converters.LongToBoolArray;
@@ -9,7 +9,6 @@ import support.ais.Reversi.MoveLogic.MakeMove;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
 import support.abstracts.AbstractGameBoard;
-import support.enums.GameEnum;
 import support.enums.SceneEnum;
 
 public class Reversi extends AbstractGameBoard<Reversi> {
@@ -55,7 +54,7 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     protected void runLogic(Integer index, Integer value) {
-        BoardPosition board = MakeMove.makeMove(this.getBoard(), value == 1, index);
+        BoardPosition board = MakeMove.makeMove(this.getBoard(), value == 1, index, this.getEndState());
 
         for (int i = 0; i < 64; i++) {
             if (LongToBoolArray.convert(board.playerWhitePieces)[i]) {
@@ -68,11 +67,11 @@ public class Reversi extends AbstractGameBoard<Reversi> {
 
     @Override
     public void runAI() {
+        long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
+        long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
         if (this.isPlayerTurn()) {
-            long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
-            long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
-
-            this.doMove(new RandomAI().getBestMove(playerPieces, opponentPieces, this.isPlayerTurn()));
+            Integer index = new Tournament().getBestMove(playerPieces, opponentPieces, isPlayerTurn());
+            this.doMove(index);
         }
     }
 }

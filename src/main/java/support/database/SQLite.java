@@ -1,5 +1,7 @@
 package support.database;
 
+import support.enums.DatabaseTableEnum;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,8 +18,7 @@ public class SQLite {
     public SQLite() {
         try {
             this.connection = DriverManager.getConnection(DB_PATH);
-
-            this.connection.createStatement().executeQuery("PRAGMA foreign_keys = ON;");
+//            this.connection.createStatement().executeQuery("PRAGMA foreign_keys = ON;");
         } catch (SQLException e) {
 
         }
@@ -26,6 +27,12 @@ public class SQLite {
     public static SQLite getInstance() {
         if (SQLite.instance == null) {
             SQLite.instance = new SQLite();
+
+            try {
+                DatabaseTableEnum.createTables();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return SQLite.instance;

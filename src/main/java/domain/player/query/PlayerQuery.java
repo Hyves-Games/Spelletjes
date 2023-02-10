@@ -1,5 +1,6 @@
 package domain.player.query;
 
+import support.ais.Reversi.Interfaces.Strategy;
 import domain.player.model.Player;
 import domain.player.table.PlayerTable;
 import support.abstracts.AbstractQuery;
@@ -28,6 +29,16 @@ public class PlayerQuery extends AbstractQuery<PlayerQuery> {
         if (player.isNew()) {
             player.setUsername(username);
         }
+
+        return player;
+    }
+
+    public Player<?> findOneOrCreate(Strategy ai) {
+        this.filterByName(ai.getName());
+
+        Player<?> player = (Player<?>) this.findOneOrCreate();
+
+        player.setStrategy(ai);
 
         return player;
     }
