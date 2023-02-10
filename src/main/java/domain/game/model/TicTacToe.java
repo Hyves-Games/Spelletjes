@@ -1,11 +1,26 @@
 package domain.game.model;
 
 import client.Application;
-import support.abstracts.AbstractGameBoard;
 
-public class TicTacToe extends AbstractGameBoard {
-    public TicTacToe() {
-        this.generate(9);
+import support.ais.TicTacToe.AI;
+import support.abstracts.AbstractGameBoard;
+import support.enums.GameEnum;
+import support.enums.SceneEnum;
+
+public class TicTacToe extends AbstractGameBoard<TicTacToe> {
+    @Override
+    public Integer getSizeX() {
+        return 3;
+    }
+
+    @Override
+    public Integer getSizeY() {
+        return 3;
+    }
+
+    @Override
+    public String getKey() {
+        return "tic-tac-toe";
     }
 
     @Override
@@ -14,7 +29,21 @@ public class TicTacToe extends AbstractGameBoard {
     }
 
     @Override
+    public SceneEnum getScene() {
+        return SceneEnum.TIC_TAC_TOE;
+    }
+
+    @Override
     public String getIconPath() {
         return Application.class.getResource("assets/icons/tic_tac_toe.png").toString();
+    }
+
+    @Override
+    public void runAI() {
+        if (this.isPlayerTurn()) {
+            Integer index = new AI().getBestMoveBestScore(this.getBoard(), true)[0];
+
+            this.doMove(index);
+        }
     }
 }

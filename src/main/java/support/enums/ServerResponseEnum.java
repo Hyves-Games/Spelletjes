@@ -1,14 +1,16 @@
 package support.enums;
 
 public enum ServerResponseEnum {
-    MATCH,
-    YOURTURN,
+    OK,
     WIN,
     DRAW,
     LOSS,
-    MOVE,
-    PLAYERLIST,
     NONE,
-    OK,
+    MOVE,
     ERROR,
+    MATCH,
+    YOURTURN,
+    CHALLENGE,
+    CANCELLED,
+    PLAYERLIST,
 }

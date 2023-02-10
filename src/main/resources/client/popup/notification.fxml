@@ -51,8 +51,8 @@
             <Text id="notification_description_text" layoutX="10.0" layoutY="43.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin leo lectus, pulvinar quis tellus ut, tincidunt viverra ante." wrappingWidth="313.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="30.0" />
             <ButtonBar buttonMinWidth="60.0" layoutX="57.0" layoutY="48.0" prefHeight="25.0" prefWidth="100.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                <buttons>
-                  <Button id="button1" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="OK" />
-                  <Button id="button2" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Cancel" />
+                  <Button id="button1" mnemonicParsing="false" onAction="#left_button_click" prefHeight="25.0" prefWidth="127.0" text="Cancel" />
+                  <Button id="button2" mnemonicParsing="false" onAction="#right_button_click" prefHeight="25.0" prefWidth="127.0" text="OK" />
                </buttons>
             </ButtonBar>
          </children>

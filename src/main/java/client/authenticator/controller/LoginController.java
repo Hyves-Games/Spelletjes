@@ -1,13 +1,17 @@
 package client.authenticator.controller;
 
 import domain.player.actions.LoginAction;
+import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.exceptions.LoginFailedException;
+import domain.player.model.AI;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import support.abstracts.AbstractController;
+import support.abstracts.controllers.AbstractController;
+import support.enums.GameStrategyEnum;
 import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
-import support.helpers.SceneSwitcher;
+import support.exceptions.ServerConnectionFailedException;
+import support.helpers.Auth;
 import support.services.Server;
 
 public class LoginController extends AbstractController {
@@ -36,7 +40,7 @@ public class LoginController extends AbstractController {
 
             new LoginAction(loginFieldText.trim());
 
-            SceneSwitcher.getInstance().change(SceneEnum.LOBBY);
+            SceneEnum.LOBBY.switchTo();
         } catch (LoginFailedException e) {
             this.setError(this.errorMessage, "Failed to login");
         } catch (NoServerConnectionException e) {
@@ -45,7 +49,12 @@ public class LoginController extends AbstractController {
     }
 
     public void onSettingsClick() {
-        SceneSwitcher.getInstance().change(SceneEnum.SETTING);
+        SceneEnum.SETTING.switchTo();
     }
 
+    public void onTournamentClick() throws ServerConnectionFailedException, FailedToCreateAIException {
+        Auth.setPlayer(new AI());
+
+        SceneEnum.WAIT_ROOM_TOURNAMENT.switchTo();
+    }
 }

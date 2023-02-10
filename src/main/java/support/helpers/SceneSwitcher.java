@@ -3,32 +3,27 @@ package support.helpers;
 import client.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
 import support.enums.SceneEnum;
 import support.records.ClientScene;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SceneSwitcher {
+    private SceneEnum scene;
     private final Stage stage;
-    private static SceneSwitcher instance;
+    private final Map<String, Dialog<?>> dialogs = new HashMap<>();
 
-    private final HashMap<SceneEnum, ClientScene> availableScenes = new HashMap<>() {{
-        put(SceneEnum.LOGIN, new ClientScene("authenticator", "login", "Login"));
-        put(SceneEnum.LOBBY, new ClientScene("lobby", "lobby", "Lobby"));
-        put(SceneEnum.SETTING, new ClientScene("settings", "settings", "Settings"));
-        put(SceneEnum.TIC_TAC_TOE, new ClientScene("game/board", "ticTacToe", "Tic-Tac-Toe"));
-        put(SceneEnum.PLAYER_LIST, new ClientScene("playerList", "playerList","Players list"));
-        put(SceneEnum.GAME_MODE_SELECTOR, new ClientScene("game","gameModeSelector", "Game mode"));
-        put(SceneEnum.GAME_SELECTOR, new ClientScene("game","gameSelector", "Game"));
-        put(SceneEnum.WAIT_ROOM, new ClientScene("waitingRoom", "waitingRoom","Finding a game"));
-    }};
+    private static SceneSwitcher instance;
 
     public SceneSwitcher(Stage stage) {
         this.stage = stage;
-        this.stage.setWidth(1300);
-        this.stage.setHeight(800);
+        this.stage.setWidth(900);
+        this.stage.setHeight(600);
 
         SceneSwitcher.instance = this;
     }
@@ -42,18 +37,20 @@ public class SceneSwitcher {
     }
 
     public void change(SceneEnum sceneEnum) {
-        ClientScene clientScene = this.availableScenes.get(sceneEnum);
+        ClientScene clientScene = sceneEnum.getClientScene();
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
                     Application.class.getResource(clientScene.path())
             );
 
-            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight() - 28);
+            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight());
 
             this.stage.setTitle(clientScene.title());
             this.stage.setScene(scene);
             this.stage.show();
+
+            this.scene = sceneEnum;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,5 +58,25 @@ public class SceneSwitcher {
 
     public Stage getStage() {
         return this.stage;
+    }
+
+    public SceneEnum getScene() {
+        return this.scene;
+    }
+
+    public void addDialog(String key, Dialog<?> dialog) {
+        this.dialogs.put(key, dialog);
+    }
+
+    public void removeDialog(String key) {
+        Dialog<?> dialog = this.dialogs.get(key);
+
+        if (dialog != null) {
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+            dialog.close();
+
+            this.dialogs.remove(key);
+        }
     }
 }

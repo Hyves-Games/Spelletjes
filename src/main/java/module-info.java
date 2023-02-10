@@ -5,6 +5,10 @@ module hyvesgamesspelletjes {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires com.google.gson;
+    requires javafaker;
+    requires java.sql;
+    requires org.jetbrains.annotations;
+    requires java.instrument;
 
     opens client.authenticator.controller to javafx.fxml;
     opens client.lobby.controller to javafx.fxml;
@@ -13,6 +17,7 @@ module hyvesgamesspelletjes {
     opens client.game.controller to javafx.fxml;
     opens client.playerList.controller to javafx.fxml;
     opens client.game.board.controller to javafx.fxml;
+    opens support.abstracts.controllers to javafx.fxml;
 
     exports client;
 }

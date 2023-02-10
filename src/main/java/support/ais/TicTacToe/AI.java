@@ -1,19 +1,22 @@
-package domain.game.ai;
+package support.ais.TicTacToe;
 
-public class TicTacToeAI {
-    static final int maximisingPlayerPiece = 1;
-    static final int minimisingPlayerPiece = -1;
-    static final int boardWidth = 3;
-    static final int maxScore = 100;
+public class AI {
+    final int maximisingPlayerPiece = 1;
+    final int minimisingPlayerPiece = -1;
+    final int boardWidth = 3;
+    final int maxScore = 100;
 
-    public static int evaluateBoard(int[] board) {
-        int[] pieces = new int[]{minimisingPlayerPiece, maximisingPlayerPiece};
+    public Integer evaluateBoard(Integer[] board) {
+        Integer[] pieces = new Integer[]{minimisingPlayerPiece, maximisingPlayerPiece};
+
         for (int playerPiece : pieces) {
             int diaFCount = 0;
             int diaBCount = 0;
+
             for (int i = 0; i < boardWidth; i++) {
                 int horCount = 0;
                 int verCount = 0;
+
                 for (int j = 0; j < boardWidth; j++) {
                     // Horizontal check
                     if (board[i + j * boardWidth] == playerPiece) {
@@ -42,12 +45,13 @@ public class TicTacToeAI {
                 }
             }
         }
+
         return 0; // Tie
     }
 
-    public static int[] getValidMoves(int[] board) {
+    private Integer[] getValidMoves(Integer[] board) {
         // Get all available moves
-        int[] moves = new int[board.length];
+        Integer[] moves = new Integer[board.length];
         int moveCount = 0;
         for (int i = 0; i < board.length; i++) {
             if (board[i] == 0) {
@@ -56,52 +60,62 @@ public class TicTacToeAI {
             }
         }
         // Truncate length of array by creating a new one
-        int[] movesTruncated = new int[moveCount];
+        Integer[] movesTruncated = new Integer[moveCount];
         System.arraycopy(moves, 0, movesTruncated, 0, moveCount);
+
         return movesTruncated;
     }
 
-    public static boolean isFilled(int[] board) {
+    private Boolean isFilled(Integer[] board) {
         boolean isFilled = true;
+
         for (int j : board) {
             if (j == 0) { // Empty space
                 isFilled = false;
                 break;
             }
         }
+
         return isFilled;
     }
 
-    public static boolean canMakeMove(int[] board) {
+    private boolean canMakeMove(Integer[] board) {
         // Player cannot make a move if game is won or board is filled
         if (isFilled(board)) {
             return false;
         }
+
         int score = evaluateBoard(board);
+
         return score != -maxScore && score != maxScore;
     }
 
-    public static int[] getBestMoveBestScore(int[] board, boolean isMaximisingPlayer) {
-        int[] movesLeft = getValidMoves(board);
+    public Integer[] getBestMoveBestScore(Integer[] board, boolean isMaximisingPlayer) {
+        Integer[] movesLeft = getValidMoves(board);
         int bestMove = movesLeft[0];
+
         if (movesLeft.length == 1) {
-            return new int[]{movesLeft[0], evaluateBoard(board)};
+            Integer[] new_board = board.clone();
+            new_board[movesLeft[0]] = isMaximisingPlayer ? maximisingPlayerPiece : minimisingPlayerPiece;
+            return new Integer[]{movesLeft[0], evaluateBoard(new_board)};
         }
+
         int bestScore = isMaximisingPlayer ? -maxScore : maxScore;
         for (int j : movesLeft) { // Iterate over every available move
             // Make new board
-            int[] new_board = board.clone();
+            Integer[] new_board = board.clone();
             // Place selected piece and evaluate
             new_board[j] = isMaximisingPlayer ? maximisingPlayerPiece : minimisingPlayerPiece; // Place new move
             int evaluation = evaluateBoard(new_board);
             int wantedScore = isMaximisingPlayer ? maxScore : -maxScore;
             // If move is winning, pick it without iterating deeper
             if (evaluation == wantedScore) {
-                return new int[]{j, evaluation};
+                return new Integer[]{j, evaluation};
             }
             if (canMakeMove(new_board)) {
                 // Get next best opponent move
-                int[] opponentBestResult = getBestMoveBestScore(new_board, !isMaximisingPlayer);
+                Integer[] opponentBestResult = getBestMoveBestScore(new_board, !isMaximisingPlayer);
+
                 int opponentBestScore = opponentBestResult[1];
                 if (opponentBestScore >= bestScore && isMaximisingPlayer) {
                     bestScore = opponentBestScore;
@@ -121,35 +135,7 @@ public class TicTacToeAI {
                 }
             }
         }
-        return new int[]{bestMove, bestScore};
-    }
 
-    public static void main(String[] args) {
-        //int[] board = {1, 1, -1, 0, -1, 0, 0, 0, 0};
-        //int[] board = {0, 0, 1, 0, 1, 0, 1, 0, 0};
-        //int[] board = {1, 1, 0, 0, 0, 0, 0, -1, -1};
-        int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-        // Testing AI against itself
-        int count = 0;
-        boolean turnMax = true;
-        while (canMakeMove(board)) {
-            count += 1;
-            System.out.println(count);
-
-            int[] result = getBestMoveBestScore(board, turnMax);
-            board[result[0]] = turnMax ? maximisingPlayerPiece : minimisingPlayerPiece;
-            turnMax = !turnMax;
-
-            for (int i : board) {
-                System.out.printf(i + " ");
-            }
-            System.out.printf("\n");
-        }
-        System.out.println("Score: " + evaluateBoard(board));
-
-        //int[] result = getBestMoveBestScore(board, false);
-        //System.out.println("Best move: " + result[0]);
-        //System.out.println("Score after move: " + result[1]);
+        return new Integer[]{bestMove, bestScore};
     }
 }
