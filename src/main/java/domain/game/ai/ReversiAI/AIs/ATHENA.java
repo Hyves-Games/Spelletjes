@@ -2,7 +2,6 @@ package domain.game.ai.ReversiAI.AIs;
 
 import domain.game.ai.ReversiAI.Board.BoardPosition;
 import domain.game.ai.ReversiAI.Evaluation.*;
-import domain.game.ai.ReversiAI.Helpers.BoardPrinter;
 import domain.game.ai.ReversiAI.Interfaces.AI;
 import domain.game.ai.ReversiAI.MoveLogic.MakeMoveFast;
 import domain.game.ai.ReversiAI.MoveLogic.MoveFinderFast;
@@ -55,39 +54,27 @@ class Calculation implements Runnable {
 }
 
 public class ATHENA implements AI {
-    private String name = "ATHENA";
-    private int maxTime = 9;
-    private int maxDepth = 5; // ignored
     public int nodesExplored = 0;
 
-    public ATHENA() {
-    }
+    public ATHENA() {}
 
-    public ATHENA(int maxDepth) {
-        this.maxDepth = maxDepth;
-    }
+    public ATHENA(int maxDepth) {}
 
-    public void setAIDepth(int depth) {
-        this.maxDepth = depth;
-    }
+    public void setAIDepth(int depth) {}
 
-    @Override
     public int getAIDepth() {
-        return this.maxDepth;
-    }
+        return -1;
+    } // Depth is dynamic
 
     private static int EVAL(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         long maxPieces = isWhiteTurn ? playerWhitePieces : playerBlackPieces;
         long minPieces = isWhiteTurn ? playerBlackPieces : playerWhitePieces;
-        //return GreedyEvaluation.evaluate(minPieces, maxPieces);
-        return DynamicEvaluation.evaluate(minPieces, maxPieces);
-        //return StaticEvaluation.evaluate(minPieces, maxPieces);
-        //return MobilityEvaluation.evaluate(minPieces, maxPieces);
+
+        // Good board -> higher score for maxPieces
+        return StaticEvaluation.evaluate(minPieces, maxPieces);
     }
 
     public static int getScoreNegamax(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn, int depth, boolean wasSkipped, int alpha, int beta) {
-        //System.out.println("depth: " + (maxDepth - depth));
-        //BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
         if (depth == 0) {
             // Leaf node, return final evaluation
             return EVAL(playerWhitePieces, playerBlackPieces, isWhiteTurn);
@@ -102,6 +89,7 @@ public class ATHENA implements AI {
                 // Game ended, calculate final score
                 long myPiecesCount = Long.bitCount(isWhiteTurn ? playerWhitePieces : playerBlackPieces);
                 long opponentPiecesCount = Long.bitCount(isWhiteTurn ? playerBlackPieces : playerWhitePieces);
+
                 if (myPiecesCount > opponentPiecesCount) {
                     return 1000000;
                 } else if (myPiecesCount < opponentPiecesCount) {
@@ -112,7 +100,7 @@ public class ATHENA implements AI {
                 }
             } else {
                 // Turn skipped
-                return -getScoreNegamax(playerWhitePieces, playerBlackPieces, !isWhiteTurn, depth - 1, true, -beta, -alpha); // Not decreasing depth, this node won't branch
+                return -getScoreNegamax(playerWhitePieces, playerBlackPieces, !isWhiteTurn, depth, true, -beta, -alpha); // Not decreasing depth, this node won't branch
             }
         }
 
@@ -156,6 +144,7 @@ public class ATHENA implements AI {
             }
         }
 
+        // Guaranteed win/loss
         if (bestScore >= 1000000) {
             System.out.println("WIN GUARANTEED!");
         } else if (bestScore <= -1000000) {
@@ -170,28 +159,32 @@ public class ATHENA implements AI {
     private static Thread thread;
     public int getBestMove(long playerWhitePieces, long playerBlackPieces, boolean isWhiteTurn) {
         System.out.println("Calculating move...");
+
+        // Create new move calculation
         Calculation calculation = new Calculation(playerWhitePieces, playerBlackPieces, isWhiteTurn);
         if (thread != null) {
             thread.interrupt();
         }
+
+        // Start new calculation thread
         thread = new Thread(calculation);
         thread.setPriority(9);
         thread.start();
 
+        // Wait maximum allowed move time
         try {
+            int maxTime = 9;
             Thread.sleep(maxTime * 1000L);
         } catch (InterruptedException e) {
             // handle interruption
         }
 
+        // Get newest iterative deepening result
         int result = calculation.getResult();
         calculation.stop();
 
         System.out.println("Move chosen: " + result);
-
         return result;
-
-        //return getBestMoveByDepth(playerWhitePieces, playerBlackPieces, isWhiteTurn, this.maxDepth);
     }
 
     public String getAIName() {
@@ -199,21 +192,10 @@ public class ATHENA implements AI {
     }
 
     public void setAIName(String name) {
-        this.name = name;
     }
 
     @Override
     public GameStrategyEnum getGameStrategy() {
         return GameStrategyEnum.ATHENA;
     }
-
-//    public static void main(String[] args) {
-//        // Set up board, default position
-//        long playerWhitePieces = 0b0000000000000000000000000001000000001000000000000000000000000000L;
-//        long playerBlackPieces = 0b0000000000000000000000000000100000010000000000000000000000000000L;
-//        ATHENA a = new ATHENA(3);
-//        int bestMove = a.getBestMove(playerWhitePieces, playerBlackPieces, false);
-//        System.out.println(bestMove);
-//        System.out.println("nodes explored: " + a.nodesExplored);
-//    }
 }

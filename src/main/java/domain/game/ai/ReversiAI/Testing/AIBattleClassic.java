@@ -18,9 +18,10 @@ import java.util.Arrays;
 public class AIBattleClassic {
     public static void main(String[] args) throws Exception {
         //////////////////////////////
+        boolean printBoard = true;
         int GameCount = 1; // Amount of games to be played
         int RandomInitialMoveCount = 0; // Amount of random moves played before AIs take over. Avoids repetitive behaviour when comparing deterministic AIs at fixed depths.
-        //AI AIOne = new MiniMaxABAI(MiniMaxStragegyEnum.DYNAMIC);
+
         AI AIOne = new RandomAI();
         AI AITwo = new ATHENA();
         //////////////////////////////
@@ -31,12 +32,14 @@ public class AIBattleClassic {
         // Progress bar
         int barLength = 40;
         int lastFilledCount = 0;
-        System.out.println("Running " + GameCount + " games...");
-        System.out.print("[");
-        for (int b = 0; b < barLength; b++) {
-            System.out.print("░");
+        if (!printBoard) {
+            System.out.println("Running " + GameCount + " games...");
+            System.out.print("[");
+            for (int b = 0; b < barLength; b++) {
+                System.out.print("░");
+            }
+            System.out.print("]");
         }
-        System.out.print("]");
 
         // Run the games
         AI WhiteAI = AIOne;
@@ -87,6 +90,7 @@ public class AIBattleClassic {
 
                     BoardPosition newBoard = MakeMove.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, bestMove);
 
+                    // Catch illegal moves that didn't result in board change
                     if ((newBoard.playerWhitePieces == playerWhitePieces) || (newBoard.playerBlackPieces == playerBlackPieces)) {
                         System.out.println("\nBoard before:");
                         BoardPrinter.printBoard(playerWhitePieces, playerBlackPieces);
@@ -145,6 +149,6 @@ public class AIBattleClassic {
         // Print results
         System.out.println("\n" + AIOne.getAIName() + " won " + AIOneWinCount + " games.\n" + AITwo.getAIName() + " won " + AITwoWinCount + " games.");
         System.out.println((System.currentTimeMillis() - start) + " ms duration");
-        System.out.println(((ATHENA) AITwo).nodesExplored + " nodes explored");
+//        System.out.println(((ATHENACLONE) AITwo).nodesExplored + " nodes explored");
     }
 }

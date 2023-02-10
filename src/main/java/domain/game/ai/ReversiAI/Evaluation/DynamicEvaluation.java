@@ -20,7 +20,7 @@ public class DynamicEvaluation implements Evaluation {
             staticFactor = 25;
             mobilityFactor = 25;
         } else if (pieceCount < 15) {
-            cornerFactor = 3;
+            cornerFactor = 8;
             parityFactor = 1;
             staticFactor = 5;
             mobilityFactor = 15;
@@ -30,7 +30,7 @@ public class DynamicEvaluation implements Evaluation {
             staticFactor = 10;
             mobilityFactor = 8;
         } else if (pieceCount < 45) {
-            cornerFactor = 3;
+            cornerFactor = 8;
             parityFactor = 1;
             staticFactor = 6;
             mobilityFactor = 5;
@@ -44,7 +44,7 @@ public class DynamicEvaluation implements Evaluation {
         int cornerScore = CornersHeuristic.getHeuristic(minPieces, maxPieces) * cornerFactor;
         int parityScore = ParityHeuristic.getHeuristic(minPieces, maxPieces) * parityFactor;
         int staticScore = StaticWeightsHeuristic.getHeuristic(minPieces, maxPieces) * staticFactor;
-        int mobilityScore = 0;//MobilityHeuristic.getHeuristic(minPieces, maxPieces) * mobilityFactor; // Removed to achieve higher depth
+        int mobilityScore = 0; //MobilityHeuristic.getHeuristic(minPieces, maxPieces) * mobilityFactor; // Slows down depth
 
         return cornerScore + parityScore + staticScore + mobilityScore;
     }

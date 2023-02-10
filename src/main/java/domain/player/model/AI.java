@@ -56,7 +56,7 @@ public class AI extends Player<AI> {
     public static String createUsername() {
         Faker faker = new Faker();
 
-        return String.format("%sAI", faker.name().firstName().toLowerCase());
+        return String.format("b");
     }
 
     private void connect() throws ServerConnectionFailedException {

@@ -23,8 +23,8 @@ import java.util.Arrays;
 public class AIBattle {
     public static void main(String[] args) throws Exception {
         AIBattle sim = new AIBattle(
-                new PlayerQuery().findOneOrCreate(new ATHENA(3)),
-                new PlayerQuery().findOneOrCreate(new ATHENA(5))
+                new PlayerQuery().findOneOrCreate(new ATHENA()),
+                new PlayerQuery().findOneOrCreate(new ATHENA())
         );
 
         sim.run();

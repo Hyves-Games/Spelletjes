@@ -87,6 +87,7 @@ public class MonteCarlo implements AI {
             BoardPosition board = MakeMoveFast.makeMove(playerWhitePieces, playerBlackPieces, isWhiteTurn, move);
             int result = simulatedGameResult(board.playerWhitePieces, board.playerBlackPieces, isWhiteTurn);
 
+            // Add move score to array
             moveScores[moveIndexIndex] += result;
         }
         // Return move with the highest score
