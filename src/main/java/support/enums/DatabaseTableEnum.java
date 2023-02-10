@@ -29,7 +29,7 @@ public enum DatabaseTableEnum {
     }
 
     public static void createTables() throws SQLException {
-//        // remove all tables
+        // remove all tables
 //        for (DatabaseTableEnum table : DatabaseTableEnum.values()) {
 //            table.getTable().dropTable();
 //        }

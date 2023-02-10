@@ -10,13 +10,11 @@ import support.enums.GameStrategyEnum;
 import java.sql.Timestamp;
 
 public class Player<T> extends AbstractModel<Player<T>> {
-
     protected GameFactory game;
 
-    // db fields
     protected String username;
-    private GameStrategyEnum gameStrategy;
-    private Timestamp lastLogin;
+    protected Timestamp lastLogin;
+    protected GameStrategyEnum gameStrategy;
 
     public Player() {}
 
@@ -26,6 +24,10 @@ public class Player<T> extends AbstractModel<Player<T>> {
 
     public String getUsername() {
         return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public GameFactory getGame() {
@@ -38,26 +40,6 @@ public class Player<T> extends AbstractModel<Player<T>> {
 
     public AbstractGameBoard<?> getGameBoard() {
         return this.game.getGameBoard();
-    }
-
-    public GameStrategyEnum getGameStrategy() {
-        return gameStrategy;
-    }
-
-    public Player<T> setGameStrategy(GameStrategyEnum gameStrategy) {
-        this.gameStrategy = gameStrategy;
-
-        return this;
-    }
-
-    public Timestamp getLastLogin() {
-        return lastLogin;
-    }
-
-    public Player<T> setLastLogin(Timestamp lastLogin) {
-        this.lastLogin = lastLogin;
-
-        return this;
     }
 
     @Override

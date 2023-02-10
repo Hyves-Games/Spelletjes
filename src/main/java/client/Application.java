@@ -43,6 +43,7 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) throws SQLException {
         DatabaseTableEnum.createTables();
+
         try {
             new ConnectServerAction(Settings.SERVER_IP_ADDRESS.getStringValue(), Settings.SERVER_PORT.getIntegerValue());
         } catch (ServerConnectionFailedException ignored) {}

@@ -46,18 +46,12 @@ public class GameFactory {
         this.setPlayer(Auth.getPlayer());
     }
 
-    public AI setAIPlayer() {
-        Player<?> ai = new PlayerQuery().findOneOrCreate(AI.createUsername());
-        if (ai.isNew()) {
-            ai.setGameStrategy(GameStrategyEnum.RANDOM);
-            ai.save();
+    public void setAIPlayer() {
+        try {
+            new ChallengeServerAction(new AI(), this.gameBoard.getKey());
+        } catch (FailedToCreateAIException | ServerConnectionFailedException e) {
+            throw new RuntimeException(e);
         }
-
-        AI aiPlayer = new AI(ai);
-
-        new ChallengeServerAction(aiPlayer, this.gameBoard.getKey());
-
-        return aiPlayer;
     }
 
     public void searchGame() {

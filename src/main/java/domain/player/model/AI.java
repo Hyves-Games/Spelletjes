@@ -16,63 +16,26 @@ import java.util.ArrayList;
 public class AI extends Player<AI> {
     private Server connection;
 
-    protected Timestamp updatedAt;
-    protected Timestamp createdAt;
     private final ArrayList<String> winLoss = new ArrayList<String>();
 
     public AI() throws ServerConnectionFailedException, FailedToCreateAIException {
         super(createUsername());
 
-        if (this.getUsername() == null) {
-            this.setUsername(AI.createUsername());
-        }
+        this.connect().login(0);
 
-        this.setActive();
+        Application.addAI(this);
     }
 
-    public AI(Player player) {
-        this.id = player.getId();
-        this.username = player.getUsername();
-        this.createdAt = player.getCreatedAt();
-        this.updatedAt = player.getUpdatedAt();
-        this.setGameStrategy(player.getGameStrategy());
-
-        this.setActive();
-    }
-
-    public void setActive() {
-        try {
-            this.connect();
-            this.login(0);
-
-            Application.addAI(this);
-        } catch (ServerConnectionFailedException | FailedToCreateAIException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static String createUsername() {
+    private static String createUsername() {
         Faker faker = new Faker();
 
         return String.format("%sAI", faker.name().firstName().toLowerCase());
     }
 
-    private void connect() throws ServerConnectionFailedException {
-        if (Server.getConnection().isConnected()) {
-            this.connection = new Server().connect();
+    private AI renewUsername() {
+        this.setUsername(createUsername());
 
-            Thread thread = new Thread(new AIResponseHandler(this));
-
-            thread.setPriority(Thread.MAX_PRIORITY);
-            thread.start();
-        }
-    }
-
-    public void disconnect() {
-        if (this.connection != null) {
-            this.connection.disconnect();
-        }
+        return this;
     }
 
     private void login(Integer retries) throws FailedToCreateAIException {
@@ -82,13 +45,32 @@ public class AI extends Player<AI> {
             return;
         } catch (LoginFailedException e) {
             if (retries <= 5) {
-                this.login(retries + 1);
+                this.renewUsername().login(retries + 1);
 
                 return;
             }
         } catch (NoServerConnectionException ignored) {}
 
         throw new FailedToCreateAIException();
+    }
+
+    private AI connect() throws ServerConnectionFailedException {
+        if (Server.getConnection().isConnected()) {
+            this.connection = new Server().connect();
+
+            Thread thread = new Thread(new AIResponseHandler(this));
+
+            thread.setPriority(Thread.MAX_PRIORITY);
+            thread.start();
+        }
+
+        return this;
+    }
+
+    public void disconnect() {
+        if (this.connection != null) {
+            this.connection.disconnect();
+        }
     }
 
     public Server getConnection() {

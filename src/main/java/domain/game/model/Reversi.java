@@ -24,11 +24,6 @@ public class Reversi extends AbstractGameBoard<Reversi> {
     }
 
     @Override
-    public GameEnum getGameEnum() {
-        return GameEnum.REVERSI;
-    }
-
-    @Override
     public String getKey() {
         return "reversi";
     }

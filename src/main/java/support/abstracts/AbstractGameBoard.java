@@ -125,8 +125,6 @@ public abstract class AbstractGameBoard<T> {
     public void setMove(Integer index, Integer value) {
         this.board.set(index, value);
 
-        LogHandler.makeMove(player, this.board);
-
         this.runLogic(index, value);
 
         this.runEventListeners(this.eventListenersForBoard);

@@ -23,12 +23,12 @@ public class PlayerQuery extends AbstractQuery<PlayerQuery> {
     public Player<?> findOneOrCreate(String username) {
         this.filterByName(username);
 
-        Player<?> p = (Player<?>) this.findOneOrCreate();
+        Player<?> player = (Player<?>) this.findOneOrCreate();
 
-        if (p.isNew()) {
-            p.setUsername(username);
+        if (player.isNew()) {
+            player.setUsername(username);
         }
 
-        return p;
+        return player;
     }
 }
