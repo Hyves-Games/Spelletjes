@@ -1,5 +1,6 @@
 package client.playerList.controller;
 
+import support.enums.GameModeEnum;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import domain.player.model.Player;
@@ -58,10 +59,15 @@ public class PlayerListController {
     }
 
     public void onInviteClick(ActionEvent event) {
-        // Hier kan de client & server verder gaan met het inviten van een player in de player variabele hieronder zit de naam van de player.
+        GameEnum game = GameEnum.TIC_TAC_TOE;
         Player<?> opponent = new Player<>(((Node)event.getSource()).getId());
 
-        new ChallengeServerAction(opponent, GameEnum.TIC_TAC_TOE.getKey());
+        Auth.setLastGame(game);
+        Auth.setLastGameMode(GameModeEnum.PVP);
+
+        game.create().setAuthPlayer();
+
+        new ChallengeServerAction(opponent, game.getKey());
 
         SceneEnum.WAIT_ROOM_CHALLENGE.switchTo();
     }

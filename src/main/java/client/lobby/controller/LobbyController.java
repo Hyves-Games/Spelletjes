@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import support.actions.GetServerPlayerListAction;
 import support.enums.SceneEnum;
 import support.exceptions.NoServerConnectionException;
-import support.helpers.SceneSwitcher;
 import support.services.Server;
 
 public class LobbyController

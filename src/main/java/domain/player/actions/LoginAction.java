@@ -1,17 +1,12 @@
 package domain.player.actions;
 
-import domain.player.exceptions.FailedToCreateAIException;
 import domain.player.exceptions.LoginFailedException;
-import domain.player.model.AI;
 import domain.player.model.Player;
 import domain.player.query.PlayerQuery;
 import support.abstracts.AbstractAction;
 import support.actions.LoginServerAction;
 import support.exceptions.NoServerConnectionException;
-import support.exceptions.ServerConnectionFailedException;
 import support.helpers.Auth;
-
-import java.net.Authenticator;
 
 public class LoginAction extends AbstractAction {
     private final String username;

@@ -21,7 +21,6 @@ public abstract class AbstractGameBoard<T> {
     private Server connection;
 
     private Boolean useAI = false;
-    private Boolean ended = false;
     private Boolean playerTurn = false;
 
     private Boolean starter = false;
@@ -31,17 +30,11 @@ public abstract class AbstractGameBoard<T> {
 
     private GameEndStateEnum endState;
 
-    private final ArrayList<Runnable> eventListenersForEnd = new ArrayList<Runnable>();
-    private final ArrayList<Runnable> eventListenersForTurn = new ArrayList<Runnable>();
-    private final ArrayList<Runnable> eventListenersForBoard = new ArrayList<Runnable>();
+    private final ArrayList<Runnable> eventListenersForEnd = new ArrayList<>();
+    private final ArrayList<Runnable> eventListenersForTurn = new ArrayList<>();
+    private final ArrayList<Runnable> eventListenersForBoard = new ArrayList<>();
 
-    protected final ArrayList<Integer> board = new ArrayList<Integer>();
-
-    protected final void generate(Integer size) {
-        for (int i = 0; i < size; i++) {
-            this.board.add(0);
-        }
-    }
+    protected final ArrayList<Integer> board = new ArrayList<>();
 
     public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
         this.player = player;
@@ -52,7 +45,19 @@ public abstract class AbstractGameBoard<T> {
             this.connection = ((AI) player).getConnection();
         }
 
-        LogHandler.updateBoard(this.board);
+        for (int i = 0; i < this.getSize(); i++) {
+            this.board.add(0);
+        }
+    }
+
+    public void setStarter(Boolean starter) {
+        this.starter = starter;
+    }
+
+    public boolean isStarter() { return starter; }
+
+    public Integer getSize() {
+        return this.getSizeX() * this.getSizeY();
     }
 
     public Player<?> getPlayer() {
@@ -61,6 +66,10 @@ public abstract class AbstractGameBoard<T> {
 
     public Player<?> getOpponent() {
         return this.opponent;
+    }
+
+    public Integer[] getBoard() {
+        return this.board.toArray(new Integer[0]);
     }
 
     public Boolean isPlayerTurn() {
@@ -76,31 +85,14 @@ public abstract class AbstractGameBoard<T> {
 
         this.runEventListeners(this.eventListenersForTurn);
     }
+
     public void setOpponentTurn() {
         this.playerTurn = false;
 
         this.runEventListeners(this.eventListenersForTurn);
     }
 
-    public boolean isStarter() { return starter; }
-
-    public void setStarter(Boolean starter) {
-        this.starter = starter;
-    }
-
-    public Integer[] getBoard() {
-        return this.board.toArray(new Integer[0]);
-    }
-
-    public Boolean isGameEnded() {
-        return this.ended;
-    }
-
     public void setGameEnd() {
-        this.ended = true;
-
-        LogHandler.updateBoard(this.board);
-
         this.runEventListeners(this.eventListenersForEnd);
     }
 
@@ -156,17 +148,19 @@ public abstract class AbstractGameBoard<T> {
         callbacks.forEach(Runnable::run);
     }
 
-    protected void runLogic(Integer index, Integer value) {}
+    public abstract Integer getSizeX();
+
+    public abstract Integer getSizeY();
 
     public abstract String getKey();
 
-    public abstract GameEnum getGameEnum();
+    public abstract String getName();
 
     public abstract SceneEnum getScene();
 
     public abstract String getIconPath();
 
-    public abstract String getName();
-
     public abstract void runAI();
+
+    protected void runLogic(Integer index, Integer value) {}
 }

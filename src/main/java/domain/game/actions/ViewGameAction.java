@@ -1,7 +1,7 @@
 package domain.game.actions;
 
 import com.google.gson.JsonObject;
-import domain.game.model.Game;
+import domain.game.factories.GameFactory;
 import domain.game.model.Reversi;
 import domain.player.model.Player;
 import domain.player.query.PlayerQuery;
@@ -28,7 +28,7 @@ public class ViewGameAction extends AbstractGameAction {
     protected void handler() {
         Player<?> opponent = new PlayerQuery().findOneOrCreate(this.data.get("OPPONENT").getAsString());
 
-        Game game = this.player.getGame();
+        GameFactory game = this.player.getGame();
         AbstractGameBoard<?> gameBoard = game.getGameBoard();
 
         if (gameBoard instanceof Reversi) {

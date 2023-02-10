@@ -1,12 +1,11 @@
 package domain.game.model;
 
 import client.Application;
-import domain.game.ai.ReversiAI.AIs.MoveMaximizerAI;
-import domain.game.ai.ReversiAI.AIs.RandomAI;
-import domain.game.ai.ReversiAI.Board.BoardPosition;
-import domain.game.ai.ReversiAI.Converters.IntArrayToLong;
-import domain.game.ai.ReversiAI.Converters.LongToBoolArray;
-import domain.game.ai.ReversiAI.MoveLogic.MakeMove;
+import support.ais.Reversi.RandomAI;
+import support.ais.Reversi.Board.BoardPosition;
+import support.ais.Reversi.Converters.IntArrayToLong;
+import support.ais.Reversi.Converters.LongToBoolArray;
+import support.ais.Reversi.MoveLogic.MakeMove;
 import domain.player.model.Player;
 import org.jetbrains.annotations.NotNull;
 import support.abstracts.AbstractGameBoard;
@@ -14,8 +13,14 @@ import support.enums.GameEnum;
 import support.enums.SceneEnum;
 
 public class Reversi extends AbstractGameBoard<Reversi> {
-    public Reversi() {
-        this.generate(64);
+    @Override
+    public Integer getSizeX() {
+        return 8;
+    }
+
+    @Override
+    public Integer getSizeY() {
+        return 8;
     }
 
     @Override
@@ -29,29 +34,28 @@ public class Reversi extends AbstractGameBoard<Reversi> {
     }
 
     @Override
+    public String getName() {
+        return "Reversi";
+    }
+
+    @Override
     public SceneEnum getScene() {
         return SceneEnum.REVERSI;
     }
 
     @Override
     public String getIconPath() {
-        return Application.class.getResource("assets/icons/reversi.jpg").toString();
+        return Application.class.getResource("assets/icons/reversi.png").toString();
     }
-
-    @Override
-    public String getName() {
-        return "Reversi";
-    }
-
 
     @Override
     public void start(@NotNull Player<?> player, @NotNull Player<?> opponent) {
+        super.start(player, opponent);
+
         this.board.set(27, this.isStarter() ? -1 : 1);
         this.board.set(28, this.isStarter() ? 1 : -1);
         this.board.set(35, this.isStarter() ? 1 : -1);
         this.board.set(36, this.isStarter() ? -1 : 1);
-
-        super.start(player, opponent);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class Reversi extends AbstractGameBoard<Reversi> {
             long playerPieces = IntArrayToLong.convert(this.getBoard(), 1);
             long opponentPieces = IntArrayToLong.convert(this.getBoard(), -1);
 
-            this.doMove(new RandomAI().getBestMove(playerPieces, opponentPieces, isPlayerTurn()));
+            this.doMove(new RandomAI().getBestMove(playerPieces, opponentPieces, this.isPlayerTurn()));
         }
     }
 }

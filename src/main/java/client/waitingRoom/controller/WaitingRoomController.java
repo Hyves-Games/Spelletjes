@@ -1,8 +1,6 @@
 package client.waitingRoom.controller;
 
-import domain.game.exceptions.GameNotImplementedException;
 import support.actions.StopGameAction;
-import support.actions.SubscribeServerAction;
 import support.enums.SceneEnum;
 
 public class WaitingRoomController {

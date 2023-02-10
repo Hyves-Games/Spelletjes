@@ -26,7 +26,6 @@ public class GameSelectorController {
             VBox gameContainer = new VBox();
             Button gameButton = new Button();
             Label gameName = new Label(gameProperties.getName());
-
             ImageView icon = this.createImage(gameProperties.getIconPath(), 60, 60);
 
             gameButton.setGraphic(icon);
@@ -36,7 +35,9 @@ public class GameSelectorController {
 
             gameContainer.getChildren().add(gameButton);
             gameContainer.getChildren().add(gameName);
+
             container.getChildren().add(gameContainer);
+            container.setSpacing(10);
         }
     }
 

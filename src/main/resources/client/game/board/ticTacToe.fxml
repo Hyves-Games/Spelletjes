@@ -1,120 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.game.board.controller.TicTacToeController">
-   <center>
-      <VBox fx:id="boardContainer" alignment="CENTER" maxHeight="360.0" maxWidth="360.0" prefHeight="500.0" prefWidth="360.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="120.0" prefWidth="360.0">
-               <children>
-                  <Button fx:id="btn_0" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn_1" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn_2" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets right="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="120.0" prefWidth="360.0">
-               <children>
-                  <Button fx:id="btn_3" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn_4" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn_5" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets right="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="120.0" prefWidth="360.0">
-               <children>
-                  <Button fx:id="btn_6" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn_7" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btn_8" mnemonicParsing="false" onAction="#onMoveClick" prefHeight="120.0" prefWidth="120.0">
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" right="10.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </VBox>
-   </center>
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -180,15 +71,17 @@
          </children>
       </VBox>
    </left>
+   <center>
+      <VBox fx:id="boardContainer" spacing="5.0" maxHeight="360.0" maxWidth="360.0" prefHeight="360.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
    <right>
       <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <VBox maxWidth="360.0" prefHeight="82.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <ProgressBar fx:id="timeLeft" prefWidth="360.0" progress="0.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="360.0" text="Time left for your move" />
-         </children>
-      </VBox>
+      <VBox prefHeight="82.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

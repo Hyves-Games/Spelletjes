@@ -2,17 +2,20 @@ package domain.game.model;
 
 import client.Application;
 
-import domain.game.ai.TicTacToeAI;
+import support.ais.TicTacToe.AI;
 import support.abstracts.AbstractGameBoard;
 import support.enums.GameEnum;
 import support.enums.SceneEnum;
 
 public class TicTacToe extends AbstractGameBoard<TicTacToe> {
-    public TicTacToe() {this.generate(9);}
+    @Override
+    public Integer getSizeX() {
+        return 3;
+    }
 
     @Override
-    public GameEnum getGameEnum() {
-        return GameEnum.TIC_TAC_TOE;
+    public Integer getSizeY() {
+        return 3;
     }
 
     @Override
@@ -21,13 +24,13 @@ public class TicTacToe extends AbstractGameBoard<TicTacToe> {
     }
 
     @Override
-    public SceneEnum getScene() {
-        return SceneEnum.TIC_TAC_TOE;
+    public String getName() {
+        return "Tic Tac Toe";
     }
 
     @Override
-    public String getName() {
-        return "Tic Tac Toe";
+    public SceneEnum getScene() {
+        return SceneEnum.TIC_TAC_TOE;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class TicTacToe extends AbstractGameBoard<TicTacToe> {
     @Override
     public void runAI() {
         if (this.isPlayerTurn()) {
-            Integer index = new TicTacToeAI().getBestMoveBestScore(this.getBoard(), true)[0];
+            Integer index = new AI().getBestMoveBestScore(this.getBoard(), true)[0];
 
             this.doMove(index);
         }

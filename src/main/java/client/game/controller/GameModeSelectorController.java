@@ -2,11 +2,9 @@ package client.game.controller;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import support.enums.GameEnum;
 import support.enums.GameModeEnum;
 import support.enums.SceneEnum;
 import support.helpers.Auth;
-import support.helpers.SceneSwitcher;
 
 public class GameModeSelectorController {
 
@@ -18,7 +16,7 @@ public class GameModeSelectorController {
         GameModeEnum mode = GameModeEnum.valueOf(((Node) event.getSource()).getId());
 
         Auth.setLastGameMode(mode);
-//        System.out.println(mode);
-        mode.create(mode.equals(GameModeEnum.PVA) ? true : false, mode.equals(GameModeEnum.PVA) ? false: true);
+
+        mode.create(mode.equals(GameModeEnum.PVA), !mode.equals(GameModeEnum.PVA));
     }
 }

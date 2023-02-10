@@ -5,7 +5,6 @@ import support.database.SQLite;
 import support.helpers.Utils;
 import support.records.ModelField;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

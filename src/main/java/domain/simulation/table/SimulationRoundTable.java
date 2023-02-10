@@ -1,10 +1,6 @@
 package domain.simulation.table;
 
-import domain.log.model.GameLog;
-import domain.log.model.GameSetLog;
-import domain.log.query.GameSetLogQuery;
 import domain.player.model.Player;
-import domain.simulation.model.Simulation;
 import domain.simulation.model.SimulationRound;
 import domain.simulation.query.SimulationRoundQuery;
 import support.abstracts.AbstractModel;

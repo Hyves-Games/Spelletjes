@@ -12,7 +12,6 @@ import support.helpers.AIResponseHandler;
 import support.services.Server;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.RandomAccess;
 
 public class AI extends Player<AI> {
     private Server connection;

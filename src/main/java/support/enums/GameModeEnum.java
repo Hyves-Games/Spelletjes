@@ -1,9 +1,6 @@
 package support.enums;
 
-import domain.game.model.Game;
-import domain.log.helpers.LogHandler;
-import domain.log.model.GameLog;
-import domain.player.model.AI;
+import domain.game.factories.GameFactory;
 import support.helpers.Auth;
 
 public enum GameModeEnum {
@@ -17,7 +14,7 @@ public enum GameModeEnum {
     }
 
     public void create(Boolean createAI, boolean subscribe) {
-        Game game = Auth.getLastGame().create();
+        GameFactory game = Auth.getLastGame().create();
 
         GameLog log = new GameLog();
 
@@ -45,8 +42,4 @@ public enum GameModeEnum {
 
         this.scene.switchTo();
     }
-
-//    public void create() {
-//        this.create(false, true);
-//    }
 }

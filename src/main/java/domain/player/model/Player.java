@@ -1,7 +1,6 @@
 package domain.player.model;
 
-import domain.game.model.Game;
-import domain.player.query.PlayerQuery;
+import domain.game.factories.GameFactory;
 import domain.player.table.PlayerTable;
 import support.abstracts.AbstractGameBoard;
 import support.abstracts.AbstractModel;
@@ -12,7 +11,7 @@ import java.sql.Timestamp;
 
 public class Player<T> extends AbstractModel<Player<T>> {
 
-    protected Game game;
+    protected GameFactory game;
 
     // db fields
     protected String username;
@@ -29,17 +28,11 @@ public class Player<T> extends AbstractModel<Player<T>> {
         return this.username;
     }
 
-    public Player<T> setUsername(String username) {
-        this.username = username;
-
-        return this;
-    }
-
-    public Game getGame() {
+    public GameFactory getGame() {
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(GameFactory game) {
         this.game = game;
     }
 
